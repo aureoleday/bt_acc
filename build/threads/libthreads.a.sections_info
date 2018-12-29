@@ -1,0 +1,40 @@
+In archive D:/workstation/01.projects/02.acc/03.soft/esp/bt_acc/build/threads/libthreads.a:
+
+test.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .literal.test_thread 0000000c  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .text         00000000  00000000  00000000  00000040  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         00000000  00000000  00000000  00000040  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000000  00000000  00000000  00000040  2**0
+                  ALLOC
+  4 .rodata.str1.4 00000006  00000000  00000000  00000040  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .text.test_thread 00000018  00000000  00000000  00000048  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  6 .debug_frame  00000028  00000000  00000000  00000060  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  7 .debug_info   00000109  00000000  00000000  00000088  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  8 .debug_abbrev 000000b2  00000000  00000000  00000191  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_aranges 00000020  00000000  00000000  00000243  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 10 .debug_ranges 00000010  00000000  00000000  00000263  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 11 .debug_line   00000198  00000000  00000000  00000273  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 12 .debug_str    000001e9  00000000  00000000  0000040b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .comment      0000003c  00000000  00000000  000005f4  2**0
+                  CONTENTS, READONLY
+ 14 .xtensa.info  00000038  00000000  00000000  00000630  2**0
+                  CONTENTS, READONLY
+ 15 .xt.lit       00000008  00000000  00000000  00000668  2**0
+                  CONTENTS, RELOC, READONLY
+ 16 .xt.prop      00000030  00000000  00000000  00000670  2**0
+                  CONTENTS, RELOC, READONLY
