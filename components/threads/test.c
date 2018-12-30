@@ -5,7 +5,7 @@
 
 void test_thread(void* param)
 {
-	printf("hello\n");
+	printf("\nHello, Scott!\n");
 
 	while(1)
 	{

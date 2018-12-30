@@ -10,3 +10,14 @@ environment/project/cdt.managedbuild.toolchain.gnu.cross.base.137850282/PATH/ope
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.137850282/PATH/value=C\:\\msys32\\mingw32\\bin;C\:\\msys32\\opt\\xtensa-esp32-elf\\bin;C\:\\msys32\\usr\\bin;C\:/Program Files/Java/jre1.8.0_191/bin/server;C\:/Program Files/Java/jre1.8.0_191/bin;C\:/Program Files/Java/jre1.8.0_191/lib/amd64;C\:\\Program Files\\Espressif\\ESP-IDF Tools\\toolchain\\bin;C\:\\Program Files\\Espressif\\ESP-IDF Tools\\mconf-idf;C\:\\Program Files\\Espressif\\ESP-IDF Tools;C\:\\Python27\\;C\:\\Python27\\Scripts;C\:\\Program Files\\Espressif\\ESP-IDF Tools\\toolchain\\bin;C\:\\Program Files\\Espressif\\ESP-IDF Tools\\mconf-idf;C\:\\Program Files\\Espressif\\ESP-IDF Tools;C\:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C\:\\WINDOWS\\system32;C\:\\WINDOWS;C\:\\WINDOWS\\System32\\Wbem;C\:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C\:\\WINDOWS\\System32\\OpenSSH\\;C\:\\Program Files\\Git\\cmd;C\:\\Program Files\\Microsoft VS Code\\bin;C\:\\Program Files\\CMake\\bin;C\:\\Users\\Administrator\\AppData\\Local\\Microsoft\\WindowsApps;;C\:\\WINDOWS\\System32
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.137850282/append=true
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.137850282/appendContributed=true
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/BATCH_BUILD/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/BATCH_BUILD/operation=append
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/BATCH_BUILD/value=1
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/IDF_PATH/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/IDF_PATH/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/IDF_PATH/value=C\:\\msys32\\home\\scott\\esp\\esp-idf
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/PATH/delimiter=;
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/PATH/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/PATH/value=C\:\\msys32\\mingw32\\bin;C\:\\msys32\\opt\\xtensa-esp32-elf\\bin;C\:\\msys32\\usr\\bin;C\:/Program Files/Java/jre1.8.0_191/bin/server;C\:/Program Files/Java/jre1.8.0_191/bin;C\:/Program Files/Java/jre1.8.0_191/lib/amd64;C\:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\Windows\\System32\\OpenSSH\\;C\:\\Program Files\\Git\\cmd;C\:\\Users\\scott\\AppData\\Local\\Microsoft\\WindowsApps;;C\:\\Windows\\System32
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/append=true
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.890474397/appendContributed=true
