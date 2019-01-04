@@ -5,11 +5,11 @@
  *      Author: Administrator
  */
 
-#ifndef USR_KITS_TEST_H_
-#define USR_KITS_TEST_H_
+#ifndef THREAD_H_
+#define THREAD_H_
 
 void test_thread(void* param);
+void spp_thread(void* param);
 
 
-
-#endif /* USR_KITS_TEST_H_ */
+#endif /* THREAD_H_ */

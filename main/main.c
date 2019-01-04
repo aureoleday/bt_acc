@@ -13,18 +13,20 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "usr_sys_init.h"
-#include "test.h"
+#include "threads.h"
 #include "cli_shell.h"
 
 enum
 {
 	TEST_THREAD_PRIO=2,
 	CLI_THREAD_PRIO,
+	SPP_THREAD_PRIO,
 	USR_MAX_PRIO
 };
 
 #define TEST_THREAD_STACK_SIZE 	2048
 #define CLI_THREAD_STACK_SIZE 	8192
+#define SPP_THREAD_STACK_SIZE 	4096
 
 static void tasks_create(void)
 {
@@ -41,6 +43,13 @@ static void tasks_create(void)
                 NULL,
 				CLI_THREAD_PRIO,
 				NULL);
+
+    xTaskCreate(&spp_thread,
+                    "Task_spp",
+    				SPP_THREAD_STACK_SIZE,
+                    NULL,
+    				SPP_THREAD_PRIO,
+    				NULL);
 }
 
 void app_main()
