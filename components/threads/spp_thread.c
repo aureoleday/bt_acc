@@ -31,10 +31,13 @@
 #include "esp_spp_api.h"
 #include "argtable3/argtable3.h"
 #include "esp_console.h"
-#include "fifo.h"
 
 #include "time.h"
 #include "sys/time.h"
+
+#include "sys_conf.h"
+#include "bit_op.h"
+#include "fifo.h"
 
 #define SPP_TAG "SPP_GEO"
 #define SPP_SERVER_NAME "GEO_YKJ"
@@ -69,6 +72,7 @@ static void usr_spp_init(void)
 
 static esp_err_t usr_spp_reg_conn(uint32_t h_conn,bool reg_mode)
 {
+	extern sys_reg_st  g_sys;
 	esp_err_t ret = ESP_OK;
 
 	if(reg_mode != 0)
@@ -83,6 +87,7 @@ static esp_err_t usr_spp_reg_conn(uint32_t h_conn,bool reg_mode)
 			ESP_LOGW("","spp conn full");
 			ret = ESP_FAIL;
 		}
+		bit_op_set(&g_sys.stat.gen.status_bm, GBM_BT, 1);
 	}
 	else
 	{
@@ -96,6 +101,7 @@ static esp_err_t usr_spp_reg_conn(uint32_t h_conn,bool reg_mode)
 			usr_spp_inst.h_conn[usr_spp_inst.conn_cnt] = 0;
 			usr_spp_inst.conn_cnt--;
 		}
+		bit_op_set(&g_sys.stat.gen.status_bm, GBM_BT, 0);
 	}
 	return ret;
 }
@@ -162,7 +168,7 @@ static void esp_spp_cb(esp_spp_cb_event_t event, esp_spp_cb_param_t *param)
         ESP_LOGI(SPP_TAG, "ESP_SPP_CONG_EVT");
         break;
     case ESP_SPP_WRITE_EVT:
-        ESP_LOGI(SPP_TAG, "ESP_SPP_WRITE_EVT");
+//        ESP_LOGI(SPP_TAG, "ESP_SPP_WRITE_EVT");
         break;
     case ESP_SPP_SRV_OPEN_EVT:
         ESP_LOGI(SPP_TAG, "ESP_SPP_SRV_OPEN_EVT");
@@ -308,10 +314,10 @@ void spp_thread(void* param)
 	                fifo32_pop(&cmd_tx_fifo, &tx_buf[i]);
 	            }
 	            usr_spp_write(0,(uint8_t *)tx_buf,buf_len*4);
+//	            printf("buf_len:%d\n",buf_len);
 	        }
 		}
-
-		vTaskDelay(1000 / portTICK_PERIOD_MS);
+		vTaskDelay(50 / portTICK_PERIOD_MS);
 	}
 }
 

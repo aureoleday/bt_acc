@@ -193,19 +193,17 @@ const sts_reg_map_st status_reg_map_inst[STAT_REG_MAP_NUM]=
   */
 void init_load_status(void)
 {
-		uint16_t i;	
-		for(i=0;i<STAT_REG_MAP_NUM;i++)
-		{
-				if(status_reg_map_inst[i].reg_ptr != NULL)
-				{
-						*(status_reg_map_inst[i].reg_ptr) = status_reg_map_inst[i].dft;
-				}
-		}    
+	uint16_t i;
+	for (i = 0; i < STAT_REG_MAP_NUM; i++) {
+		if (status_reg_map_inst[i].reg_ptr != NULL) {
+			*(status_reg_map_inst[i].reg_ptr) = status_reg_map_inst[i].dft;
+		}
+	}
 //    g_sys.stat.gen.reset_counts = get_reset_counts();
 //    g_sys.stat.man.serial_no = get_serial_id();
 //    g_sys.stat.man.man_date = get_comp_date();
 //    g_sys.stat.gen.reset_counts = update_reset_cnt(0);
-//    bit_op_set(&g_sys.stat.gen.status_bm,GBM_FLASH,1);
+//	bit_op_set(&g_sys.stat.gen.status_bm, GBM_BT, 1);
 }
 
 

@@ -11,6 +11,7 @@
 #include "freertos/task.h"
 #include "global_var.h"
 #include "adxl_drv.h"
+#include "bit_op.h"
 
 void geo_thread(void* param)
 {
@@ -20,7 +21,7 @@ void geo_thread(void* param)
 
 	while(1)
 	{
-		if(g_sys.conf.geo.enable == 1)
+		if((g_sys.conf.geo.enable == 1)&&((bit_op_get(g_sys.stat.gen.status_bm,GBM_BT) == 1)))
 		{
 			adxl355_scanfifo();
 			vTaskDelay(g_sys.conf.geo.sample_period);

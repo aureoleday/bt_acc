@@ -114,8 +114,8 @@ static void cmd_buf_init(void)
 static void geo_timeout(void* arg)
 {
     uint16_t report_geo_data(void);
-    int64_t time_since_boot = esp_timer_get_time();
-    ESP_LOGI("", "Periodic timer called, time since boot: %lld us", time_since_boot);
+//    int64_t time_since_boot = esp_timer_get_time();
+//    ESP_LOGI("", "Periodic timer called, time since boot: %lld us", time_since_boot);
     report_geo_data();
 }
 
@@ -676,7 +676,7 @@ uint16_t report_geo_data(void)
 	uint16_t rd_cnt;
 	
     err_code = CMD_ERR_NOERR;
-    if(bit_op_get(g_sys.stat.gen.status_bm,GBM_TCP) == 0)
+    if(bit_op_get(g_sys.stat.gen.status_bm,GBM_BT) == 0)
         return CMD_NOT_READY;
   
     rd_cnt = get_geo_data(&cmd_reg_inst.tx_buf[FRAME_D_AL_POS]);
