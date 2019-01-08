@@ -15,6 +15,8 @@
 #include "driver/gpio.h"
 #include "argtable3/argtable3.h"
 #include "esp_console.h"
+#include "adxl_drv.h"
+#include "fifo.h"
 
 #define PIN_NUM_MISO 19
 #define PIN_NUM_MOSI 23
@@ -24,6 +26,9 @@
 #define DEV_GEO_RTX_SIZE    2048
 #define DEV_GEO_FIFO_SIZE   256
 
+fifo32_cb_td geo_rx_fifo;
+static uint8_t rxd_temp[DEV_GEO_RTX_SIZE];
+
 typedef struct
 {
     spi_device_handle_t     		spi_device_h;
@@ -32,6 +37,11 @@ typedef struct
 }spi_geo_device_st;
 
 spi_geo_device_st spi_geo_dev_inst;
+
+void geo_ds_init(void)
+{
+    fifo32_init(&geo_rx_fifo,1,DEV_GEO_FIFO_SIZE);
+}
 
 uint8_t adxl_wr_reg(uint8_t addr, uint8_t data)
 {
@@ -100,11 +110,44 @@ void adxl_init(void)
     };
     //Initialize the SPI bus
     ret=spi_bus_initialize(VSPI_HOST, &buscfg, 1);
+    geo_ds_init();
     ESP_ERROR_CHECK(ret);
     //Attach the LCD to the SPI bus
     ret=spi_bus_add_device(VSPI_HOST, &devcfg, &spi_geo_dev_inst.spi_device_h);
     ESP_ERROR_CHECK(ret);
 
+}
+
+uint16_t adxl355_scanfifo(void)
+{
+    uint16_t ret;
+    uint16_t i;
+    uint16_t total_cnt;
+    uint8_t  sample_cnt;
+    uint32_t buf_temp;
+    uint8_t status;
+
+    ret = 0;
+    status = adxl_rd_reg(ADXL_STATUS,rxd_temp,1);
+    if((status&0x6) != 0)
+    	printf("adxl_fifo fuov!\n");
+
+    sample_cnt = adxl_rd_reg(ADXL_FIFO_ENTRIES,rxd_temp,1);
+
+    total_cnt = sample_cnt*3*3;
+
+    if(rxd_temp[1] > 0)
+    {
+        adxl_rd_reg(ADXL_FIFO_DATA, rxd_temp, total_cnt);
+    }
+
+    for(i=0;i<sample_cnt;i++)
+    {
+        buf_temp = (rxd_temp[1+i*3]<<16)|(rxd_temp[2+i*3]<<8)|(rxd_temp[3+i*3]);
+        if(fifo32_push(&geo_rx_fifo,&buf_temp) == 0)
+        	printf("geo fifo full\n");
+    }
+    return ret;
 }
 
 /** Arguments used by 'join' function */

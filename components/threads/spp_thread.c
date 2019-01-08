@@ -18,6 +18,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include "sdkconfig.h"
 #include "nvs.h"
 #include "nvs_flash.h"
 #include "freertos/FreeRTOS.h"
@@ -28,6 +29,8 @@
 #include "esp_gap_bt_api.h"
 #include "esp_bt_device.h"
 #include "esp_spp_api.h"
+#include "argtable3/argtable3.h"
+#include "esp_console.h"
 
 #include "time.h"
 #include "sys/time.h"
@@ -39,6 +42,12 @@
 #define SPP_SHOW_SPEED 1
 #define SPP_SHOW_MODE SPP_SHOW_DATA    /*Choose show mode: show data or speed*/
 
+typedef struct
+{
+	uint32_t h_conn[8];
+	uint32_t conn_cnt;
+}usr_spp_st;
+
 static const esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;
 
 static struct timeval time_new, time_old;
@@ -46,6 +55,55 @@ static long data_num = 0;
 
 static const esp_spp_sec_t sec_mask = ESP_SPP_SEC_AUTHENTICATE;
 static const esp_spp_role_t role_slave = ESP_SPP_ROLE_SLAVE;
+
+static usr_spp_st usr_spp_inst;
+
+static void usr_spp_init(void)
+{
+	int i;
+	for(i=0;i<8;i++)
+		usr_spp_inst.h_conn[i] = 0;
+	usr_spp_inst.conn_cnt = 0;
+}
+
+static esp_err_t usr_spp_reg_conn(uint32_t h_conn,bool reg_mode)
+{
+	esp_err_t ret = ESP_OK;
+
+	if(reg_mode != 0)
+	{
+		if(usr_spp_inst.conn_cnt<8)
+		{
+			usr_spp_inst.h_conn[usr_spp_inst.conn_cnt] = h_conn;
+			usr_spp_inst.conn_cnt++;
+		}
+		else
+		{
+			ESP_LOGW("","spp conn full");
+			ret = ESP_FAIL;
+		}
+	}
+	else
+	{
+		if(usr_spp_inst.conn_cnt <= 0)
+		{
+			ESP_LOGW("","spp conn empty");
+			ret = ESP_FAIL;
+		}
+		else
+		{
+			usr_spp_inst.h_conn[usr_spp_inst.conn_cnt] = 0;
+			usr_spp_inst.conn_cnt--;
+		}
+	}
+	return ret;
+}
+
+esp_err_t usr_spp_write(uint8_t conn_id,uint8_t* src_dptr, uint16_t tx_len)
+{
+	return esp_spp_write(usr_spp_inst.h_conn[conn_id], tx_len, src_dptr);
+}
+
 
 static void print_speed(void)
 {
@@ -76,6 +134,9 @@ static void esp_spp_cb(esp_spp_cb_event_t event, esp_spp_cb_param_t *param)
         break;
     case ESP_SPP_CLOSE_EVT:
         ESP_LOGI(SPP_TAG, "ESP_SPP_CLOSE_EVT");
+        if (usr_spp_reg_conn(param->open.handle,0) != 0) {
+        	ESP_LOGW( SPP_TAG, "unregister SPP Connection failed");
+        }
         break;
     case ESP_SPP_START_EVT:
         ESP_LOGI(SPP_TAG, "ESP_SPP_START_EVT");
@@ -104,6 +165,9 @@ static void esp_spp_cb(esp_spp_cb_event_t event, esp_spp_cb_param_t *param)
         break;
     case ESP_SPP_SRV_OPEN_EVT:
         ESP_LOGI(SPP_TAG, "ESP_SPP_SRV_OPEN_EVT");
+        if (usr_spp_reg_conn(param->open.handle,1) != 0) {
+        	ESP_LOGW( SPP_TAG, "register SPP Connection failed");
+        }
         gettimeofday(&time_old, NULL);
         break;
     default:
@@ -222,10 +286,65 @@ static void spp_init(void)
 
 void spp_thread(void* param)
 {
+	uint8_t test_buf[8];
+	uint16_t i;
+
 	spp_init();
+	usr_spp_init();
+
+	for(i=0;i<8;i++)
+		test_buf[i] = i+0x30;
+
+
 	while(1)
 	{
+		if(usr_spp_inst.conn_cnt > 0)
+			usr_spp_write(0,test_buf,4);
+//		esp_spp_write(param->write.handle, SPP_DATA_LEN, spp_data);
 		vTaskDelay(5000 / portTICK_PERIOD_MS);
 	}
+}
+
+/** Arguments used by 'join' function */
+static struct {
+    struct arg_str *data;
+    struct arg_end *end;
+} usr_spp_args;
+
+static int wr_spp(int argc, char **argv)
+{
+	uint8_t rx_buf[16];
+	uint8_t i;
+
+    int nerrors = arg_parse(argc, argv, (void**) &usr_spp_args);
+    if (nerrors != 0) {
+        arg_print_errors(stderr, usr_spp_args.end, argv[0]);
+        return 1;
+    }
+
+    usr_spp_write(0,usr_spp_args.data->sval[0],strlen(usr_spp_args.data->sval[0]));
+
+	return 0;
+}
+
+
+static void register_wr_spp()
+{
+	usr_spp_args.data = arg_str1(NULL, NULL, "<c>", "write to spp");
+	usr_spp_args.end = arg_end(1);
+    const esp_console_cmd_t cmd = {
+        .command = "spp_wr",
+        .help = "write spp",
+        .hint = NULL,
+        .func = &wr_spp,
+		.argtable = &usr_spp_args
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
+
+void usr_spp_register(void)
+{
+	register_wr_spp();
 }
 

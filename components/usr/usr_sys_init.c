@@ -12,6 +12,7 @@
 #include "global_var.h"
 #include "nvs.h"
 #include "nvs_flash.h"
+#include "threads.h"
 
 static void initialize_nvs()
 {
@@ -29,6 +30,7 @@ void usr_sys_init(void)
 
 	adxl_init();
 	adxl_register();
+	usr_spp_register();
 
 	gvar_init();
 	gvar_register();

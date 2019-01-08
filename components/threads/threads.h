@@ -11,5 +11,6 @@
 void test_thread(void* param);
 void spp_thread(void* param);
 
+void usr_spp_register(void);
 
 #endif /* THREAD_H_ */
