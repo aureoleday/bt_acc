@@ -21,12 +21,14 @@ enum
 	TEST_THREAD_PRIO=2,
 	CLI_THREAD_PRIO,
 	SPP_THREAD_PRIO,
+	GEO_THREAD_PRIO,
 	USR_MAX_PRIO
 };
 
 #define TEST_THREAD_STACK_SIZE 	2048
-#define CLI_THREAD_STACK_SIZE 	8192
+#define CLI_THREAD_STACK_SIZE 	4096
 #define SPP_THREAD_STACK_SIZE 	4096
+#define GEO_THREAD_STACK_SIZE 	2048
 
 static void tasks_create(void)
 {
@@ -49,6 +51,13 @@ static void tasks_create(void)
     				SPP_THREAD_STACK_SIZE,
                     NULL,
     				SPP_THREAD_PRIO,
+    				NULL);
+
+    xTaskCreate(&geo_thread,
+                    "Task_geo",
+    				GEO_THREAD_STACK_SIZE,
+                    NULL,
+    				GEO_THREAD_PRIO,
     				NULL);
 }
 

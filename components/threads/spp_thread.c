@@ -35,8 +35,8 @@
 #include "time.h"
 #include "sys/time.h"
 
-#define SPP_TAG "SPP_ACCEPTOR_DEMO"
-#define SPP_SERVER_NAME "SPP_SERVER"
+#define SPP_TAG "SPP_GEO"
+#define SPP_SERVER_NAME "GEO_YKJ"
 #define EXCAMPLE_DEVICE_NAME "SPP_ACCEPTOR"
 #define SPP_SHOW_DATA 0
 #define SPP_SHOW_SPEED 1

@@ -46,11 +46,13 @@ typedef enum {
    ADXL_RANGE = 0x2C,
    ADXL_POWER_CTL = 0x2D,
    ADXL_SELF_TEST = 0x2E,
-   ADXL_ARESET = 0x2F
+   ADXL_RESET = 0x2F
 } ADXL355_register_t;
 
 void adxl_init(void);
 void adxl_register(void);
+void adxl355_reset(void);
+void adxl355_scanfifo(void);
 uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt);
 uint8_t adxl_wr_reg(uint8_t addr, uint8_t data);
 

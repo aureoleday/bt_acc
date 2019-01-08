@@ -84,7 +84,7 @@ uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt)
 
     esp_err_t ret = spi_device_polling_transmit(spi_geo_dev_inst.spi_device_h, &t);
 
-    return ret;
+    return *(rx_buf+1);
 }
 
 void adxl_init(void)
@@ -118,7 +118,12 @@ void adxl_init(void)
 
 }
 
-uint16_t adxl355_scanfifo(void)
+void adxl355_reset(void)
+{
+	adxl_wr_reg(ADXL_RESET,0x52);
+}
+
+void adxl355_scanfifo(void)
 {
     uint16_t ret;
     uint16_t i;
@@ -147,7 +152,7 @@ uint16_t adxl355_scanfifo(void)
         if(fifo32_push(&geo_rx_fifo,&buf_temp) == 0)
         	printf("geo fifo full\n");
     }
-    return ret;
+//    return ret;
 }
 
 /** Arguments used by 'join' function */
