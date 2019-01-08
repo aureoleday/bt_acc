@@ -20,6 +20,7 @@ enum
 {
 	TEST_THREAD_PRIO=2,
 	CLI_THREAD_PRIO,
+	CMD_THREAD_PRIO,
 	SPP_THREAD_PRIO,
 	GEO_THREAD_PRIO,
 	USR_MAX_PRIO
@@ -27,6 +28,7 @@ enum
 
 #define TEST_THREAD_STACK_SIZE 	2048
 #define CLI_THREAD_STACK_SIZE 	4096
+#define CMD_THREAD_STACK_SIZE 	2048
 #define SPP_THREAD_STACK_SIZE 	4096
 #define GEO_THREAD_STACK_SIZE 	2048
 
@@ -44,6 +46,13 @@ static void tasks_create(void)
 				CLI_THREAD_STACK_SIZE,
                 NULL,
 				CLI_THREAD_PRIO,
+				NULL);
+
+    xTaskCreate(&cmd_thread,
+                "Task_CMD",
+				CMD_THREAD_STACK_SIZE,
+                NULL,
+				CMD_THREAD_PRIO,
 				NULL);
 
     xTaskCreate(&spp_thread,

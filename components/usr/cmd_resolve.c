@@ -2,7 +2,10 @@
 #include "global_var.h"
 #include "bit_op.h"
 #include "fifo.h"
-
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_timer.h"
+#include "esp_log.h"
 //cpad err code
 enum
 {
@@ -26,10 +29,10 @@ enum
 };
 
 
-#define CMD_FRAME_OVSIZE                3
+#define CMD_FRAME_OVSIZE                 	  3
 
-#define CMD_RTX_BUF_DEPTH 					    512
-#define CMD_FSM_TIMEOUT	 					      2
+#define CMD_RTX_BUF_DEPTH 					  512
+#define CMD_FSM_TIMEOUT	 					  2
 
 #define CMD_FRAME_TAG_M_SYNC 			      0x1bdf9bdf
 #define CMD_FRAME_TAG_S_SYNC 			      0x9bdf1bdf
@@ -102,15 +105,17 @@ static void cmd_buf_init(void)
   * @param  none
   * @retval none
   */
-static void cmd_timeout(void* parameter)
-{
-    uint16_t report_data(void);
-    report_data();
-}
+//static void cmd_timeout(void* parameter)
+//{
+//    uint16_t report_data(void);
+//    report_data();
+//}
 
-static void geo_timeout(void* parameter)
+static void geo_timeout(void* arg)
 {
     uint16_t report_geo_data(void);
+    int64_t time_since_boot = esp_timer_get_time();
+    ESP_LOGI("", "Periodic timer called, time since boot: %lld us", time_since_boot);
     report_geo_data();
 }
 
@@ -133,19 +138,21 @@ static void geo_timeout(void* parameter)
 //		return 1;
 //}
 //
-//rt_timer_t tm_geo_repo;
-//static uint16_t	geo_timer_init(void)
-//{
-//    extern sys_reg_st  g_sys;
-////		rt_timer_t tm_tcp_repo;
-//		tm_geo_repo = rt_timer_create("tm_geo_repo",
-//									geo_timeout,
-//									RT_NULL,
-//									(g_sys.conf.geo.pkg_period),
-//									RT_TIMER_FLAG_PERIODIC);
-//		rt_timer_start(tm_geo_repo);
-//		return 1;
-//}
+
+static uint16_t	geo_timer_init(void)
+{
+	extern sys_reg_st g_sys;
+	const esp_timer_create_args_t geo_timer_args = {
+			.callback = &geo_timeout,
+			/* name is optional, but may help identify the timer when debugging */
+			.name = "periodic"
+	};
+
+	esp_timer_handle_t geo_timer;
+	ESP_ERROR_CHECK(esp_timer_create(&geo_timer_args, &geo_timer));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(geo_timer, g_sys.conf.geo.pkg_period*1000));
+	return 0;
+}
 
 
 /**
@@ -156,9 +163,9 @@ static void geo_timeout(void* parameter)
   */
 void cmd_dev_init(void)
 {
-		cmd_buf_init();
+	cmd_buf_init();
 //    cmd_timer_init();
-//    geo_timer_init();
+    geo_timer_init();
 }
 
 /**
@@ -167,14 +174,13 @@ void cmd_dev_init(void)
 						tx_cnt: tx src buffer transmitt count
   * @retval none
   */
-void cmd_uart_send_fifo(void)
-{
-		uint32_t tx_data;
-  
-		if(is_fifo32_empty(&cmd_tx_fifo) == 0)
-		{
-				fifo32_pop(&cmd_tx_fifo,&tx_data);
-		}
+void cmd_uart_send_fifo(void) {
+	uint32_t tx_data;
+
+	if (is_fifo32_empty(&cmd_tx_fifo) == 0)
+	{
+		fifo32_pop(&cmd_tx_fifo, &tx_data);
+	}
 }
 
 /**
@@ -184,18 +190,17 @@ void cmd_uart_send_fifo(void)
 			`0: checksum ok
 			`1:	checksum fail
   */
-static uint32_t frame_checksum(void)
-{
-		uint32_t res,i;
-		res = 0;
-		for(i=0;i<cmd_reg_inst.rx_cnt;i++)
-		{
-				res ^= cmd_reg_inst.rx_buf[i];
-		}
-    if(res == 0)
-        return 1;
-    else
-        return 0;
+static uint32_t frame_checksum(void) {
+	uint32_t res, i;
+	res = 0;
+	for (i = 0; i < cmd_reg_inst.rx_cnt; i++)
+	{
+		res ^= cmd_reg_inst.rx_buf[i];
+	}
+	if (res == 0)
+		return 1;
+	else
+		return 0;
 }
 
 /**
@@ -204,15 +209,14 @@ static uint32_t frame_checksum(void)
 						data_num: number of data to be caculated
   * @retval caculated checksum
   */
-static uint32_t frame_checksum_gen(uint32_t* data_ptr, uint16_t data_num)
-{
-		uint32_t res,i;
-		res = 0;
-		for(i=0;i<data_num;i++)
-		{
-				res ^= *(data_ptr+i);
-		}
-		return res;
+static uint32_t frame_checksum_gen(uint32_t* data_ptr, uint16_t data_num) {
+	uint32_t res, i;
+	res = 0;
+	for (i = 0; i < data_num; i++)
+	{
+		res ^= *(data_ptr + i);
+	}
+	return res;
 }
 
 /**
@@ -224,13 +228,12 @@ static uint32_t frame_checksum_gen(uint32_t* data_ptr, uint16_t data_num)
   */
 uint16_t cmd_get_comm_sts(void)
 {
-		return cmd_reg_inst.rtx_timeout;
+	return cmd_reg_inst.rtx_timeout;
 }
-
 
 uint8_t cmd_get_rx_fsm(void)
 {
-		return cmd_reg_inst.cmd_fsm_cstate;
+	return cmd_reg_inst.cmd_fsm_cstate;
 }
 
 /**
@@ -242,14 +245,12 @@ uint8_t cmd_get_rx_fsm(void)
   */
 uint16_t cmd_frame_recv(void)
 {
-		if(cmd_reg_inst.rx_tag == 1)	//if there is already an unprocessed frame in the rx buffer, quit new frame recieving
-		{
-				return 1;
-		}
-		else
-		{
-				return 0;
-		}
+	if (cmd_reg_inst.rx_tag == 1)//if there is already an unprocessed frame in the rx buffer, quit new frame recieving
+			{
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 
@@ -260,18 +261,18 @@ uint16_t cmd_frame_recv(void)
   */
 static void cmd_response(void)
 {
-		uint32_t i,check_sum;
+	uint32_t i,check_sum;
 
-		cmd_reg_inst.tx_buf[FRAME_SYNC_POS] = CMD_FRAME_TAG_S_SYNC;		
+	cmd_reg_inst.tx_buf[FRAME_SYNC_POS] = CMD_FRAME_TAG_S_SYNC;
+
+	cmd_reg_inst.tx_buf[FRAME_C_ATL_POS] = (cmd_reg_inst.tx_errcode<<24)|(cmd_reg_inst.tx_cmd<<16)|cmd_reg_inst.tx_cnt;
 	
-		cmd_reg_inst.tx_buf[FRAME_C_ATL_POS] = (cmd_reg_inst.tx_errcode<<24)|(cmd_reg_inst.tx_cmd<<16)|cmd_reg_inst.tx_cnt;
-  
-		check_sum = frame_checksum_gen(&cmd_reg_inst.tx_buf[0],(cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE-1));		//response frame checksum caculate
-		cmd_reg_inst.tx_buf[cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE-1] = check_sum;																					
-		for(i=0;i<(cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE);i++)																															//fifo test
-		{
-				fifo32_push(&cmd_tx_fifo,&cmd_reg_inst.tx_buf[i]);
-		}	
+	check_sum = frame_checksum_gen(&cmd_reg_inst.tx_buf[0],(cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE-1));		//response frame checksum caculate
+	cmd_reg_inst.tx_buf[cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE-1] = check_sum;
+	for(i=0;i<(cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE);i++)																															//fifo test
+	{
+		fifo32_push(&cmd_tx_fifo,&cmd_reg_inst.tx_buf[i]);
+	}
 }
 
 /**
@@ -287,27 +288,27 @@ static void cmd_response(void)
   */
 static uint16_t cmd_wr_reg(void)
 {
-		uint8_t err_code;
-		uint8_t tx_addr,tx_cnt;
-		extern sys_reg_st	 g_sys; 
-	
-    err_code = CMD_ERR_NOERR;					
-		tx_addr = cmd_reg_inst.rx_buf[FRAME_D_AL_POS]>>16;	
-		tx_cnt = cmd_reg_inst.rx_buf[FRAME_D_AL_POS]&0x0000ffff;
+	uint8_t err_code;
+	uint8_t tx_addr, tx_cnt;
+	extern sys_reg_st g_sys;
 
-		cmd_reg_inst.rx_cnt = 0;																																            //clear rx_buffer
-		cmd_reg_inst.rx_tag = 0;		
-  
-		err_code = reg_map_write(tx_addr,&cmd_reg_inst.rx_buf[FRAME_D_PL_POS],tx_cnt); 																			//write conf reg map	
+	err_code = CMD_ERR_NOERR;
+	tx_addr = cmd_reg_inst.rx_buf[FRAME_D_AL_POS] >> 16;
+	tx_cnt = cmd_reg_inst.rx_buf[FRAME_D_AL_POS] & 0x0000ffff;
 
-    cmd_reg_inst.tx_buf[FRAME_D_AL_POS] = cmd_reg_inst.rx_buf[FRAME_D_AL_POS];
-  
-    cmd_reg_inst.tx_cnt = 1;
-    cmd_reg_inst.tx_cmd	= (cmd_reg_inst.rx_buf[FRAME_C_ATL_POS]>>16)&0x00ff;		
-    cmd_reg_inst.tx_errcode = err_code;
+	cmd_reg_inst.rx_cnt = 0;								//clear rx_buffer
+	cmd_reg_inst.rx_tag = 0;
 
-		cmd_response();
-		return err_code;
+	err_code = reg_map_write(tx_addr, &cmd_reg_inst.rx_buf[FRAME_D_PL_POS],	tx_cnt); 									//write conf reg map
+
+	cmd_reg_inst.tx_buf[FRAME_D_AL_POS] = cmd_reg_inst.rx_buf[FRAME_D_AL_POS];
+
+	cmd_reg_inst.tx_cnt = 1;
+	cmd_reg_inst.tx_cmd = (cmd_reg_inst.rx_buf[FRAME_C_ATL_POS] >> 16) & 0x00ff;
+	cmd_reg_inst.tx_errcode = err_code;
+
+	cmd_response();
+	return err_code;
 }
 
 /**
@@ -323,33 +324,31 @@ static uint16_t cmd_wr_reg(void)
   */
 static uint16_t cmd_rd_reg(void)
 {
-		uint8_t err_code;
-		uint16_t rd_addr,rd_cnt;
-	
-    err_code = CMD_ERR_NOERR;
-    
-		rd_addr = cmd_reg_inst.rx_buf[FRAME_D_AL_POS]>>16;
-		rd_cnt = cmd_reg_inst.rx_buf[FRAME_D_AL_POS]&0x0000ffff;		
-	
-		cmd_reg_inst.rx_cnt = 0;																																//clear rx_buffer
-		cmd_reg_inst.rx_tag = 0;		
+	uint8_t err_code;
+	uint16_t rd_addr, rd_cnt;
 
-		if(rd_cnt > CMD_RTX_BUF_DEPTH)
-		{
-				err_code =  CMD_ERR_UNKNOWN;
-        cmd_reg_inst.tx_cnt = 1;
-		}	
-		else
-		{
-				err_code = reg_map_read(rd_addr,&cmd_reg_inst.tx_buf[FRAME_D_PL_POS],rd_cnt);
-				cmd_reg_inst.tx_cnt = rd_cnt + 1;				
-		}
-    cmd_reg_inst.tx_buf[FRAME_D_AL_POS] =  cmd_reg_inst.rx_buf[FRAME_D_AL_POS];
-    
-    cmd_reg_inst.tx_cmd	= (cmd_reg_inst.rx_buf[FRAME_C_ATL_POS]>>16)&0x00ff;
-    cmd_reg_inst.tx_errcode = err_code;
-		cmd_response();
-		return err_code;
+	err_code = CMD_ERR_NOERR;
+
+	rd_addr = cmd_reg_inst.rx_buf[FRAME_D_AL_POS] >> 16;
+	rd_cnt = cmd_reg_inst.rx_buf[FRAME_D_AL_POS] & 0x0000ffff;
+
+	cmd_reg_inst.rx_cnt = 0;								//clear rx_buffer
+	cmd_reg_inst.rx_tag = 0;
+
+	if (rd_cnt > CMD_RTX_BUF_DEPTH) {
+		err_code = CMD_ERR_UNKNOWN;
+		cmd_reg_inst.tx_cnt = 1;
+	} else {
+		err_code = reg_map_read(rd_addr, &cmd_reg_inst.tx_buf[FRAME_D_PL_POS],
+				rd_cnt);
+		cmd_reg_inst.tx_cnt = rd_cnt + 1;
+	}
+	cmd_reg_inst.tx_buf[FRAME_D_AL_POS] = cmd_reg_inst.rx_buf[FRAME_D_AL_POS];
+
+	cmd_reg_inst.tx_cmd = (cmd_reg_inst.rx_buf[FRAME_C_ATL_POS] >> 16) & 0x00ff;
+	cmd_reg_inst.tx_errcode = err_code;
+	cmd_response();
+	return err_code;
 }
 
 /**
@@ -365,32 +364,31 @@ static uint16_t cmd_rd_reg(void)
   */
 static uint16_t cmd_wr_ser(void)
 {
-		uint8_t err_code;
-		uint8_t tx_cnt,i;
-    uint8_t tx_buf[32];
-    
-		extern sys_reg_st	 g_sys; 
-	
-    err_code = CMD_ERR_NOERR;					
+	uint8_t err_code;
+	uint8_t tx_cnt, i;
+	uint8_t tx_buf[32];
 
-		tx_cnt = cmd_reg_inst.rx_buf[FRAME_C_ATL_POS]&0x0000ffff;
+	extern sys_reg_st g_sys;
 
-		cmd_reg_inst.rx_cnt = 0;																																            //clear rx_buffer
-		cmd_reg_inst.rx_tag = 0;
-  
-    for(i=0;i<tx_cnt;i++)
-    {
-        tx_buf[i] = (uint8_t)cmd_reg_inst.rx_buf[FRAME_D_AL_POS+i];
-    }
+	err_code = CMD_ERR_NOERR;
+
+	tx_cnt = cmd_reg_inst.rx_buf[FRAME_C_ATL_POS] & 0x0000ffff;
+
+	cmd_reg_inst.rx_cnt = 0;								//clear rx_buffer
+	cmd_reg_inst.rx_tag = 0;
+
+	for (i = 0; i < tx_cnt; i++) {
+		tx_buf[i] = (uint8_t) cmd_reg_inst.rx_buf[FRAME_D_AL_POS + i];
+	}
 //    err_code = plc_tx(tx_buf,tx_cnt);
-  
-    cmd_reg_inst.tx_cnt = 0;
-    cmd_reg_inst.tx_cmd	= (cmd_reg_inst.rx_buf[FRAME_C_ATL_POS]>>16)&0x0fff;
-    
-    cmd_reg_inst.tx_errcode = err_code;
 
-		cmd_response();
-		return err_code;
+	cmd_reg_inst.tx_cnt = 0;
+	cmd_reg_inst.tx_cmd = (cmd_reg_inst.rx_buf[FRAME_C_ATL_POS] >> 16) & 0x0fff;
+
+	cmd_reg_inst.tx_errcode = err_code;
+
+	cmd_response();
+	return err_code;
 }
 
 /**
@@ -449,164 +447,140 @@ static uint16_t cmd_rd_ser(void)
   */
 uint16_t cmd_frame_resolve(void)
 {
-		uint8_t err_code;
-		uint8_t frame_cmd_type;
-	
-		err_code = CMD_ERR_NOERR;
-		frame_cmd_type = (cmd_reg_inst.rx_buf[FRAME_C_ATL_POS]>>16)&0x00ff;
+	uint8_t err_code;
+	uint8_t frame_cmd_type;
 
-		if(cmd_reg_inst.rx_tag == 0)
-		{
-        err_code = CMD_ERR_NOERR;
-				return err_code;
-		}
-	
-		switch(frame_cmd_type)
-		{
-				case (CMD_RD_REG):
-				{
-						err_code = cmd_rd_reg();
-						 printf("console: read reg.\n");
-						break;						
-				}				
-				case (CMD_WR_REG):
-				{	
-						err_code = cmd_wr_reg();
-						printf("console: write reg.\n");
-						break;
-				}
-				case (CMD_RD_SER):
-				{	
-						err_code = cmd_rd_ser();
-						printf("console: read ser.\n");
-						break;
-				}
-				case (CMD_WR_SER):
-				{	
-						err_code = cmd_wr_ser();
-						printf("console: write ser.\n");
-						break;
-				}
-				default:
-				{
-						err_code = CMD_ERR_UNKNOWN;
-						break;
-				}
-		}
+	err_code = CMD_ERR_NOERR;
+	frame_cmd_type = (cmd_reg_inst.rx_buf[FRAME_C_ATL_POS] >> 16) & 0x00ff;
+
+	if (cmd_reg_inst.rx_tag == 0) {
+		err_code = CMD_ERR_NOERR;
 		return err_code;
+	}
+
+	switch (frame_cmd_type) {
+		case (CMD_RD_REG): {
+			err_code = cmd_rd_reg();
+			printf("console: read reg.\n");
+			break;
+		}
+		case (CMD_WR_REG): {
+			err_code = cmd_wr_reg();
+			printf("console: write reg.\n");
+			break;
+		}
+		case (CMD_RD_SER): {
+			err_code = cmd_rd_ser();
+			printf("console: read ser.\n");
+			break;
+		}
+		case (CMD_WR_SER): {
+			err_code = cmd_wr_ser();
+			printf("console: write ser.\n");
+			break;
+		}
+		default: {
+			err_code = CMD_ERR_UNKNOWN;
+			break;
+		}
+	}
+	return err_code;
 }
 
 void recv_frame_fsm(void)
 {
-		uint32_t rx_data;
-    
-    if(cmd_reg_inst.rx_tag == 1)
-        return;
-    
-    if(cmd_reg_inst.cmd_fsm_cstate == CMD_FRAME_FSM_DATA)
-    {
-        cmd_reg_inst.rtx_timeout ++;
-    }
-    
-	  while ((fifo32_pop(&cmd_rx_fifo,&rx_data) == 1)&&(cmd_reg_inst.rx_tag == 0))
-		{
+	uint32_t rx_data;
+
+	if (cmd_reg_inst.rx_tag == 1)
+		return;
+
+	if (cmd_reg_inst.cmd_fsm_cstate == CMD_FRAME_FSM_DATA) {
+		cmd_reg_inst.rtx_timeout++;
+	}
+
+	while ((fifo32_pop(&cmd_rx_fifo, &rx_data) == 1)
+			&& (cmd_reg_inst.rx_tag == 0))
+	{
 //        printf("tcp: %x\n ",rx_data);
-				switch (cmd_reg_inst.cmd_fsm_cstate)
-				{
-						case (CMD_FRAME_FSM_SYNC):
-						{
-								cmd_reg_inst.rx_cnt = 0;
-								if(rx_data == CMD_FRAME_TAG_M_SYNC)
-								{
-										cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = rx_data;
-										cmd_reg_inst.rx_cnt++;
-										cmd_reg_inst.rx_tag = 0;
-										cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_TL;
-								}
-								else
-								{
-										cmd_reg_inst.rx_cnt = 0;
-										cmd_reg_inst.rx_tag = 0;
-										cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;										
-										cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
-								}
-                cmd_reg_inst.rtx_timeout = 0;
-								break;
-						}			
-						case (CMD_FRAME_FSM_TL):
-						{								
-								if(cmd_reg_inst.rtx_timeout < CMD_FSM_TIMEOUT)
-								{
-										cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = rx_data;
-										cmd_reg_inst.rx_cnt++;
-										cmd_reg_inst.rx_tag = 0;
-										cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_DATA;
-								}
-								else
-								{
-										cmd_reg_inst.rx_cnt = 0;
-										cmd_reg_inst.rx_tag = 0;
-										cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;										
-										cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
-								}				
-                cmd_reg_inst.rtx_timeout = 0;
-//                printf("fsm_len\n ");
-								break;
-						}		
-						case (CMD_FRAME_FSM_DATA):
-						{
-                if(cmd_reg_inst.rtx_timeout > CMD_FSM_TIMEOUT)
-                {                    
-                    cmd_reg_inst.rx_cnt = 0;
-                    cmd_reg_inst.rx_tag = 0;
-                    cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;                    
-                    cmd_reg_inst.rtx_timeout = 0;
-                    cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
-//                    printf("cmd timeout\n");
-                }
-								else if(((cmd_reg_inst.rx_buf[FRAME_C_ATL_POS]&0x0000ffff)+CMD_FRAME_OVSIZE-1) > cmd_reg_inst.rx_cnt)
-								{
-										cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = rx_data;
-										cmd_reg_inst.rx_cnt++;
-										cmd_reg_inst.rx_tag = 0;
-										cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_DATA;
-								}
-								else
-								{
-										cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = rx_data;
-										cmd_reg_inst.rx_cnt ++;										
-										if(frame_checksum() == 1)
-										{
-												cmd_reg_inst.rx_tag = 1;
-//												cmd_reg_inst.rx_cnt = cmd_reg_inst.rx_cnt;
-												cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
-//												printf("chk ok\n");
-										}
-										else
-										{
-												cmd_reg_inst.rx_tag = 0;
-												cmd_reg_inst.rx_cnt = 0;
-												cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
-//												printf("chk error\n");
-										}
-                    cmd_reg_inst.rtx_timeout = 0;
-										cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
-								}
-//                printf("fsm_data\n ");
-								break;
-						}
-						default:
-						{
-								cmd_reg_inst.rx_cnt = 0;
-								cmd_reg_inst.rx_tag = 0;
-								cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;								
-								cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
-                cmd_reg_inst.rtx_timeout = 0;
-//                printf("fsm_default\n ");
-								break;
-						}	
-				}				
+		switch (cmd_reg_inst.cmd_fsm_cstate)
+		{
+			case (CMD_FRAME_FSM_SYNC): {
+				cmd_reg_inst.rx_cnt = 0;
+				if (rx_data == CMD_FRAME_TAG_M_SYNC) {
+					cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = rx_data;
+					cmd_reg_inst.rx_cnt++;
+					cmd_reg_inst.rx_tag = 0;
+					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_TL;
+				} else {
+					cmd_reg_inst.rx_cnt = 0;
+					cmd_reg_inst.rx_tag = 0;
+					cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
+					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
+				}
+				cmd_reg_inst.rtx_timeout = 0;
+				break;
+			}
+			case (CMD_FRAME_FSM_TL): {
+				if (cmd_reg_inst.rtx_timeout < CMD_FSM_TIMEOUT) {
+					cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = rx_data;
+					cmd_reg_inst.rx_cnt++;
+					cmd_reg_inst.rx_tag = 0;
+					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_DATA;
+				} else {
+					cmd_reg_inst.rx_cnt = 0;
+					cmd_reg_inst.rx_tag = 0;
+					cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
+					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
+				}
+				cmd_reg_inst.rtx_timeout = 0;
+	//                printf("fsm_len\n ");
+				break;
+			}
+			case (CMD_FRAME_FSM_DATA): {
+				if (cmd_reg_inst.rtx_timeout > CMD_FSM_TIMEOUT) {
+					cmd_reg_inst.rx_cnt = 0;
+					cmd_reg_inst.rx_tag = 0;
+					cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
+					cmd_reg_inst.rtx_timeout = 0;
+					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
+	//                    printf("cmd timeout\n");
+				} else if (((cmd_reg_inst.rx_buf[FRAME_C_ATL_POS] & 0x0000ffff)
+						+ CMD_FRAME_OVSIZE - 1) > cmd_reg_inst.rx_cnt) {
+					cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = rx_data;
+					cmd_reg_inst.rx_cnt++;
+					cmd_reg_inst.rx_tag = 0;
+					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_DATA;
+				} else {
+					cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = rx_data;
+					cmd_reg_inst.rx_cnt++;
+					if (frame_checksum() == 1) {
+						cmd_reg_inst.rx_tag = 1;
+	//												cmd_reg_inst.rx_cnt = cmd_reg_inst.rx_cnt;
+						cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
+	//												printf("chk ok\n");
+					} else {
+						cmd_reg_inst.rx_tag = 0;
+						cmd_reg_inst.rx_cnt = 0;
+						cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
+	//												printf("chk error\n");
+					}
+					cmd_reg_inst.rtx_timeout = 0;
+					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
+				}
+	//                printf("fsm_data\n ");
+				break;
+			}
+			default: {
+				cmd_reg_inst.rx_cnt = 0;
+				cmd_reg_inst.rx_tag = 0;
+				cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
+				cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
+				cmd_reg_inst.rtx_timeout = 0;
+	//                printf("fsm_default\n ");
+				break;
+			}
 		}
+	}
 }
 
 //static int16_t get_report_data(uint32_t * buf_ptr)
@@ -698,8 +672,8 @@ static int16_t get_geo_data(uint32_t * buf_ptr)
 uint16_t report_geo_data(void)
 {
     extern sys_reg_st	  g_sys;
-		uint8_t err_code;
-		uint16_t rd_cnt;
+	uint8_t err_code;
+	uint16_t rd_cnt;
 	
     err_code = CMD_ERR_NOERR;
     if(bit_op_get(g_sys.stat.gen.status_bm,GBM_TCP) == 0)
@@ -713,9 +687,18 @@ uint16_t report_geo_data(void)
     cmd_reg_inst.tx_cmd	= CMD_RP_GEO;
     cmd_reg_inst.tx_cnt = rd_cnt;
     cmd_reg_inst.tx_errcode = err_code;
-		cmd_response();
-		return err_code;
+	cmd_response();
+	return err_code;
 }
+
+
+
+//const esp_timer_create_args_t periodic_timer_args = {
+//        .callback = &periodic_timer_callback,
+//        /* name is optional, but may help identify the timer when debugging */
+//        .name = "periodic"
+//};
+
 
 
 //FINSH_FUNCTION_EXPORT(show_cmd_info, show cmd information.);

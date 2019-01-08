@@ -82,7 +82,7 @@ uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt)
 
     t.tx_buffer=spi_geo_dev_inst.txd;
 
-    esp_err_t ret = spi_device_polling_transmit(spi_geo_dev_inst.spi_device_h, &t);
+    spi_device_polling_transmit(spi_geo_dev_inst.spi_device_h, &t);
 
     return *(rx_buf+1);
 }
@@ -125,14 +125,12 @@ void adxl355_reset(void)
 
 void adxl355_scanfifo(void)
 {
-    uint16_t ret;
     uint16_t i;
     uint16_t total_cnt;
     uint8_t  sample_cnt;
     uint32_t buf_temp;
     uint8_t status;
 
-    ret = 0;
     status = adxl_rd_reg(ADXL_STATUS,rxd_temp,1);
     if((status&0x6) != 0)
     	printf("adxl_fifo fuov!\n");
@@ -153,6 +151,18 @@ void adxl355_scanfifo(void)
         	printf("geo fifo full\n");
     }
 //    return ret;
+}
+
+static int adxl_info(int argc, char **argv)
+{
+	printf("Status\tFentry\tFilt\tTemp\tPwr#\n");
+	printf("%x\t%x\t%x\t%x\t%x\n",
+			adxl_rd_reg(ADXL_STATUS,rxd_temp,1),
+			adxl_rd_reg(ADXL_FIFO_ENTRIES,rxd_temp,1),
+			adxl_rd_reg(ADXL_FILTER,rxd_temp,1),
+			adxl_rd_reg(ADXL_TEMP2,rxd_temp,1),
+			adxl_rd_reg(ADXL_POWER_CTL,rxd_temp,1));
+	return 0;
 }
 
 /** Arguments used by 'join' function */
@@ -226,10 +236,22 @@ static void register_adxl_wr()
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
 }
 
+static void register_adxl_info()
+{
+    const esp_console_cmd_t cmd = {
+        .command = "adxl_info",
+        .help = "Get adxl_dev infomation",
+        .hint = NULL,
+        .func = &adxl_info
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
 void adxl_register(void)
 {
 	register_adxl_rd();
 	register_adxl_wr();
+	register_adxl_info();
 }
 
 

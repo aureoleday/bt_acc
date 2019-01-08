@@ -31,6 +31,7 @@
 #include "esp_spp_api.h"
 #include "argtable3/argtable3.h"
 #include "esp_console.h"
+#include "fifo.h"
 
 #include "time.h"
 #include "sys/time.h"
@@ -284,24 +285,33 @@ static void spp_init(void)
     esp_bt_gap_set_pin(pin_type, 0, pin_code);
 }
 
+static uint32_t tx_buf[1024];
+
 void spp_thread(void* param)
 {
-	uint8_t test_buf[8];
+	extern fifo32_cb_td cmd_tx_fifo;
+	uint16_t buf_len;
 	uint16_t i;
 
 	spp_init();
 	usr_spp_init();
 
-	for(i=0;i<8;i++)
-		test_buf[i] = i+0x30;
-
-
 	while(1)
 	{
 		if(usr_spp_inst.conn_cnt > 0)
-			usr_spp_write(0,test_buf,4);
-//		esp_spp_write(param->write.handle, SPP_DATA_LEN, spp_data);
-		vTaskDelay(5000 / portTICK_PERIOD_MS);
+		{
+	        if(is_fifo32_empty(&cmd_tx_fifo) == 0)
+	        {
+	            buf_len = get_fifo32_length(&cmd_tx_fifo);
+	            for(i=0;i<buf_len;i++)
+	            {
+	                fifo32_pop(&cmd_tx_fifo, &tx_buf[i]);
+	            }
+	            usr_spp_write(0,(uint8_t *)tx_buf,buf_len*4);
+	        }
+		}
+
+		vTaskDelay(1000 / portTICK_PERIOD_MS);
 	}
 }
 
@@ -313,8 +323,8 @@ static struct {
 
 static int wr_spp(int argc, char **argv)
 {
-	uint8_t rx_buf[16];
-	uint8_t i;
+//	uint8_t rx_buf[16];
+//	uint8_t i;
 
     int nerrors = arg_parse(argc, argv, (void**) &usr_spp_args);
     if (nerrors != 0) {
