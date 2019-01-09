@@ -142,15 +142,13 @@ void adxl355_scanfifo(void)
     if(rxd_temp[1] > 0)
     {
         adxl_rd_reg(ADXL_FIFO_DATA, rxd_temp, total_cnt);
+        for(i=0;i<sample_cnt;i++)
+        {
+            buf_temp = (rxd_temp[1+i*3]<<16)|(rxd_temp[2+i*3]<<8)|(rxd_temp[3+i*3]);
+            if(fifo32_push(&geo_rx_fifo,&buf_temp) == 0)
+            	printf("geo fifo full\n");
+        }
     }
-
-    for(i=0;i<sample_cnt;i++)
-    {
-        buf_temp = (rxd_temp[1+i*3]<<16)|(rxd_temp[2+i*3]<<8)|(rxd_temp[3+i*3]);
-        if(fifo32_push(&geo_rx_fifo,&buf_temp) == 0)
-        	printf("geo fifo full\n");
-    }
-//    return ret;
 }
 
 static int adxl_info(int argc, char **argv)

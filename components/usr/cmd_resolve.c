@@ -51,6 +51,7 @@ enum
 
 fifo32_cb_td cmd_rx_fifo;
 fifo32_cb_td cmd_tx_fifo;
+esp_timer_handle_t geo_timer;
 
 typedef struct
 {
@@ -114,8 +115,6 @@ static void cmd_buf_init(void)
 static void geo_timeout(void* arg)
 {
     uint16_t report_geo_data(void);
-//    int64_t time_since_boot = esp_timer_get_time();
-//    ESP_LOGI("", "Periodic timer called, time since boot: %lld us", time_since_boot);
     report_geo_data();
 }
 
@@ -148,7 +147,6 @@ static uint16_t	geo_timer_init(void)
 			.name = "periodic"
 	};
 
-	esp_timer_handle_t geo_timer;
 	ESP_ERROR_CHECK(esp_timer_create(&geo_timer_args, &geo_timer));
 	ESP_ERROR_CHECK(esp_timer_start_periodic(geo_timer, g_sys.conf.geo.pkg_period*1000));
 	return 0;

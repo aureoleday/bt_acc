@@ -1,7 +1,10 @@
 #include "sys_def.h" 
 #include "reg_map_check.h"
-#include "netif/ethernetif.h"
 #include "global_var.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_timer.h"
+#include "esp_log.h"
 //#include "drv_adxl355.h"
 
 //extern sys_reg_st g_sys;
@@ -77,6 +80,9 @@ uint16_t tcp_timer_opt(uint32_t pram)
 
 uint16_t geo_timer_opt(uint32_t pram)
 {
+	extern esp_timer_handle_t geo_timer;
+	ESP_ERROR_CHECK(esp_timer_stop(geo_timer));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(geo_timer, pram*1000));
 //    extern rt_timer_t tm_geo_repo;
 //    uint32_t period;
 //    period = pram;
