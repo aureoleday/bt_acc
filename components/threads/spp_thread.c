@@ -317,7 +317,7 @@ void spp_thread(void* param)
 //	            printf("buf_len:%d\n",buf_len);
 	        }
 		}
-		vTaskDelay(50 / portTICK_PERIOD_MS);
+		vTaskDelay(20 / portTICK_PERIOD_MS);
 	}
 }
 

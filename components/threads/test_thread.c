@@ -7,8 +7,6 @@
 
 void test_thread(void* param)
 {
-	printf("\nHello, Scott!\n");
-
 	while(1)
 	{
 		vTaskDelay(1000 / portTICK_PERIOD_MS);

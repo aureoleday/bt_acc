@@ -24,7 +24,7 @@
 #define PIN_NUM_CS   5
 
 #define DEV_GEO_RTX_SIZE    2048
-#define DEV_GEO_FIFO_SIZE   256
+#define DEV_GEO_FIFO_SIZE   1024
 
 fifo32_cb_td geo_rx_fifo;
 static uint8_t rxd_temp[DEV_GEO_RTX_SIZE];
@@ -102,7 +102,7 @@ void adxl_init(void)
     };
     spi_device_interface_config_t devcfg=
     {
-        .clock_speed_hz=1000*1000,           //Clock out at 10 MHz
+        .clock_speed_hz=10*1000*1000,           //Clock out at 10 MHz
         .mode=0,                                //SPI mode 0
         .spics_io_num=PIN_NUM_CS,               //CS pin
         .queue_size=7,                          //We want to be able to queue 7 transactions at a time
