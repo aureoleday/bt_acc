@@ -4,13 +4,10 @@
 
 //application delay
 #define		CMD_THREAD_DELAY            400
+#define		WS_THREAD_DELAY           	500
 #define		BKG_THREAD_DELAY            700
 #define		GEO_THREAD_DELAY            800
 #define		TCPCLIENT_THREAD_DELAY      600
-#define		UDPSRV_THREAD_DELAY         900
-#define		TEST_THREAD_DELAY		    800
-#define		MBM_THREAD_DELAY		    200
-#define		MBM_FSM_THREAD_DELAY        500
 
 typedef struct
 {	

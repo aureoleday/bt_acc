@@ -46,6 +46,10 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/bt_acc/components/drv}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\msys32\home\scott\esp\esp-idf\components\mqtt\esp-mqtt\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\msys32\home\scott\esp\esp-idf\components\tcpip_adapter\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\msys32\home\scott\esp\esp-idf\components\heap\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\msys32\home\scott\esp\esp-idf\components\wpa_supplicant\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\msys32\home\scott\esp\esp-idf\components\lwip\lwip\src\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/bt_acc/components/web_sock}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.701565426" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>

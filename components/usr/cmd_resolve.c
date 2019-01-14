@@ -38,8 +38,8 @@ enum
 #define CMD_FRAME_TAG_S_SYNC 			      0x9bdf1bdf
 
 #define CMD_FRAME_FSM_SYNC				      0x01
-#define CMD_FRAME_FSM_TL					      0x02
-#define CMD_FRAME_FSM_DATA					    0x04
+#define CMD_FRAME_FSM_TL					  0x02
+#define CMD_FRAME_FSM_DATA					  0x04
 
 
 #define CMD_RD_REG        0x0001

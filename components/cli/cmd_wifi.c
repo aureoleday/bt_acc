@@ -20,6 +20,7 @@
 #include "esp_event_loop.h"
 #include "cmd_wifi.h"
 #include "mqtt_client.h"
+#include "web_sock.h"
 
 static const char *TAG = "MQTT_EXAMPLE";
 static EventGroupHandle_t wifi_event_group;
@@ -77,8 +78,8 @@ static esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event)
 static void mqtt_app_start(void)
 {
     esp_mqtt_client_config_t mqtt_cfg = {
-//        .uri = CONFIG_BROKER_URL,
-   		.uri = "mqtt://192.168.56.1",
+        .uri = CONFIG_BROKER_URL,
+//   		.uri = "mqtt://192.168.56.1",
         .event_handle = mqtt_event_handler,
         // .user_context = (void *)your_context
     };
@@ -149,6 +150,7 @@ static void initialise_wifi(void)
 static bool wifi_join(const char* ssid, const char* pass, int timeout_ms)
 {
     initialise_wifi();
+//    mqtt_app_start();
     wifi_config_t wifi_config = { 0 };
     strncpy((char*) wifi_config.sta.ssid, ssid, sizeof(wifi_config.sta.ssid));
     if (pass) {
@@ -159,10 +161,14 @@ static bool wifi_join(const char* ssid, const char* pass, int timeout_ms)
     ESP_ERROR_CHECK( esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );
     ESP_ERROR_CHECK( esp_wifi_connect() );
 
+    xTaskCreate(&task_process_ws, "ws_process_rx", 2048, NULL, 5, NULL);
+
+    //Create Websocket Server Task
+    xTaskCreate(&ws_server, "ws_server", 2048, NULL, 5, NULL);
+
     int bits = xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT,
             1, 1, timeout_ms / portTICK_PERIOD_MS);
     return (bits & CONNECTED_BIT) != 0;
-    mqtt_app_start();
 }
 
 
