@@ -18,7 +18,7 @@ ini_st		ini_inst;
 //configuration register map declairation
 const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=  
 	{//id		mapped registers		                     min	    max				default			type    chk_prt
-	{	0,		&g_sys.conf.eth.tcp_client_en,               0,		    1,				1,				0,      NULL   	          },
+	{	0,		&g_sys.conf.eth.tcp_en,               		 0,		    1,				1,				0,      NULL   	          },
 	{	1,		&g_sys.conf.eth.tcp_period,                  1,		    0xffffffff,		30,			    0,      tcp_timer_opt     },
 	{	2,		&g_sys.conf.eth.remote_ip,                   0,		    0xffffffff,		0x60b44e78,		0,      NULL   	          },
 	{	3,		&g_sys.conf.eth.remote_port,	             0,		    65535,		    19999,       	0,      NULL   	          },
@@ -411,6 +411,7 @@ int32_t gvar_init(void)
 {
 	esp_err_t err;
 	err = load_conf("usr");
+	init_load_status();
 	return err;
 }
 

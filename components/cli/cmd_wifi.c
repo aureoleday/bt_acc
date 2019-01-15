@@ -21,8 +21,11 @@
 #include "cmd_wifi.h"
 #include "mqtt_client.h"
 #include "web_sock.h"
-
 #include "threads.h"
+#include "sys_conf.h"
+#include "bit_op.h"
+
+extern  sys_reg_st  g_sys;
 
 static const char *TAG = "MQTT_EXAMPLE";
 static EventGroupHandle_t wifi_event_group;
@@ -120,10 +123,12 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
     switch(event->event_id) {
     case SYSTEM_EVENT_STA_GOT_IP:
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+        bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
         break;
     case SYSTEM_EVENT_STA_DISCONNECTED:
         esp_wifi_connect();
         xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+        bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,0);
         break;
     default:
         break;

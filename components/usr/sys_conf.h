@@ -30,7 +30,7 @@ typedef struct
 
 typedef struct
 {
-    uint32_t    tcp_client_en;
+    uint32_t    tcp_en;
     uint32_t    tcp_period;
     uint32_t    reconnect_period;
     uint32_t    dhcp_en;
