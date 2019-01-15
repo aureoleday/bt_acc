@@ -22,6 +22,8 @@
 #include "mqtt_client.h"
 #include "web_sock.h"
 
+#include "threads.h"
+
 static const char *TAG = "MQTT_EXAMPLE";
 static EventGroupHandle_t wifi_event_group;
 const int CONNECTED_BIT = BIT0;
@@ -161,13 +163,20 @@ static bool wifi_join(const char* ssid, const char* pass, int timeout_ms)
     ESP_ERROR_CHECK( esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );
     ESP_ERROR_CHECK( esp_wifi_connect() );
 
-    xTaskCreate(&task_process_ws, "ws_process_rx", 2048, NULL, 5, NULL);
-
-    //Create Websocket Server Task
-    xTaskCreate(&ws_server, "ws_server", 2048, NULL, 5, NULL);
+//    xTaskCreate(&task_process_ws, "ws_process_rx", 2048, NULL, 5, NULL);
+//    //Create Websocket Server Task
+//    xTaskCreate(&ws_server, "ws_server", 2048, NULL, 5, NULL);
 
     int bits = xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT,
             1, 1, timeout_ms / portTICK_PERIOD_MS);
+
+    xTaskCreate(&tcp_thread,
+                "Task_TCP",
+        		8192,
+                NULL,
+        		5,
+        		NULL);
+
     return (bits & CONNECTED_BIT) != 0;
 }
 

@@ -129,7 +129,7 @@ static void ws_server_netconn_serve(struct netconn *conn) {
 
 	//allocate memory for SHA1 input
 	p_SHA1_Inp = heap_caps_malloc(WS_CLIENT_KEY_L + sizeof(WS_sec_conKey),
-			MALLOC_CAP_8BIT);
+	MALLOC_CAP_8BIT);
 
 	//allocate memory for SHA1 result
 	p_SHA1_result = heap_caps_malloc(SHA1_RES_L, MALLOC_CAP_8BIT);
@@ -163,7 +163,7 @@ static void ws_server_netconn_serve(struct netconn *conn) {
 
 				//hex to base64
 				p_buf = (char*) base64_encode((unsigned char*) p_SHA1_result,
-						SHA1_RES_L, (size_t*) &i);
+				SHA1_RES_L, (size_t*) &i);
 
 				//free SHA1 input
 				free(p_SHA1_Inp);
@@ -239,22 +239,21 @@ static void ws_server_netconn_serve(struct netconn *conn) {
 								p_payload = p_buf;
 
 							//do stuff
-							if ((p_payload != NULL)	&& (p_frame_hdr->opcode == WS_OP_TXT)) {
+							if ((p_payload != NULL)
+									&& (p_frame_hdr->opcode == WS_OP_TXT)) {
 
 								//prepare FreeRTOS message
 								WebSocket_frame_t __ws_frame;
-								__ws_frame.conenction=conn;
-								__ws_frame.frame_header=*p_frame_hdr;
-								__ws_frame.payload_length=p_frame_hdr->payload_length;
-								__ws_frame.payload=p_payload;
+								__ws_frame.conenction = conn;
+								__ws_frame.frame_header = *p_frame_hdr;
+								__ws_frame.payload_length =
+										p_frame_hdr->payload_length;
+								__ws_frame.payload = p_payload;
 
 								//send message
-								xQueueSendFromISR(WebSocket_rx_queue,&__ws_frame,0);
+								xQueueSendFromISR(WebSocket_rx_queue,
+										&__ws_frame, 0);
 							}
-
-							//free payload buffer (in this demo done by the receive task)
-//							if (p_frame_hdr->mask && p_payload != NULL)
-//								free(p_payload);
 
 						} //p_frame_hdr->payload_length<126
 
@@ -301,29 +300,31 @@ void ws_server(void *pvParameters) {
 
 QueueHandle_t WebSocket_rx_queue;
 
-void task_process_ws( void *pvParameters ){
-    (void)pvParameters;
+void task_process_ws(void *pvParameters) {
+	(void) pvParameters;
 
-    //frame buffer
-    WebSocket_frame_t __RX_frame;
+	//frame buffer
+	WebSocket_frame_t __RX_frame;
 
-    //create WebSocket RX Queue
-    WebSocket_rx_queue = xQueueCreate(10,sizeof(WebSocket_frame_t));
+	//create WebSocket RX Queue
+	WebSocket_rx_queue = xQueueCreate(10, sizeof(WebSocket_frame_t));
 
-    while (1){
-        //receive next WebSocket frame from queue
-        if(xQueueReceive(WebSocket_rx_queue,&__RX_frame, 3*portTICK_PERIOD_MS)==pdTRUE){
+	while (1) {
+		//receive next WebSocket frame from queue
+		if (xQueueReceive(WebSocket_rx_queue, &__RX_frame, 3 * portTICK_PERIOD_MS) == pdTRUE) {
 
-        	//write frame inforamtion to UART
-        	printf("New Websocket frame. Length %d, payload %.*s \r\n", __RX_frame.payload_length, __RX_frame.payload_length, __RX_frame.payload);
+			//write frame inforamtion to UART
+			printf("New ws frame.\nLength: %d\npayload %.*s \r\n",
+					__RX_frame.payload_length, __RX_frame.payload_length,
+					__RX_frame.payload);
 
-        	//loop back frame
-        	WS_write_data(__RX_frame.payload, __RX_frame.payload_length);
+			//loop back frame
+			WS_write_data(__RX_frame.payload, __RX_frame.payload_length);
 
-        	//free memory
+			//free memory
 			if (__RX_frame.payload != NULL)
 				free(__RX_frame.payload);
 
-        }
-    }
+		}
+	}
 }
