@@ -45,6 +45,9 @@ void tcp_thread(void *pvParameters)
     int addr_family;
     int ip_protocol;
     xTaskHandle tx_xHandle,rx_xHandle;
+    int sock;
+    struct sockaddr_in6 sourceAddr; // Large enough for both IPv4 or IPv6
+    uint addrLen = sizeof(sourceAddr);
 
 #ifdef CONFIG_EXAMPLE_IPV4
 	struct sockaddr_in destAddr;
@@ -93,9 +96,8 @@ inet_ntoa_r(destAddr.sin_addr, addr_str, sizeof(addr_str) - 1);
 
 	while (1)
 	{
-		struct sockaddr_in6 sourceAddr; // Large enough for both IPv4 or IPv6
-		uint addrLen = sizeof(sourceAddr);
-		int sock = accept(listen_sock, (struct sockaddr *)&sourceAddr, &addrLen);
+		addrLen = sizeof(struct sockaddr_in6);
+		sock = accept(listen_sock, (struct sockaddr *)&sourceAddr, &addrLen);
 		if (sock < 0) {
 			ESP_LOGE(TAG, "Unable to accept connection: errno %d", errno);
 			bit_op_set(&g_sys.stat.gen.status_bm,GBM_TCP,0);
@@ -189,11 +191,13 @@ inet_ntoa_r(destAddr.sin_addr, addr_str, sizeof(addr_str) - 1);
 //    vTaskDelete(NULL);
 //}
 
+
 static void tcp_tx_thread(void* parameter)
 {
     int t_sock,i,ret;
-	vTaskDelay(100 / portTICK_PERIOD_MS);
     uint16_t buf_len;
+	vTaskDelay(100 / portTICK_PERIOD_MS);
+
     t_sock = *(int*)parameter;
 
     fifo32_reset(&cmd_tx_fifo);
