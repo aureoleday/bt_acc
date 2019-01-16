@@ -110,14 +110,14 @@ void tcp_thread(void *pvParameters)
 						"thread_tcp_tx",
 						2048,
 						&sock,
-						25,
+						6,
 						&tx_xHandle);
 
 			xTaskCreate(&tcp_rx_thread,
 						"thread_tcp_rx",
 						2048,
 						&sock,
-						15,
+						7,
 						&rx_xHandle);
 			while (1)
 			{
@@ -223,8 +223,12 @@ static void tcp_tx_thread(void* parameter)
 				/* 打印send函数返回值为0的警告信息 */
 				printf("\nSend warning,send function return 0.\r\n");
 			}
+//			else
+//			{
+//				printf("%d.\n",ret);
+//			}
 		}
-		vTaskDelay(5 / portTICK_PERIOD_MS);
+		vTaskDelay(10 / portTICK_PERIOD_MS);
 	}
 }
 
@@ -260,7 +264,7 @@ static void tcp_rx_thread(void* parameter)
 			}
 		}
 
-		vTaskDelay(10 / portTICK_PERIOD_MS);
+		vTaskDelay(20 / portTICK_PERIOD_MS);
 	}
 }
 

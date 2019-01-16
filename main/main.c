@@ -57,12 +57,12 @@ static void tasks_create(void)
 				CMD_THREAD_PRIO,
 				NULL);
 
-    xTaskCreate(&spp_thread,
-                "Task_spp",
-    			SPP_THREAD_STACK_SIZE,
-                NULL,
-    			SPP_THREAD_PRIO,
-    			NULL);
+//    xTaskCreate(&spp_thread,
+//                "Task_spp",
+//    			SPP_THREAD_STACK_SIZE,
+//                NULL,
+//    			SPP_THREAD_PRIO,
+//    			NULL);
 
     xTaskCreate(&geo_thread,
                 "Task_geo",

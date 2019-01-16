@@ -23,8 +23,8 @@
 #define PIN_NUM_CLK  18
 #define PIN_NUM_CS   5
 
-#define DEV_GEO_RTX_SIZE    2048
-#define DEV_GEO_FIFO_SIZE   1024
+#define DEV_GEO_RTX_SIZE    512
+#define DEV_GEO_FIFO_SIZE   2048
 
 fifo32_cb_td geo_rx_fifo;
 static uint8_t rxd_temp[DEV_GEO_RTX_SIZE];

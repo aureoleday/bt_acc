@@ -55,7 +55,7 @@ esp_timer_handle_t geo_timer;
 
 typedef struct
 {
-	uint32_t tx_buf[CMD_RTX_BUF_DEPTH];
+	uint32_t tx_buf[CMD_RTX_BUF_DEPTH*2];
     uint32_t rx_buf[CMD_RTX_BUF_DEPTH];
 	uint16_t tx_cnt;
 	uint16_t tx_cmd;
@@ -97,7 +97,7 @@ static void cmd_buf_init(void)
 
     //rx fifo initialization
     fifo32_init(&cmd_rx_fifo,1,CMD_RTX_BUF_DEPTH);
-    fifo32_init(&cmd_tx_fifo,1,CMD_RTX_BUF_DEPTH);
+    fifo32_init(&cmd_tx_fifo,1,CMD_RTX_BUF_DEPTH*2);
 }
 
 
