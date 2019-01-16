@@ -24,7 +24,7 @@
 
 static const char *TAG = "tTCP";
 
-static uint32_t tx_buf[BUFSZ];
+static uint32_t tx_buf[2048];
 static uint8_t  rx_buf[BUFSZ];
 
 extern  sys_reg_st  g_sys;
@@ -39,8 +39,6 @@ static void tcp_rx_thread(void* parameter);
 
 void tcp_thread(void *pvParameters)
 {
-
-    char rx_buffer[128];
     char addr_str[128];
     int addr_family;
     int ip_protocol;
@@ -56,7 +54,7 @@ void tcp_thread(void *pvParameters)
 	destAddr.sin_port = htons(PORT);
 	addr_family = AF_INET;
 	ip_protocol = IPPROTO_IP;
-inet_ntoa_r(destAddr.sin_addr, addr_str, sizeof(addr_str) - 1);
+	inet_ntoa_r(destAddr.sin_addr, addr_str, sizeof(addr_str) - 1);
 #else // IPV6
 	struct sockaddr_in6 destAddr;
 	bzero(&destAddr.sin6_addr.un, sizeof(destAddr.sin6_addr.un));
@@ -110,16 +108,16 @@ inet_ntoa_r(destAddr.sin_addr, addr_str, sizeof(addr_str) - 1);
 
 			xTaskCreate(&tcp_tx_thread,
 						"thread_tcp_tx",
-						1024,
+						2048,
 						&sock,
-						5,
+						25,
 						&tx_xHandle);
 
 			xTaskCreate(&tcp_rx_thread,
 						"thread_tcp_rx",
-						1024,
+						2048,
 						&sock,
-						5,
+						15,
 						&rx_xHandle);
 			while (1)
 			{
@@ -128,15 +126,15 @@ inet_ntoa_r(destAddr.sin_addr, addr_str, sizeof(addr_str) - 1);
 					vTaskDelete(tx_xHandle);
 					vTaskDelete(rx_xHandle);
 					printf("detach tcp_rtx threads\n");
+					vTaskDelay(10 / portTICK_PERIOD_MS);	//this line prevent system from crash
 					tcp_flag = 0;
 					break;
 				}
-				vTaskDelay(1000 / portTICK_PERIOD_MS);
+				vTaskDelay(5 / portTICK_PERIOD_MS);
 			}
-			shutdown(sock, 0);
+//			shutdown(sock, 1);
 			close(sock);
 			bit_op_set(&g_sys.stat.gen.status_bm,GBM_TCP,0);
-
 		}
 	}
 	vTaskDelete(NULL);
@@ -226,7 +224,7 @@ static void tcp_tx_thread(void* parameter)
 				printf("\nSend warning,send function return 0.\r\n");
 			}
 		}
-		vTaskDelay(50 / portTICK_PERIOD_MS);
+		vTaskDelay(5 / portTICK_PERIOD_MS);
 	}
 }
 
@@ -253,11 +251,15 @@ static void tcp_rx_thread(void* parameter)
 			tcp_flag |= 1;
 			vTaskDelay(1000000 / portTICK_PERIOD_MS);
 		}
-		for(i=0;i<(bytes_received>>2);i++)
+		else
 		{
-			host_data = ntohl(*(uint32_t *)(rx_buf+4*i));
-			fifo32_push(&cmd_rx_fifo, &host_data);
+			for(i=0;i<(bytes_received>>2);i++)
+			{
+				host_data = ntohl(*(uint32_t *)(rx_buf+4*i));
+				fifo32_push(&cmd_rx_fifo, &host_data);
+			}
 		}
+
 		vTaskDelay(10 / portTICK_PERIOD_MS);
 	}
 }
