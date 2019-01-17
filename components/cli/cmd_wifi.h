@@ -1,4 +1,4 @@
-/* Console example — declarations of command registration functions.
+/* Console example 鈥� declarations of command registration functions.
 
    This example code is in the Public Domain (or CC0 licensed, at your option.)
 
@@ -14,6 +14,7 @@ extern "C" {
 
 // Register WiFi functions
 void register_wifi();
+void usr_wifi_init(void);
 
 #ifdef __cplusplus
 }

@@ -110,7 +110,7 @@ void tcp_thread(void *pvParameters)
 						"thread_tcp_tx",
 						2048,
 						&sock,
-						6,
+						16,
 						&tx_xHandle);
 
 			xTaskCreate(&tcp_rx_thread,

@@ -26,7 +26,7 @@
 #include "esp_vfs_fat.h"
 
 
-static const char* TAG = "console";
+//static const char* TAG = "console";
 
 /* Console command history can be stored to and loaded from a file.
  * The easiest way to do this is to use FATFS filesystem on top of
@@ -122,6 +122,7 @@ void cli_thread(void* param)
 #endif
 
     initialize_console();
+    usr_wifi_init();
 
     /* Register commands */
     esp_console_register_help_command();
