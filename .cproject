@@ -51,6 +51,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/bt_acc/components/drv}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/bt_acc/components/web_sock}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\msys32\home\scott\esp\esp-idf\components\esp_event\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\msys32\home\scott\esp\esp-idf\components\esp_http_server\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/bt_acc/components}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.701565426" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>

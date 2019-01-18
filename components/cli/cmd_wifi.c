@@ -16,7 +16,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 #include "esp_wifi.h"
-//#include "esp_event_legacy.h"
 #include "tcpip_adapter.h"
 #include "esp_event_loop.h"
 #include "cmd_wifi.h"
@@ -25,6 +24,7 @@
 #include "threads.h"
 #include "sys_conf.h"
 #include "bit_op.h"
+#include "web_srv.h"
 
 extern  sys_reg_st  g_sys;
 
@@ -132,6 +132,8 @@ static void connected_ops(void)
 
 static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
+	httpd_handle_t *server = (httpd_handle_t *) ctx;
+
     switch(event->event_id) {
     case SYSTEM_EVENT_AP_START:
     	ESP_LOGI(TAG, "AP started!\n");
@@ -140,23 +142,41 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
     case SYSTEM_EVENT_STA_GOT_IP:
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
+        /* Start the web server */
+        if (*server == NULL) {
+            *server = start_webserver();
+        }
         break;
     case SYSTEM_EVENT_STA_DISCONNECTED:
         esp_wifi_connect();
         xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,0);
+        /* Stop the web server */
+        if (*server) {
+            stop_webserver(*server);
+            *server = NULL;
+        }
         break;
     case SYSTEM_EVENT_AP_STACONNECTED:
         ESP_LOGI(TAG, "station:"MACSTR" join, AID=%d",
                  MAC2STR(event->event_info.sta_connected.mac),
                  event->event_info.sta_connected.aid);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
+        /* Start the web server */
+        if (*server == NULL) {
+            *server = start_webserver();
+        }
         break;
     case SYSTEM_EVENT_AP_STADISCONNECTED:
         ESP_LOGI(TAG, "station:"MACSTR"leave, AID=%d",
                  MAC2STR(event->event_info.sta_disconnected.mac),
                  event->event_info.sta_disconnected.aid);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,0);
+        /* Stop the web server */
+        if (*server) {
+            stop_webserver(*server);
+            *server = NULL;
+        }
         break;
     default:
         break;
@@ -164,7 +184,7 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
     return ESP_OK;
 }
 
-static void initialise_wifi(void)
+static void initialise_wifi(void* arg)
 {
 	wifi_config_t wifi_config = {
 		.ap = {
@@ -182,7 +202,7 @@ static void initialise_wifi(void)
     }
     tcpip_adapter_init();
     wifi_event_group = xEventGroupCreate();
-    ESP_ERROR_CHECK( esp_event_loop_init(event_handler, NULL) );
+    ESP_ERROR_CHECK( esp_event_loop_init(event_handler, arg) );
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK( esp_wifi_init(&cfg) );
     ESP_ERROR_CHECK( esp_wifi_set_storage(WIFI_STORAGE_RAM) );
@@ -213,36 +233,7 @@ static bool wifi_join(const char* ssid, const char* pass, int timeout_ms)
     int bits = xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT,
             1, 1, timeout_ms / portTICK_PERIOD_MS);
 
-//    xTaskCreate(&tcp_thread,
-//                "Task_TCP",
-//        		8192,
-//                NULL,
-//        		5,
-//        		NULL);
-
     return (bits & CONNECTED_BIT) != 0;
-}
-
-
-static bool reconnect = true;
-static bool wifi_ap_set(void)
-{
-    wifi_config_t wifi_config = {
-        .ap = {
-            .ssid = "geo_acc",
-            .ssid_len = 7,
-            .max_connection = 4,
-            .password = "12345678",
-            .authmode = WIFI_AUTH_WPA_WPA2_PSK
-        },
-    };
-
-    reconnect = false;
-
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_APSTA));
-    ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_AP, &wifi_config));
-
-    return true;
 }
 
 
@@ -297,6 +288,6 @@ void register_wifi()
 
 void usr_wifi_init(void)
 {
-	initialise_wifi();
-//	wifi_ap_set();
+	static httpd_handle_t server = NULL;
+	initialise_wifi(&server);
 }
