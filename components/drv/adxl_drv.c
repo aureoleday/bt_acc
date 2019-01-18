@@ -82,7 +82,8 @@ uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt)
 
     t.tx_buffer=spi_geo_dev_inst.txd;
 
-    spi_device_polling_transmit(spi_geo_dev_inst.spi_device_h, &t);
+//    spi_device_polling_transmit(spi_geo_dev_inst.spi_device_h, &t);
+    spi_device_transmit(spi_geo_dev_inst.spi_device_h, &t);
 
     return *(rx_buf+1);
 }
