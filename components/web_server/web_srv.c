@@ -17,8 +17,9 @@
 #include <esp_log.h>
 #include <esp_system.h>
 #include <sys/param.h>
-
+#include <string.h>
 #include <esp_http_server.h>
+#include "cJSON.h"
 
 /* A simple example that demonstrates how to create GET and POST
  * handlers for the web server.
@@ -31,11 +32,63 @@
 
 static const char *TAG="HTTP";
 
+char* json_unformatted;
+
+//esp_err_t rd_reg_get_handler(httpd_req_t *req)
+//{
+//    char*  buf;
+//    size_t buf_len;
+//    cJSON * root =  cJSON_CreateObject();
+//    uint16_t reg_addr,reg_cnt;
+//
+//    buf_len = httpd_req_get_url_query_len(req) + 1;
+//    if (buf_len > 1) {
+//        buf = malloc(buf_len);
+//        if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
+//            ESP_LOGI(TAG, "Found URL query => %s", buf);
+//            uint16_t param;
+//            /* Get value of expected key from query string */
+//            if (httpd_query_key_value(buf, "reg_addr", &param, sizeof(param)) == ESP_OK) {
+//                ESP_LOGI(TAG, "URL query parameter => reg_addr=%d", param);
+//                reg_addr = param;
+//            }
+//            if (httpd_query_key_value(buf, "reg_cnt", &param, sizeof(param)) == ESP_OK) {
+//                ESP_LOGI(TAG, "URL query parameter => reg_cnt=%d", param);
+//                reg_cnt = param;
+//            }
+//        }
+//        free(buf);
+//    }
+//
+////    cJSON_AddItemToObject(root, "start_addr", cJSON_CreateNumber(0));//根节点下添加
+//}
+
+static void cj_rd_reg(uint16_t reg_addr,uint16_t reg_cnt, char* cj_dst)
+{
+	cJSON * root =  cJSON_CreateObject();
+//	cJSON * item =  cJSON_CreateObject();
+	char *cj_src = NULL;
+
+    cJSON_AddItemToObject(root, "reg_addr", cJSON_CreateNumber(reg_addr));//根节点下添加
+    cJSON_AddItemToObject(root, "reg_cnt", cJSON_CreateNumber(reg_cnt));
+    cj_src = cJSON_PrintUnformatted(root);
+    strcpy(cj_dst,cj_src);
+    free(cj_src);
+    cJSON_Delete(root);
+
+}
+
 /* An HTTP GET handler */
 esp_err_t hello_get_handler(httpd_req_t *req)
 {
     char*  buf;
     size_t buf_len;
+    uint16_t reg_addr,reg_cnt;
+
+    char * cj_buf = malloc(64);
+
+    reg_addr = 0;
+    reg_cnt = 0;
 
     /* Get header value string length and allocate memory for length + 1,
      * extra byte for null termination */
@@ -76,14 +129,13 @@ esp_err_t hello_get_handler(httpd_req_t *req)
             ESP_LOGI(TAG, "Found URL query => %s", buf);
             char param[32];
             /* Get value of expected key from query string */
-            if (httpd_query_key_value(buf, "query1", param, sizeof(param)) == ESP_OK) {
-                ESP_LOGI(TAG, "Found URL query parameter => query1=%s", param);
+            if (httpd_query_key_value(buf, "reg_addr", &param, sizeof(param)) == ESP_OK) {
+                ESP_LOGI(TAG, "Found URL query parameter => reg_addr=%d", atoi(param));
+                reg_addr = atoi(param);
             }
-            if (httpd_query_key_value(buf, "query3", param, sizeof(param)) == ESP_OK) {
-                ESP_LOGI(TAG, "Found URL query parameter => query3=%s", param);
-            }
-            if (httpd_query_key_value(buf, "query2", param, sizeof(param)) == ESP_OK) {
-                ESP_LOGI(TAG, "Found URL query parameter => query2=%s", param);
+            if (httpd_query_key_value(buf, "reg_cnt", &param, sizeof(param)) == ESP_OK) {
+                ESP_LOGI(TAG, "Found URL query parameter => reg_cnt=%d", atoi(param));
+                reg_cnt = atoi(param);
             }
         }
         free(buf);
@@ -96,13 +148,17 @@ esp_err_t hello_get_handler(httpd_req_t *req)
     /* Send response with custom headers and body set as the
      * string passed in user context*/
     const char* resp_str = (const char*) req->user_ctx;
-    httpd_resp_send(req, resp_str, strlen(resp_str));
+//    httpd_resp_send(req, resp_str, strlen(resp_str));
+    cj_rd_reg(reg_addr,reg_cnt,cj_buf);
+    httpd_resp_send(req, cj_buf, strlen(cj_buf));
 
     /* After sending the HTTP response the old HTTP request
      * headers are lost. Check if HTTP request headers can be read now. */
     if (httpd_req_get_hdr_value_len(req, "Host") == 0) {
         ESP_LOGI(TAG, "Request headers lost");
     }
+    free(cj_buf);
+
     return ESP_OK;
 }
 
@@ -208,7 +264,7 @@ httpd_handle_t start_webserver(void)
         httpd_register_uri_handler(server, &ctrl);
         return server;
     }
-
+//    creatjson();
     ESP_LOGI(TAG, "Error starting server!");
     return NULL;
 }
