@@ -49,7 +49,7 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	28,		NULL,                                        0,		    0xffffffff,     0,				1,      set_timestamp     },
 	{	29,		NULL,                                        1,		    2,				0,				1,      save_conf_opt     },
 	{	30,		NULL,                                        1,		    4,				0,				1,      set_boot_opt   	  },
-	{	31,		NULL,                                        0,		    1,				0,				1,      sys_reset_opt     },
+	{	31,		NULL,                                        0,		    0xffffffff,		0,				1,      sys_reset_opt     },
 	{	32,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	33,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	34,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
@@ -307,7 +307,6 @@ uint16 reg_map_read(uint16 reg_addr,uint32_t* reg_data,uint8_t read_cnt)
     }
     else
     {
-//        reg_addr = reg_addr;
         if(reg_addr > CONF_REG_MAP_NUM)	//address out of range
         {
             err_code = REGMAP_ERR_ADDR_OR;
@@ -316,7 +315,12 @@ uint16 reg_map_read(uint16 reg_addr,uint32_t* reg_data,uint8_t read_cnt)
         {
             for(i=0;i<read_cnt;i++)
             {
-                *(reg_data+i) = *(conf_reg_map_inst[reg_addr+i].reg_ptr);//read data from designated register						
+            	if(conf_reg_map_inst[reg_addr+i].reg_ptr == NULL)
+            	{
+            		*(reg_data+i) = 0;
+            	}
+            	else
+            		*(reg_data+i) = *(conf_reg_map_inst[reg_addr+i].reg_ptr);//read data from designated register
             }
         }		
     }	

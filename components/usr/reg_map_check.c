@@ -5,6 +5,7 @@
 #include "freertos/task.h"
 #include "esp_timer.h"
 #include "esp_log.h"
+#include "adxl_drv.h"
 //#include "drv_adxl355.h"
 
 //extern sys_reg_st g_sys;
@@ -17,7 +18,8 @@ uint16_t dhcp_trigger(uint32_t pram)
 
 uint16_t sys_reset_opt(uint32_t pram)
 {  
-//    NVIC_SystemReset();
+	if(pram == 0x9527)
+		esp_restart();
     return 1;
 }
 
@@ -83,35 +85,29 @@ uint16_t geo_timer_opt(uint32_t pram)
 	extern esp_timer_handle_t geo_timer;
 	ESP_ERROR_CHECK(esp_timer_stop(geo_timer));
 	ESP_ERROR_CHECK(esp_timer_start_periodic(geo_timer, pram*1000));
-//    extern rt_timer_t tm_geo_repo;
-//    uint32_t period;
-//    period = pram;
-//    rt_timer_control(tm_geo_repo,RT_TIMER_CTRL_SET_TIME,(void*)&period);
     return 1;
 }
 
 uint16_t geo_filter_opt(uint32_t pram)
 {
-//    uint8_t data = pram&0x0ff;
-//
-//    adxl355_activate(0);
-//    rt_thread_delay(1);
-//    adxl_wr_reg(FILTER,&data,1);
-//    rt_thread_delay(1);
-//    adxl355_activate(1);
+    uint8_t data = pram&0x0ff;
+
+    adxl_wr_reg(ADXL_FILTER,&data);
     
     return 1;
 }
 
 uint16_t geo_pwr_opt(uint32_t pram)
 {
-//    uint8_t enable = pram;
-//    adxl355_activate(enable);
+	uint8_t data = pram&0x0ff;
+	if(pram == 1)
+		adxl_wr_reg(ADXL_POWER_CTL,0);
+	else if(pram == 0)
+		adxl_wr_reg(ADXL_POWER_CTL,1);
+	else
+		adxl_wr_reg(ADXL_POWER_CTL,data);
+
     return 1;
 }
 
-static void sys_reset(void)
-{
-//    NVIC_SystemReset();
-}
 
