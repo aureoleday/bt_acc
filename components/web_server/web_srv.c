@@ -91,6 +91,31 @@ static int cj_wr_reg(uint16_t reg_addr,uint32_t reg_data, char* cj_dst)
     return strlen(cj_src);
 }
 
+//static int cj_fft(uint32_t sample_cnt,char* cj_dst)
+//{
+//	cJSON * root =  cJSON_CreateObject();
+//	char *cj_src = NULL;
+//	uint16_t ret;
+//
+//    cJSON_AddItemToObject(root, "sample_rate", cJSON_CreateNumber(reg_data));
+//    cJSON_AddItemToObject(root, "sample_cnt", cJSON_CreateNumber(sample_cnt));
+//    cJSON_AddItemToObject(root, "sample_dat", cJSON_CreateNumber(reg_data));
+//    cJSON_AddItemToObject(root, "status", cJSON_CreateNumber(reg_data));
+//
+//    ret = fft_get(sample_cnt);
+//
+//    if(ret == 0)
+//    	cJSON_AddItemToObject(root, "reg_data", cJSON_CreateIntArray((int*)rd_buf,reg_cnt));
+//    else
+//    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
+//
+//    cj_src = cJSON_PrintUnformatted(root);
+//    strcpy(cj_dst,cj_src);
+//    free(cj_src);
+//    cJSON_Delete(root);
+//    return strlen(cj_src);
+//}
+
 esp_err_t rd_reg_get_handler(httpd_req_t *req)
 {
     char*  buf;
@@ -220,14 +245,11 @@ esp_err_t wr_reg_get_handler(httpd_req_t *req)
         free(buf);
     }
 
-    printf("addr:%x, data:%x\n",reg_addr,reg_data);
-
     if(ret == 0)
-    	cj_rd_reg(reg_addr,reg_data,cj_buf);
+    	cj_wr_reg(reg_addr,reg_data,cj_buf);
     else
     	js_err("URL query mismatch!",cj_buf);
 
-    cj_wr_reg(reg_addr,reg_data,cj_buf);
     httpd_resp_send(req, cj_buf, strlen(cj_buf));
     free(cj_buf);
 
@@ -238,6 +260,68 @@ httpd_uri_t wr_reg = {
     .uri       = "/wr_reg",
     .method    = HTTP_GET,
     .handler   = wr_reg_get_handler,
+    .user_ctx  = NULL
+};
+
+esp_err_t fft_get_handler(httpd_req_t *req)
+{
+    char*  buf;
+    size_t buf_len;
+    uint16_t reg_addr,reg_data;
+    char param[32];
+
+    char * cj_buf = malloc(256);
+
+    reg_addr = 0;
+    reg_data = 0;
+
+    esp_err_t ret = 0;
+
+    /* Get header value string length and allocate memory for length + 1,
+     * extra byte for null termination */
+    buf_len = httpd_req_get_hdr_value_len(req, "Host") + 1;
+    if (buf_len > 1) {
+        buf = malloc(buf_len);
+        /* Copy null terminated value string into buffer */
+        if (httpd_req_get_hdr_value_str(req, "Host", buf, buf_len) == ESP_OK) {
+            ESP_LOGI(TAG, "Found header => Host: %s", buf);
+        }
+        free(buf);
+    }
+
+    /* Read URL query string length and allocate memory for length + 1,
+     * extra byte for null termination */
+    buf_len = httpd_req_get_url_query_len(req) + 1;
+    if (buf_len > 1) {
+        buf = malloc(buf_len);
+        if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
+            ESP_LOGI(TAG, "Found URL query => %s", buf);
+            /* Get value of expected key from query string */
+            if (httpd_query_key_value(buf, "reg_addr", param, sizeof(param)) != ESP_OK) {
+                ESP_LOGI(TAG, "Found URL query parameter => reg_addr=%d", atoi(param));
+                ret = -1;
+            }
+            else
+            	reg_addr = atoi(param);
+        }
+        free(buf);
+    }
+
+    if(ret == 0)
+    	cj_wr_reg(reg_addr,reg_data,cj_buf);
+    else
+    	js_err("URL query mismatch!",cj_buf);
+
+    httpd_resp_send(req, cj_buf, strlen(cj_buf));
+    free(cj_buf);
+
+    return ESP_OK;
+}
+
+httpd_uri_t fft = {
+    .uri       = "/fft",
+    .method    = HTTP_GET,
+    .handler   = fft_get_handler,
     .user_ctx  = NULL
 };
 
@@ -418,9 +502,9 @@ httpd_handle_t start_webserver(void)
         httpd_register_uri_handler(server, &ctrl);
         httpd_register_uri_handler(server, &rd_reg);
         httpd_register_uri_handler(server, &wr_reg);
+        httpd_register_uri_handler(server, &fft);
         return server;
     }
-//    creatjson();
     ESP_LOGI(TAG, "Error starting server!");
     return NULL;
 }

@@ -152,17 +152,17 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
         xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,0);
         /* Stop the web server */
-        if (*server) {
-            stop_webserver(*server);
-            *server = NULL;
-        }
+//        if (*server) {
+//            stop_webserver(*server);
+//            *server = NULL;
+//        }
         break;
     case SYSTEM_EVENT_AP_STACONNECTED:
         ESP_LOGI(TAG, "station:"MACSTR" join, AID=%d",
                  MAC2STR(event->event_info.sta_connected.mac),
                  event->event_info.sta_connected.aid);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
-        /* Start the web server */
+        /* stop the web server */
         if (*server == NULL) {
             *server = start_webserver();
         }
@@ -173,10 +173,10 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
                  event->event_info.sta_disconnected.aid);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,0);
         /* Stop the web server */
-        if (*server) {
-            stop_webserver(*server);
-            *server = NULL;
-        }
+//        if (*server) {
+//            stop_webserver(*server);
+//            *server = NULL;
+//        }
         break;
     default:
         break;

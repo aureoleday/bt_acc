@@ -9,6 +9,7 @@
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/ringbuf.h"
 #include "esp_system.h"
 #include "driver/spi_master.h"
 #include "soc/gpio_struct.h"
@@ -26,6 +27,7 @@
 #define DEV_GEO_RTX_SIZE    512
 #define DEV_GEO_FIFO_SIZE   2048
 
+RingbufHandle_t geo_rb_handle;
 fifo32_cb_td geo_rx_fifo;
 static uint8_t rxd_temp[DEV_GEO_RTX_SIZE];
 
@@ -37,6 +39,11 @@ typedef struct
 }spi_geo_device_st;
 
 spi_geo_device_st spi_geo_dev_inst;
+
+//int16_t geo_time(uint16_t window)
+//{
+//
+//}
 
 void geo_ds_init(void)
 {
