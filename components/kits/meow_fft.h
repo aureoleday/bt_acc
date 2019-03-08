@@ -61,7 +61,6 @@ unsigned meow_fft_is_slow_real(const struct Meow_FFT_Workset_Real* workset);
 // In order to do that I have mixed out[0] with out[N/2]. That is:
 // out[0].r == out[0].r, out[0].j = out[N/2].r
 
-
 void meow_fft_real
 (
       const struct Meow_FFT_Workset_Real* workset

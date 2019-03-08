@@ -18,6 +18,8 @@
 #include "esp_console.h"
 #include "adxl_drv.h"
 #include "fifo.h"
+#include "my_fft.h"
+#include "sys_conf.h"
 
 #define PIN_NUM_MISO 19
 #define PIN_NUM_MOSI 23
@@ -33,17 +35,97 @@ static uint8_t rxd_temp[DEV_GEO_RTX_SIZE];
 
 typedef struct
 {
+	uint16_t	max_level;
+	uint16_t	level;
+	uint16_t	stage;
+    float		ibuf[3][2048];
+    float		obuf[3][2048];
+}fft_st;
+
+typedef struct
+{
     spi_device_handle_t     		spi_device_h;
     uint8_t                         txd[DEV_GEO_RTX_SIZE];
     uint8_t                         rxd[DEV_GEO_RTX_SIZE];
 }spi_geo_device_st;
 
 spi_geo_device_st spi_geo_dev_inst;
+fft_st fft_inst;
 
-//int16_t geo_time(uint16_t window)
-//{
-//
-//}
+static int32_t decode(uint32_t din)
+{
+	uint32_t temp;
+	temp = din>>4;
+	if((temp&0x80000) != 0)
+		temp |= 0xfff00000;
+	return (int32_t)temp;
+}
+
+
+const float sine_wave1[64] = { 	0.   ,  0.098,  0.195,  0.29 ,  0.383,  0.471,  0.556,  0.634,
+								0.707,  0.773,  0.831,  0.882,  0.924,  0.957,  0.981,  0.995,
+								1.   ,  0.995,  0.981,  0.957,  0.924,  0.882,  0.831,  0.773,
+								0.707,  0.634,  0.556,  0.471,  0.383,  0.29 ,  0.195,  0.098,
+								0.   , -0.098, -0.195, -0.29 , -0.383, -0.471, -0.556, -0.634,
+							   -0.707, -0.773, -0.831, -0.882, -0.924, -0.957, -0.981, -0.995,
+							   -1.   , -0.995, -0.981, -0.957, -0.924, -0.882, -0.831, -0.773,
+							   -0.707, -0.634, -0.556, -0.471, -0.383, -0.29 , -0.195, -0.098};
+
+static int16_t fft_prep(uint32_t geo_data)
+{
+	extern sys_reg_st g_sys;
+	if(fft_inst.max_level == 0)
+	{
+		if(g_sys.conf.fft.en == 1)
+		{
+			fft_inst.max_level = 1<<g_sys.conf.fft.n;
+			printf("fft_en: %d,maxlevel: %d,fftn:%d\n",g_sys.conf.fft.en,fft_inst.max_level,g_sys.conf.fft.n);
+			fft_inst.stage = 0;
+			fft_inst.level = 0;
+		}
+	}
+	else
+	{
+		if(fft_inst.level >= fft_inst.max_level)
+		{
+			g_sys.conf.fft.en = 0;
+			fft_inst.max_level = 0;
+			fft_inst.stage = 0;
+			fft_inst.level = 0;
+			fft_init(1<<fft_inst.max_level);
+			fft_calc(fft_inst.ibuf[0],fft_inst.obuf[0]);
+			fft_calc(fft_inst.ibuf[1],fft_inst.obuf[1]);
+			fft_calc(fft_inst.ibuf[2],fft_inst.obuf[2]);
+			printf("fft complete\n");
+		}
+		else
+		{
+			if((fft_inst.level==0)&&(fft_inst.stage == 0))
+			{
+				if((geo_data&0x01) == 1)
+				{
+					fft_inst.ibuf[fft_inst.stage][fft_inst.level] = (float)decode(geo_data)*0.0000039;
+					fft_inst.stage = 1;
+				}
+			}
+			else
+			{
+				fft_inst.ibuf[fft_inst.stage][fft_inst.level] = (float)decode(geo_data)*0.0000039;
+				if(fft_inst.stage >= 2)
+				{
+					printf("%d:%f \n",fft_inst.level,fft_inst.ibuf[fft_inst.stage][fft_inst.level]);
+					fft_inst.stage = 0;
+					fft_inst.level++;
+				}
+				else
+				{
+					fft_inst.stage++;
+				}
+			}
+		}
+	}
+	return 0;
+}
 
 void geo_ds_init(void)
 {
@@ -131,6 +213,7 @@ void adxl355_reset(void)
 	adxl_wr_reg(ADXL_RESET,0x52);
 }
 
+
 void adxl355_scanfifo(void)
 {
     uint16_t i;
@@ -153,8 +236,9 @@ void adxl355_scanfifo(void)
         for(i=0;i<sample_cnt;i++)
         {
             buf_temp = (rxd_temp[1+i*3]<<16)|(rxd_temp[2+i*3]<<8)|(rxd_temp[3+i*3]);
-            if(fifo32_push(&geo_rx_fifo,&buf_temp) == 0)
-            	printf("geo fifo full\n");
+            fft_prep(buf_temp);
+//            if(fifo32_push(&geo_rx_fifo,&buf_temp) == 0)
+//            	printf("geo fifo full\n");
         }
     }
 }
@@ -168,6 +252,15 @@ static int adxl_info(int argc, char **argv)
 			adxl_rd_reg(ADXL_FILTER,rxd_temp,1),
 			adxl_rd_reg(ADXL_TEMP2,rxd_temp,1),
 			adxl_rd_reg(ADXL_POWER_CTL,rxd_temp,1));
+	return 0;
+}
+
+static int fft_info(int argc, char **argv)
+{
+	printf("Maxleve\tLevel\tStage#\n");
+	printf("%d\t%d\t%d\n",
+			fft_inst.max_level,fft_inst.level,fft_inst.stage);
+
 	return 0;
 }
 
@@ -253,11 +346,23 @@ static void register_adxl_info()
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
 }
 
+static void register_fft_info()
+{
+    const esp_console_cmd_t cmd = {
+        .command = "fft_info",
+        .help = "Get fft infomation",
+        .hint = NULL,
+        .func = &fft_info
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
 void adxl_register(void)
 {
 	register_adxl_rd();
 	register_adxl_wr();
 	register_adxl_info();
+	register_fft_info();
 }
 
 

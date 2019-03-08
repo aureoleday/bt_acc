@@ -92,7 +92,7 @@ uint16_t geo_filter_opt(uint32_t pram)
 {
     uint8_t data = pram&0x0ff;
 
-    adxl_wr_reg(ADXL_FILTER,&data);
+    adxl_wr_reg(ADXL_FILTER,data);
     
     return 1;
 }
@@ -109,5 +109,6 @@ uint16_t geo_pwr_opt(uint32_t pram)
 
     return 1;
 }
+
 
 

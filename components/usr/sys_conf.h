@@ -46,6 +46,13 @@ typedef struct
 
 typedef struct
 {
+	uint32_t    en;
+    uint32_t    n;
+    uint32_t    win;
+}conf_fft_st;
+
+typedef struct
+{
     uint32_t    enable;
     uint32_t    pkg_period;
     uint32_t    sample_period;
@@ -66,6 +73,7 @@ typedef struct
     conf_mbm_st mbm;
     conf_eth_st eth;
     conf_geo_st geo;
+    conf_fft_st fft;
 }config_st;
 
 
