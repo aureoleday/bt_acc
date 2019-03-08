@@ -32,7 +32,7 @@ enum
 #define CLI_THREAD_STACK_SIZE 	4096
 #define CMD_THREAD_STACK_SIZE 	2048
 #define SPP_THREAD_STACK_SIZE 	4096
-#define GEO_THREAD_STACK_SIZE 	4096
+#define GEO_THREAD_STACK_SIZE 	8192
 
 static void tasks_create(void)
 {

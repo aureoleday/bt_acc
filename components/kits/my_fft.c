@@ -63,9 +63,7 @@ void win_apply(float* inbuf, float* outbuf)
 void fft_calc(float* input_dbuf,float* output_dbuf)
 {
 	win_apply(input_dbuf,my_fft_inst.inbuf);
-	printf("win\n");
 	meow_fft_real(my_fft_inst.fft_sbuf_ptr, my_fft_inst.inbuf, my_fft_inst.out_dbuf_ptr);
-	printf("fft\n");
 	for(int i=0;i<my_fft_inst.ord/2;i++)
 	{
 		*(output_dbuf+i) = sqrt(pow(my_fft_inst.out_dbuf_ptr[i].r,2) + pow(my_fft_inst.out_dbuf_ptr[i].j,2))/(my_fft_inst.ord/2);

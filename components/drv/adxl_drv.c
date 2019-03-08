@@ -61,16 +61,6 @@ static int32_t decode(uint32_t din)
 	return (int32_t)temp;
 }
 
-
-const float sine_wave1[64] = { 	0.   ,  0.098,  0.195,  0.29 ,  0.383,  0.471,  0.556,  0.634,
-								0.707,  0.773,  0.831,  0.882,  0.924,  0.957,  0.981,  0.995,
-								1.   ,  0.995,  0.981,  0.957,  0.924,  0.882,  0.831,  0.773,
-								0.707,  0.634,  0.556,  0.471,  0.383,  0.29 ,  0.195,  0.098,
-								0.   , -0.098, -0.195, -0.29 , -0.383, -0.471, -0.556, -0.634,
-							   -0.707, -0.773, -0.831, -0.882, -0.924, -0.957, -0.981, -0.995,
-							   -1.   , -0.995, -0.981, -0.957, -0.924, -0.882, -0.831, -0.773,
-							   -0.707, -0.634, -0.556, -0.471, -0.383, -0.29 , -0.195, -0.098};
-
 static int16_t fft_prep(uint32_t geo_data)
 {
 	extern sys_reg_st g_sys;
@@ -79,7 +69,6 @@ static int16_t fft_prep(uint32_t geo_data)
 		if(g_sys.conf.fft.en == 1)
 		{
 			fft_inst.max_level = 1<<g_sys.conf.fft.n;
-			printf("fft_en: %d,maxlevel: %d,fftn:%d\n",g_sys.conf.fft.en,fft_inst.max_level,g_sys.conf.fft.n);
 			fft_inst.stage = 0;
 			fft_inst.level = 0;
 		}
@@ -92,7 +81,7 @@ static int16_t fft_prep(uint32_t geo_data)
 			fft_inst.max_level = 0;
 			fft_inst.stage = 0;
 			fft_inst.level = 0;
-			fft_init(1<<fft_inst.max_level);
+			fft_init(1024);
 			fft_calc(fft_inst.ibuf[0],fft_inst.obuf[0]);
 			fft_calc(fft_inst.ibuf[1],fft_inst.obuf[1]);
 			fft_calc(fft_inst.ibuf[2],fft_inst.obuf[2]);
@@ -113,7 +102,6 @@ static int16_t fft_prep(uint32_t geo_data)
 				fft_inst.ibuf[fft_inst.stage][fft_inst.level] = (float)decode(geo_data)*0.0000039;
 				if(fft_inst.stage >= 2)
 				{
-					printf("%d:%f \n",fft_inst.level,fft_inst.ibuf[fft_inst.stage][fft_inst.level]);
 					fft_inst.stage = 0;
 					fft_inst.level++;
 				}
