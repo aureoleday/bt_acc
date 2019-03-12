@@ -12,12 +12,14 @@
 #include "global_var.h"
 #include "adxl_drv.h"
 #include "bit_op.h"
+#include "my_fft.h"
 
 void geo_thread(void* param)
 {
     extern sys_reg_st  g_sys;
 
     adxl355_reset();
+    fft_init();
 
 	while(1)
 	{

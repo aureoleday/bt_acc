@@ -20,6 +20,7 @@
 #include "fifo.h"
 #include "my_fft.h"
 #include "sys_conf.h"
+#include "kfifo.h"
 
 #define PIN_NUM_MISO 19
 #define PIN_NUM_MOSI 23
@@ -30,16 +31,18 @@
 #define DEV_GEO_FIFO_SIZE   2048
 
 RingbufHandle_t geo_rb_handle;
-fifo32_cb_td geo_rx_fifo;
-static uint8_t rxd_temp[DEV_GEO_RTX_SIZE];
+fifo32_cb_td 	geo_rx_fifo;
+static uint8_t 	rxd_temp[DEV_GEO_RTX_SIZE];
+static uint8_t 	kf_xbuf[DEV_GEO_RTX_SIZE];
+kfifo_t 		kf_x;
 
 typedef struct
 {
 	uint16_t	max_level;
 	uint16_t	level;
 	uint16_t	stage;
-    float		ibuf[3][2048];
-    float		obuf[3][2048];
+    float		ibuf[3][1024];
+    float		obuf[3][1024];
 }fft_st;
 
 typedef struct
@@ -52,6 +55,12 @@ typedef struct
 spi_geo_device_st spi_geo_dev_inst;
 fft_st fft_inst;
 
+static void kf_init(void)
+{
+	memset(&kf_x, 0, sizeof(kf_x));
+	kfifo_init(&kf_x, (void *)kf_xbuf, sizeof(kf_xbuf));
+}
+
 static int32_t decode(uint32_t din)
 {
 	uint32_t temp;
@@ -63,6 +72,7 @@ static int32_t decode(uint32_t din)
 
 static int16_t fft_prep(uint32_t geo_data)
 {
+	int16_t ret = 1;
 	extern sys_reg_st g_sys;
 	if(fft_inst.max_level == 0)
 	{
@@ -77,14 +87,17 @@ static int16_t fft_prep(uint32_t geo_data)
 	{
 		if(fft_inst.level >= fft_inst.max_level)
 		{
+			fft_new(fft_inst.max_level);
+			fft_calc(fft_inst.ibuf[0],fft_inst.obuf[0]);
+			fft_calc(fft_inst.ibuf[1],fft_inst.obuf[1]);
+			fft_calc(fft_inst.ibuf[2],fft_inst.obuf[2]);
+			printf("%f,%f,%f\n",*(fft_inst.obuf[0]+1),*(fft_inst.obuf[1]+2),*(fft_inst.obuf[2]+3));
+
 			g_sys.conf.fft.en = 0;
 			fft_inst.max_level = 0;
 			fft_inst.stage = 0;
 			fft_inst.level = 0;
-			fft_init(1024);
-			fft_calc(fft_inst.ibuf[0],fft_inst.obuf[0]);
-			fft_calc(fft_inst.ibuf[1],fft_inst.obuf[1]);
-			fft_calc(fft_inst.ibuf[2],fft_inst.obuf[2]);
+			ret = 0;
 			printf("fft complete\n");
 		}
 		else
@@ -112,11 +125,12 @@ static int16_t fft_prep(uint32_t geo_data)
 			}
 		}
 	}
-	return 0;
+	return ret;
 }
 
 void geo_ds_init(void)
 {
+	kf_init();
     fifo32_init(&geo_rx_fifo,1,DEV_GEO_FIFO_SIZE);
 }
 
@@ -201,9 +215,9 @@ void adxl355_reset(void)
 	adxl_wr_reg(ADXL_RESET,0x52);
 }
 
-
 void adxl355_scanfifo(void)
 {
+	extern sys_reg_st  g_sys;
     uint16_t i;
     uint16_t total_cnt;
     uint8_t  sample_cnt;
@@ -224,7 +238,9 @@ void adxl355_scanfifo(void)
         for(i=0;i<sample_cnt;i++)
         {
             buf_temp = (rxd_temp[1+i*3]<<16)|(rxd_temp[2+i*3]<<8)|(rxd_temp[3+i*3]);
-            fft_prep(buf_temp);
+            kfifo_in(&kf_x,&buf_temp,sizeof(uint32_t));
+            if(g_sys.conf.fft.en == 1)
+            	fft_prep(buf_temp);
 //            if(fifo32_push(&geo_rx_fifo,&buf_temp) == 0)
 //            	printf("geo fifo full\n");
         }
@@ -248,6 +264,19 @@ static int fft_info(int argc, char **argv)
 	printf("Maxleve\tLevel\tStage#\n");
 	printf("%d\t%d\t%d\n",
 			fft_inst.max_level,fft_inst.level,fft_inst.stage);
+
+	return 0;
+}
+
+static int kf_read(int argc, char **argv)
+{
+	float rx_buf[16];
+	if(kfifo_out(&kf_x,rx_buf,3) == 0)
+		printf("kfifo empty!\n");
+	else
+	{
+		printf("%f,%f,%f\n",rx_buf[0],rx_buf[1],rx_buf[2]);
+	}
 
 	return 0;
 }
@@ -345,12 +374,24 @@ static void register_fft_info()
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
 }
 
+static void register_kf_read()
+{
+    const esp_console_cmd_t cmd = {
+        .command = "kf_read",
+        .help = "Read kfifo",
+        .hint = NULL,
+        .func = &kf_read
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
 void adxl_register(void)
 {
 	register_adxl_rd();
 	register_adxl_wr();
 	register_adxl_info();
 	register_fft_info();
+	register_kf_read();
 }
 
 

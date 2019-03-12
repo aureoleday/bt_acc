@@ -12,6 +12,8 @@
 #include <math.h>
 #include <stdio.h>
 
+#define FFT_MAX_ORD 1024
+
 typedef struct
 {
 	float*					inbuf;
@@ -21,29 +23,28 @@ typedef struct
 	uint16_t				ord;
 }my_fft_st;
 
-my_fft_st my_fft_inst;
+my_fft_st 		my_fft_inst;
 
 static void win_init(uint16_t ord);
 
-void fft_init(uint16_t ord)
+int16_t fft_init(void)
 {
-	size_t workset_bytes = 0;
-	if((my_fft_inst.out_dbuf_ptr != NULL)||(my_fft_inst.fft_sbuf_ptr != NULL))
+	if(my_fft_inst.out_dbuf_ptr != NULL)
+		return -1;
+	else
 	{
-		free(my_fft_inst.inbuf);
-		free(my_fft_inst.out_dbuf_ptr);
-		free(my_fft_inst.fft_sbuf_ptr);
-		free(my_fft_inst.win_buf_ptr);
+		size_t workset_bytes = meow_fft_generate_workset_real(FFT_MAX_ORD, NULL);
+		my_fft_inst.out_dbuf_ptr = malloc(sizeof(Meow_FFT_Complex) * FFT_MAX_ORD);
+		my_fft_inst.fft_sbuf_ptr = (Meow_FFT_Workset_Real*) malloc(workset_bytes);
+		my_fft_inst.win_buf_ptr = (float*) malloc(sizeof(float) * FFT_MAX_ORD);
+		my_fft_inst.inbuf = (float*) malloc(sizeof(float) * FFT_MAX_ORD);
+		return 0;
 	}
+}
 
-
-	workset_bytes = meow_fft_generate_workset_real(ord, NULL);
-	my_fft_inst.out_dbuf_ptr = malloc(sizeof(Meow_FFT_Complex) * ord);
-	my_fft_inst.fft_sbuf_ptr = (Meow_FFT_Workset_Real*) malloc(workset_bytes);
-	my_fft_inst.win_buf_ptr = (float*) malloc(sizeof(float) * ord);
-	my_fft_inst.inbuf = (float*) malloc(sizeof(float) * ord);
+void fft_new(uint16_t ord)
+{
 	my_fft_inst.ord = ord;
-
 	meow_fft_generate_workset_real(my_fft_inst.ord, my_fft_inst.fft_sbuf_ptr);
 	win_init(ord);
 }
@@ -69,6 +70,7 @@ void fft_calc(float* input_dbuf,float* output_dbuf)
 		*(output_dbuf+i) = sqrt(pow(my_fft_inst.out_dbuf_ptr[i].r,2) + pow(my_fft_inst.out_dbuf_ptr[i].j,2))/(my_fft_inst.ord/2);
 	}
 }
+
 
 
 

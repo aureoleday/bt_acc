@@ -6,6 +6,8 @@
 #include "freertos/task.h"
 #include "esp_timer.h"
 #include "esp_log.h"
+#include "kfifo.h"
+
 //cpad err code
 enum
 {
@@ -650,22 +652,30 @@ uint16_t report_data(void)
 		return err_code;
 }
 
+//static int16_t get_geo_data(uint32_t * buf_ptr)
+//{
+//    extern fifo32_cb_td geo_rx_fifo;
+//    uint32_t temp;
+//    uint16_t i;
+//    uint16_t fifo_len;
+//
+//    fifo_len = get_fifo32_length(&geo_rx_fifo);
+//
+//    for(i=0;i<fifo_len;i++)
+//    {
+//        fifo32_pop(&geo_rx_fifo,&temp);
+//        *(buf_ptr+i) = temp;
+//    }
+//    return fifo_len;
+//}
+
 static int16_t get_geo_data(uint32_t * buf_ptr)
 {
-    extern fifo32_cb_td geo_rx_fifo;
-    uint32_t temp;
-    uint16_t i;
-    uint16_t fifo_len;
-  
-    fifo_len = get_fifo32_length(&geo_rx_fifo);
-  
-    for(i=0;i<fifo_len;i++)
-    {
-        fifo32_pop(&geo_rx_fifo,&temp);
-        *(buf_ptr+i) = temp;
-    }  
-    return fifo_len;
+    extern kfifo_t kf_x;
+
+    return kfifo_out(&kf_x,buf_ptr,sizeof(uint32_t)*256);
 }
+
 
 uint16_t report_geo_data(void)
 {
@@ -677,7 +687,7 @@ uint16_t report_geo_data(void)
     if((bit_op_get(g_sys.stat.gen.status_bm,GBM_BT) == 0)&&(bit_op_get(g_sys.stat.gen.status_bm,GBM_TCP) == 0))
         return CMD_NOT_READY;
   
-    rd_cnt = get_geo_data(&cmd_reg_inst.tx_buf[FRAME_D_AL_POS]);
+    rd_cnt = get_geo_data(&cmd_reg_inst.tx_buf[FRAME_D_AL_POS])/4;
     
     if(rd_cnt == 0)
         return 0;
