@@ -9,7 +9,8 @@
 #include "nvs_flash.h"
 #include "nvs.h"
 
-#define CONFIG_NAMESPACE "config"
+#define CONFIG_NAMESPACE 	"config"
+#define WIFI_NAMESPACE 		"wifi"
 
 //configuration parameters
 sys_reg_st  g_sys; 															//global parameter declairation
@@ -29,7 +30,7 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	8,  	&g_sys.conf.eth.dns_server,		             0,		    0xffffffff,	  	0x0103a8c0,	    0,      NULL   	          },
 	{	9,		&g_sys.conf.eth.dhcp_en,		             0,		    1,	       		1,				0,      dhcp_trigger      },
 	{	10,		&g_sys.conf.eth.reconnect_period,            100,     	1000000,	    5000,			0,      NULL   	          },
-	{	11,		&g_sys.conf.eth.dns_en,                      0,		    1,				0,				0,      NULL   	          },
+	{	11,		&g_sys.conf.gen.sample_mode,                 0,		    1,				0,				0,      NULL   	          },
 	{	12,   	NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	13,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	14,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
@@ -411,6 +412,45 @@ static int load_conf(const char *load_type)
     return ESP_OK;
 }
 
+static int save_wifi(const char *ssid, const char *pwd)
+{
+	nvs_handle my_handle;
+	esp_err_t err;
+
+    // Open
+    err = nvs_open(WIFI_NAMESPACE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) return err;
+
+    nvs_set_str(my_handle,"ssid",ssid);
+    nvs_set_str(my_handle,"wpwd",pwd);
+
+    // Commit
+    err = nvs_commit(my_handle);
+    if (err != ESP_OK) return err;
+
+    // Close
+    nvs_close(my_handle);
+    return ESP_OK;
+}
+
+int get_wifi_info(char* ssid, char* pwd, size_t* s_len, size_t* p_len)
+{
+	nvs_handle my_handle;
+	esp_err_t err;
+
+    // Open
+    err = nvs_open(WIFI_NAMESPACE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) return err;
+
+    nvs_get_str(my_handle,"ssid",ssid,s_len);
+    nvs_get_str(my_handle,"wpwd",pwd,p_len);
+
+    // Close
+    nvs_close(my_handle);
+//    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,*s_len,*p_len);
+    return ESP_OK;
+}
+
 int32_t gvar_init(void)
 {
 	esp_err_t err;
@@ -418,6 +458,42 @@ int32_t gvar_init(void)
 	init_load_status();
 	return err;
 }
+
+/** Arguments used by 'blob' function */
+static struct {
+    struct arg_str *ssid;
+    struct arg_str *pwd;
+    struct arg_end *end;
+} wifi_args;
+
+static int save_wifi_arg(int argc, char **argv)
+{
+    esp_err_t err;
+
+    int nerrors = arg_parse(argc, argv, (void**) &wifi_args);
+    if (nerrors != 0) {
+        arg_print_errors(stderr, wifi_args.end, argv[0]);
+        return 1;
+    }
+
+    err = save_wifi(wifi_args.ssid->sval[0],wifi_args.pwd->sval[0]);
+    return err;
+}
+
+int print_wifi(int argc, char **argv)
+{
+    esp_err_t err = 0;
+    char ssid[32];
+    char pwd[32];
+    size_t slen,plen;
+
+//    get_wifi_info(ssid,pwd,&slen,&plen);
+//    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,slen,plen);
+    get_wifi_info(g_sys.stat.wifi.ssid,g_sys.stat.wifi.pwd,&g_sys.stat.wifi.slen,&g_sys.stat.wifi.plen);
+    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",g_sys.stat.wifi.ssid,g_sys.stat.wifi.pwd,g_sys.stat.wifi.slen,g_sys.stat.wifi.plen);
+    return err;
+}
+
 
 /** Arguments used by 'blob' function */
 static struct {
@@ -495,7 +571,7 @@ static int print_config(int argc, char **argv)
     return ESP_OK;
 }
 
-static void register_sav_conf()
+static void register_save_conf()
 {
 	savconf_args.data = arg_str1(NULL, NULL, "<type>", "save type");
 	savconf_args.end = arg_end(1);
@@ -612,13 +688,41 @@ static void register_wr_reg()
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
 }
 
+static void register_save_wifi()
+{
+	wifi_args.ssid = arg_str1(NULL, NULL, "<ssid>", "ssid of AP");
+	wifi_args.pwd = arg_str0(NULL, NULL, "<pwd>", "psk of AP");
+	wifi_args.end = arg_end(2);
+    const esp_console_cmd_t cmd = {
+        .command = "save_wifi",
+        .help = "save ssid and pwd",
+        .hint = NULL,
+        .func = &save_wifi_arg,
+		.argtable = &wifi_args
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
+static void register_print_wifi()
+{
+    const esp_console_cmd_t cmd = {
+        .command = "print_wifi",
+        .help = "print ssid and pwd",
+        .hint = NULL,
+        .func = &print_wifi
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
 void gvar_register(void)
 {
 	register_rd_reg();
 	register_wr_reg();
-	register_sav_conf();
+	register_save_conf();
 	register_print_conf();
 	register_load_conf();
+	register_save_wifi();
+	register_print_wifi();
 }
 
 

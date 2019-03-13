@@ -11,7 +11,7 @@
 
 typedef struct
 {	
-    uint32_t 		disp_dev;
+    uint32_t 		sample_mode;
     uint32_t 		temp_offset;
     uint32_t 		temp_win;
 }conf_gen_st;
@@ -102,6 +102,14 @@ typedef struct
 
 typedef struct
 {	
+    char    ssid[32];
+    char    pwd[32];
+    size_t	slen;
+    size_t	plen;
+}stat_wifi_st;
+
+typedef struct
+{
     uint32_t    serial_no;
     uint32_t    man_date;
     uint32_t    dev_type;
@@ -112,6 +120,7 @@ typedef struct
 	stat_gen_st gen;
     stat_mbm_st mbm;
     stat_eth_st eth;
+    stat_wifi_st wifi;
     stat_man_st man;
 }status_st;
 

@@ -10,4 +10,5 @@ void init_load_status(void);
 uint8_t reset_runtime(uint16_t param);
 uint8_t load_factory_pram(void);
 int32_t gvar_init(void);
+int get_wifi_info(char* ssid, char* pwd, size_t* s_len, size_t* p_len);
 #endif //__GLOBAL_VAR

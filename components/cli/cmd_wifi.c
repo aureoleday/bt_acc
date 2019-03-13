@@ -26,6 +26,11 @@
 #include "bit_op.h"
 #include "web_srv.h"
 
+#include "nvs_flash.h"
+#include "nvs.h"
+
+#define WIFI_NAMESPACE "wifi"
+
 extern  sys_reg_st  g_sys;
 
 static const char *TAG = "WIFI";

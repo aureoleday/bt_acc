@@ -30,11 +30,9 @@
 #define DEV_GEO_RTX_SIZE    512
 #define DEV_GEO_FIFO_SIZE   2048
 
-RingbufHandle_t geo_rb_handle;
-fifo32_cb_td 	geo_rx_fifo;
 static uint8_t 	rxd_temp[DEV_GEO_RTX_SIZE];
-static uint8_t 	kf_xbuf[DEV_GEO_RTX_SIZE];
-kfifo_t 		kf_x;
+static uint8_t 	kf_buf[3][DEV_GEO_RTX_SIZE];
+kfifo_t 		kf_x,kf_y,kf_z;
 
 typedef struct
 {
@@ -58,7 +56,11 @@ fft_st fft_inst;
 static void kf_init(void)
 {
 	memset(&kf_x, 0, sizeof(kf_x));
-	kfifo_init(&kf_x, (void *)kf_xbuf, sizeof(kf_xbuf));
+	memset(&kf_y, 0, sizeof(kf_y));
+	memset(&kf_z, 0, sizeof(kf_z));
+	kfifo_init(&kf_x, (void *)kf_buf[0], sizeof(kf_buf[0]));
+	kfifo_init(&kf_y, (void *)kf_buf[1], sizeof(kf_buf[1]));
+	kfifo_init(&kf_z, (void *)kf_buf[2], sizeof(kf_buf[2]));
 }
 
 static int32_t decode(uint32_t din)
@@ -131,7 +133,6 @@ static int16_t fft_prep(uint32_t geo_data)
 void geo_ds_init(void)
 {
 	kf_init();
-    fifo32_init(&geo_rx_fifo,1,DEV_GEO_FIFO_SIZE);
 }
 
 uint8_t adxl_wr_reg(uint8_t addr, uint8_t data)
@@ -215,6 +216,85 @@ void adxl355_reset(void)
 	adxl_wr_reg(ADXL_RESET,0x52);
 }
 
+static int16_t data_split(uint32_t din)
+{
+	static uint8_t stage = 0;  //0: idle;1: x;2:y;3:z;
+	static uint32_t dbuf[3]={0,0,0};
+	int16_t ret = 0;
+	switch (stage)
+	{
+		case 0:
+		{
+			if(din & 0x1)
+			{
+				dbuf[0] = din;
+				stage = 2;
+			}
+			else
+			{
+				stage = 0;
+			}
+			ret = 0;
+			break;
+		}
+		case 1:
+		{
+			if(din & 0x1)
+			{
+				kfifo_in(&kf_x,&dbuf[0],sizeof(uint32_t));
+				kfifo_in(&kf_y,&dbuf[1],sizeof(uint32_t));
+				kfifo_in(&kf_z,&dbuf[2],sizeof(uint32_t));
+				dbuf[0] = din;
+				stage = 2;
+				ret = 0;
+			}
+			else
+			{
+				stage = 0;
+				ret = -1;
+			}
+			break;
+		}
+		case 2:
+		{
+			if(!(din & 0x1))
+			{
+				dbuf[1] = din;
+				stage = 3;
+				ret = 0;
+			}
+			else
+			{
+				stage = 0;
+				ret = -1;
+			}
+			break;
+		}
+		case 3:
+		{
+			if(!(din & 0x1))
+			{
+				dbuf[2] = din;
+				stage = 1;
+				ret = 0;
+			}
+			else
+			{
+				stage = 0;
+				ret = -1;
+			}
+			break;
+		}
+		default:
+		{
+			stage = 0;
+			ret = -1;
+			break;
+		}
+	}
+	return ret;
+}
+
 void adxl355_scanfifo(void)
 {
 	extern sys_reg_st  g_sys;
@@ -238,11 +318,10 @@ void adxl355_scanfifo(void)
         for(i=0;i<sample_cnt;i++)
         {
             buf_temp = (rxd_temp[1+i*3]<<16)|(rxd_temp[2+i*3]<<8)|(rxd_temp[3+i*3]);
-            kfifo_in(&kf_x,&buf_temp,sizeof(uint32_t));
+            if(data_split(buf_temp) != 0)
+            	printf("geo missing code\n");
             if(g_sys.conf.fft.en == 1)
             	fft_prep(buf_temp);
-//            if(fifo32_push(&geo_rx_fifo,&buf_temp) == 0)
-//            	printf("geo fifo full\n");
         }
     }
 }

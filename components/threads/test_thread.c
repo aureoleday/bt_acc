@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include "sdkconfig.h"
+#include "esp_log.h"
 #include "esp_system.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "esp_wifi.h"
+#include "cmd_wifi.h"
 #include <math.h>
 #include "my_fft.h"
 #include "kfifo.h"
+#include "global_var.h"
 
 //#define MEOW_FFT_IMPLEMENTAION
 //
@@ -40,9 +44,32 @@
 //	}
 //}
 
+
+void join_wifi(void)
+{
+    char ssid[24];
+    char pwd[24];
+    size_t slen,plen;
+    wifi_config_t wifi_config = { 0 };
+
+    get_wifi_info(ssid,pwd,&slen,&plen);
+    get_wifi_info(ssid,pwd,&slen,&plen);
+
+    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,slen,plen);
+    printf("connecting %s...\n",ssid);
+
+    strncpy((char*) wifi_config.sta.ssid, ssid, slen-1);
+    strncpy((char*) wifi_config.sta.password, pwd, plen-1);
+
+    ESP_ERROR_CHECK( esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );
+    ESP_ERROR_CHECK( esp_wifi_connect() );
+}
+
 void test_thread(void* param)
 {
 	vTaskDelay(5000 / portTICK_PERIOD_MS);
+	join_wifi();
+
 	while(1)
 	{
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
