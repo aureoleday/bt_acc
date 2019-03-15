@@ -31,7 +31,7 @@ static void initialize_nvs()
 
 void usr_sys_init(void)
 {
-	extern sys_reg_st  g_sys;
+//	extern sys_reg_st  g_sys;
 	initialize_nvs();
 
 	adxl_init();
@@ -40,7 +40,4 @@ void usr_sys_init(void)
 
 	gvar_init();
 	gvar_register();
-//	get_wifi_info(g_sys.stat.wifi.ssid,g_sys.stat.wifi.pwd,&g_sys.stat.wifi.slen,&g_sys.stat.wifi.plen);
-//	get_wifi_info(g_sys.stat.wifi.ssid,g_sys.stat.wifi.pwd,&g_sys.stat.wifi.slen,&g_sys.stat.wifi.plen);
-//	printf(" saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",g_sys.stat.wifi.ssid,g_sys.stat.wifi.pwd,g_sys.stat.wifi.slen,g_sys.stat.wifi.plen);
 }

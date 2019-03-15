@@ -14,22 +14,21 @@
 
 //configuration parameters
 sys_reg_st  g_sys; 															//global parameter declairation
-ini_st		ini_inst;
 
 //configuration register map declairation
 const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=  
 	{//id		mapped registers		                     min	    max				default			type    chk_prt
 	{	0,		&g_sys.conf.eth.tcp_en,               		 0,		    1,				1,				0,      NULL   	          },
-	{	1,		&g_sys.conf.eth.tcp_period,                  1,		    0xffffffff,		30,			    0,      NULL     },
-	{	2,		&g_sys.conf.eth.remote_ip,                   0,		    0xffffffff,		0x60b44e78,		0,      NULL   	          },
-	{	3,		&g_sys.conf.eth.remote_port,	             0,		    65535,		    19999,       	0,      NULL   	          },
-	{	4,		&g_sys.conf.eth.local_ip,			         0,		    0xffffffff,		0x6403a8c0,		0,      NULL   	          },
-	{	5,		&g_sys.conf.eth.local_gateway,               0,		    0xffffffff,		0x0103a8c0,		0,      NULL   	          },
-	{	6,		&g_sys.conf.eth.local_mask,                  0,		    0xffffffff,		0x00ffffff,		0,      NULL   	          },
-	{	7,		&g_sys.conf.eth.local_port,	                 0,		    65535,    		80,				0,      NULL   	          },
-	{	8,  	&g_sys.conf.eth.dns_server,		             0,		    0xffffffff,	  	0x0103a8c0,	    0,      NULL   	          },
-	{	9,		&g_sys.conf.eth.dhcp_en,		             0,		    1,	       		1,				0,      dhcp_trigger      },
-	{	10,		&g_sys.conf.eth.reconnect_period,            100,     	1000000,	    5000,			0,      NULL   	          },
+	{	1,		&g_sys.conf.eth.tcp_period,                  1,		    0xffffffff,		30,			    0,      NULL     		  },
+	{	2,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	3,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	4,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	5,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	6,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	7,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	8,  	NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	9,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	10,		&g_sys.conf.gen.sample_channel,            	 0,     	2,	    		0,				0,      NULL   	          },
 	{	11,		&g_sys.conf.gen.sample_mode,                 0,		    1,				0,				0,      NULL   	          },
 	{	12,   	NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	13,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
@@ -43,8 +42,8 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	21,		&g_sys.conf.geo.pkg_period,                  0,		    1000000,        10,			    0,      geo_timer_opt     },
 	{	22,		&g_sys.conf.geo.sample_period,               0,		    1000,           10,			    0,      NULL              },
 	{	23,		&g_sys.conf.geo.filter,                      0,		    255,            10,			    0,      geo_filter_opt    },
-	{	24,		&g_sys.conf.gen.temp_offset,                 0,		    999,            10,			    0,      NULL              },
-	{	25,		&g_sys.conf.gen.temp_win,                    1,		    63,				8,				0,      NULL   	          },
+	{	24,		NULL,                                        0,		    0,				0,				0,      NULL              },
+	{	25,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	26,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	27,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	28,		NULL,                                        0,		    0xffffffff,     0,				1,      set_timestamp     },
@@ -143,7 +142,7 @@ const sts_reg_map_st status_reg_map_inst[STAT_REG_MAP_NUM]=
      {	19,		NULL,						                0},
      {	20,		NULL,						                0},
      {	21,		NULL,						                0},
-     {	22,		&g_sys.stat.mbm.plc_bitmap,                 0},
+     {	22,		NULL,						                0},
      {	23,		NULL,						                0},
      {	24,		NULL,						                0},
      {	25,		NULL,						                0},
@@ -340,7 +339,6 @@ static int save_conf(const char *save_type)
     err = nvs_open(CONFIG_NAMESPACE, NVS_READWRITE, &my_handle);
     if (err != ESP_OK) return err;
 
-
     required_size = CONF_REG_MAP_NUM*sizeof(uint32_t);
     config = malloc(required_size);
     // Write value including previously saved blob if available
@@ -443,6 +441,9 @@ int get_wifi_info(char* ssid, char* pwd, size_t* s_len, size_t* p_len)
     if (err != ESP_OK) return err;
 
     nvs_get_str(my_handle,"ssid",ssid,s_len);
+    nvs_get_str(my_handle,"ssid",ssid,s_len);
+
+    nvs_get_str(my_handle,"wpwd",pwd,p_len);
     nvs_get_str(my_handle,"wpwd",pwd,p_len);
 
     // Close
@@ -489,8 +490,8 @@ int print_wifi(int argc, char **argv)
 
 //    get_wifi_info(ssid,pwd,&slen,&plen);
 //    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,slen,plen);
-    get_wifi_info(g_sys.stat.wifi.ssid,g_sys.stat.wifi.pwd,&g_sys.stat.wifi.slen,&g_sys.stat.wifi.plen);
-    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",g_sys.stat.wifi.ssid,g_sys.stat.wifi.pwd,g_sys.stat.wifi.slen,g_sys.stat.wifi.plen);
+    get_wifi_info(ssid,pwd,&slen,&plen);
+    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,slen,plen);
     return err;
 }
 

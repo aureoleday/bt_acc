@@ -18,9 +18,11 @@ typedef struct kfifo {
 }kfifo_t;
 
 void kfifo_init(struct kfifo *fifo, void *buffer, unsigned int size);
-unsigned int kfifo_in(struct kfifo *fifo, const void *from,
-				unsigned int len);
+void kfifo_reset(struct kfifo *fifo);
+unsigned int kfifo_in(struct kfifo *fifo, const void *from,	unsigned int len);
 unsigned int kfifo_out(struct kfifo *fifo, void *to, unsigned int len);
+unsigned int kfifo_out_peek(struct kfifo *fifo, void *to, unsigned int len);
+unsigned int kfifo_len(struct kfifo *fifo);
 
 #ifdef KFIFO_EXT
 unsigned int kfifo_out2(struct kfifo *fifo, unsigned int len);

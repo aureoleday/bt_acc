@@ -53,10 +53,9 @@ void join_wifi(void)
     wifi_config_t wifi_config = { 0 };
 
     get_wifi_info(ssid,pwd,&slen,&plen);
-    get_wifi_info(ssid,pwd,&slen,&plen);
 
     printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,slen,plen);
-    printf("connecting %s...\n",ssid);
+    printf("connecting to station: %s...\n",ssid);
 
     strncpy((char*) wifi_config.sta.ssid, ssid, slen-1);
     strncpy((char*) wifi_config.sta.password, pwd, plen-1);

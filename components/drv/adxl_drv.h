@@ -55,6 +55,8 @@ void adxl355_reset(void);
 void adxl355_scanfifo(void);
 uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt);
 uint8_t adxl_wr_reg(uint8_t addr, uint8_t data);
+float* geo_get_fft(uint16_t* fft_len);
+float* geo_get_time(uint16_t *out_len,uint16_t get_len);
 
 
 #endif /* COMPONENTS_DRV_ADXL_DRV_H_ */

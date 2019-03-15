@@ -92,6 +92,11 @@ void kfifo_init(struct kfifo *fifo, void *buffer, unsigned int size)
 	fifo->in = fifo->out = 0;
 }
 
+void kfifo_reset(struct kfifo *fifo)
+{
+	fifo->in = fifo->out = 0;
+}
+
 /**
  * @brief
  *
@@ -177,4 +182,26 @@ unsigned int kfifo_out(struct kfifo *fifo, void *to, unsigned int len)
   	fifo->out += len;
 
 	return len;
+}
+
+unsigned int kfifo_out_peek(struct kfifo *fifo, void *to, unsigned int len)
+{
+    unsigned int off;
+	unsigned int l;
+    /* 验证len是否大于缓冲区存的值  */
+    len = min(fifo->in - fifo->out, len);
+
+    off = (fifo->out + 0) & (fifo->size - 1);/*==> (out+0) % size*/
+	/* first get the data from fifo->out until the end of the buffer */
+	l = min(len, fifo->size - off);
+	memcpy(to, fifo->buffer + off, l);
+	/* then get the rest (if any) from the beginning of the buffer */
+	memcpy((char *)to + l, fifo->buffer, len - l);
+
+	return len;
+}
+
+unsigned int kfifo_len(struct kfifo *fifo)
+{
+	return fifo->in - fifo->out;
 }

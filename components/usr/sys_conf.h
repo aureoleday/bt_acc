@@ -12,8 +12,9 @@
 typedef struct
 {	
     uint32_t 		sample_mode;
-    uint32_t 		temp_offset;
-    uint32_t 		temp_win;
+    uint32_t 		sample_channel;
+//    uint32_t 		temp_offset;
+//    uint32_t 		temp_win;
 }conf_gen_st;
 
 typedef struct
@@ -32,16 +33,16 @@ typedef struct
 {
     uint32_t    tcp_en;
     uint32_t    tcp_period;
-    uint32_t    reconnect_period;
-    uint32_t    dhcp_en;
-    uint32_t    remote_ip;
-    uint32_t    remote_port;
-    uint32_t    local_ip;
-    uint32_t    local_gateway;
-    uint32_t    local_mask;
-    uint32_t    local_port;
-    uint32_t    dns_server;
-    uint32_t    dns_en;
+//    uint32_t    reconnect_period;
+//    uint32_t    dhcp_en;
+//    uint32_t    remote_ip;
+//    uint32_t    remote_port;
+//    uint32_t    local_ip;
+//    uint32_t    local_gateway;
+//    uint32_t    local_mask;
+//    uint32_t    local_port;
+//    uint32_t    dns_server;
+//    uint32_t    dns_en;
 }conf_eth_st;
 
 typedef struct
@@ -117,11 +118,11 @@ typedef struct
 
 typedef struct
 {
-	stat_gen_st gen;
-    stat_mbm_st mbm;
-    stat_eth_st eth;
-    stat_wifi_st wifi;
-    stat_man_st man;
+	stat_gen_st 	gen;
+    stat_mbm_st 	mbm;
+    stat_eth_st 	eth;
+    stat_wifi_st 	wifi;
+    stat_man_st 	man;
 }status_st;
 
 typedef struct
@@ -147,13 +148,6 @@ typedef struct
 	uint32_t*	reg_ptr;
     uint32_t  	dft;
 }sts_reg_map_st;
-
-typedef struct
-{
-    uint8_t 	start_up_flag;
-    uint32_t 	serial_id;
-    uint32_t 	man_date;
-}ini_st;
 
 uint16_t sys_global_var_init(void);
 

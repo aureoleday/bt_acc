@@ -671,9 +671,9 @@ uint16_t report_data(void)
 
 static int16_t get_geo_data(uint32_t * buf_ptr)
 {
-    extern kfifo_t kf_x;
+    extern kfifo_t kf_a;
 
-    return kfifo_out(&kf_x,buf_ptr,sizeof(uint32_t)*256);
+    return kfifo_out(&kf_a,buf_ptr,sizeof(uint32_t)*256);
 }
 
 
