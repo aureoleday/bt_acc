@@ -15,11 +15,11 @@
 #include <string.h>
 
 typedef unsigned char 		uint8;
-typedef char 							int8;
+typedef char 				int8;
 typedef unsigned short 		uint16;
-typedef short					 		int16;
+typedef short				int16;
 typedef unsigned long 		uint32;
-typedef long					 		int32; 
+typedef long				int32;
 
 
 #define USR_EOK                 0
@@ -28,8 +28,8 @@ typedef long					 		int32;
 #define DEFAULT_SDN             "www.baidu.com"
 
 //#define SYS_DEBUG
-#define STAT_REG_MAP_NUM        64
-#define CONF_REG_MAP_NUM		96
+#define STAT_REG_MAP_NUM        16
+#define CONF_REG_MAP_NUM		32
 #define SOFTWARE_VER			0x00000001
 #define HARDWARE_VER			0x00010000
 #define SERIAL_NO				0

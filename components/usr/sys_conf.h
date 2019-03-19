@@ -13,6 +13,7 @@ typedef struct
 {	
     uint32_t 		sample_mode;
     uint32_t 		sample_channel;
+    uint32_t 		wifi_mode;
 }conf_gen_st;
 
 

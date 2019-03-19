@@ -206,7 +206,9 @@ void adxl_init(void)
 
 void adxl355_reset(void)
 {
+	extern sys_reg_st  g_sys;
 	adxl_wr_reg(ADXL_RESET,0x52);
+	adxl_wr_reg(ADXL_FILTER,g_sys.conf.geo.filter);
 }
 
 static int16_t raw_data_buf(uint32_t din, uint8_t axis)

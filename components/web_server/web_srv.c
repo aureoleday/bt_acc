@@ -169,7 +169,7 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
     }
 
     cj_src = cJSON_PrintUnformatted(root);
-    printf("[size: %d]\n",strlen(cj_src));
+//    printf("[size: %d]\n",strlen(cj_src));
     strcpy(cj_dst,cj_src);
     free(cj_src);
     cJSON_Delete(root);
@@ -413,6 +413,51 @@ httpd_uri_t time = {
 };
 
 /* An HTTP POST handler */
+esp_err_t timeb_post_handler(httpd_req_t *req)
+{
+    uint16_t out_len;
+	float * time_data_p = NULL;
+
+	time_data_p = geo_get_time(&out_len);
+
+	httpd_resp_send_chunk(req, (char *)time_data_p, out_len*4);
+
+    httpd_resp_send_chunk(req, NULL, 0);
+
+    return ESP_OK;
+}
+
+httpd_uri_t timeb = {
+    .uri       = "/timeb",
+    .method    = HTTP_POST,
+    .handler   = timeb_post_handler,
+    .user_ctx  = NULL
+};
+
+/* An HTTP POST handler */
+esp_err_t fftb_post_handler(httpd_req_t *req)
+{
+    uint16_t out_len;
+
+	float * fft_data_p = NULL;
+
+	fft_data_p = geo_get_fft(&out_len);
+
+	httpd_resp_send_chunk(req, (char *)fft_data_p, out_len*4);
+
+    httpd_resp_send_chunk(req, NULL, 0);
+
+    return ESP_OK;
+}
+
+httpd_uri_t fftb = {
+    .uri       = "/fftb",
+    .method    = HTTP_POST,
+    .handler   = fftb_post_handler,
+    .user_ctx  = NULL
+};
+
+/* An HTTP POST handler */
 esp_err_t echo_post_handler(httpd_req_t *req)
 {
     char buf[100];
@@ -507,7 +552,9 @@ httpd_handle_t start_webserver(void)
         httpd_register_uri_handler(server, &rd_reg);
         httpd_register_uri_handler(server, &wr_reg);
         httpd_register_uri_handler(server, &fft);
+        httpd_register_uri_handler(server, &fftb);
         httpd_register_uri_handler(server, &time);
+        httpd_register_uri_handler(server, &timeb);
         return server;
     }
     ESP_LOGI(TAG, "Error starting server!");
