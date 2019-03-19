@@ -291,35 +291,35 @@ static void spp_init(void)
     esp_bt_gap_set_pin(pin_type, 0, pin_code);
 }
 
-static uint32_t tx_buf[1024];
+//static uint32_t tx_buf[1024];
 
-void spp_thread(void* param)
-{
-	extern fifo32_cb_td cmd_tx_fifo;
-	uint16_t buf_len;
-	uint16_t i;
-
-	spp_init();
-	usr_spp_init();
-
-	while(1)
-	{
-		if(usr_spp_inst.conn_cnt > 0)
-		{
-	        if(is_fifo32_empty(&cmd_tx_fifo) == 0)
-	        {
-	            buf_len = get_fifo32_length(&cmd_tx_fifo);
-	            for(i=0;i<buf_len;i++)
-	            {
-	                fifo32_pop(&cmd_tx_fifo, &tx_buf[i]);
-	            }
-	            usr_spp_write(0,(uint8_t *)tx_buf,buf_len*4);
-//	            printf("buf_len:%d\n",buf_len);
-	        }
-		}
-		vTaskDelay(20 / portTICK_PERIOD_MS);
-	}
-}
+//void spp_thread(void* param)
+//{
+//	extern fifo32_cb_td cmd_tx_fifo;
+//	uint16_t buf_len;
+//	uint16_t i;
+//
+//	spp_init();
+//	usr_spp_init();
+//
+//	while(1)
+//	{
+//		if(usr_spp_inst.conn_cnt > 0)
+//		{
+//	        if(is_fifo32_empty(&cmd_tx_fifo) == 0)
+//	        {
+//	            buf_len = get_fifo32_length(&cmd_tx_fifo);
+//	            for(i=0;i<buf_len;i++)
+//	            {
+//	                fifo32_pop(&cmd_tx_fifo, &tx_buf[i]);
+//	            }
+//	            usr_spp_write(0,(uint8_t *)tx_buf,buf_len*4);
+////	            printf("buf_len:%d\n",buf_len);
+//	        }
+//		}
+//		vTaskDelay(20 / portTICK_PERIOD_MS);
+//	}
+//}
 
 /** Arguments used by 'join' function */
 static struct {
@@ -359,8 +359,8 @@ static void register_wr_spp()
 }
 
 
-void usr_spp_register(void)
-{
-	register_wr_spp();
-}
+//void usr_spp_register(void)
+//{
+//	register_wr_spp();
+//}
 

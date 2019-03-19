@@ -37,7 +37,7 @@
 */
 
 static const char *TAG="HTTP";
-static char cjson_buf[12000];
+static char cjson_buf[24576];
 
 static void js_err(char * err_info, char* cj_dst)
 {
@@ -115,17 +115,18 @@ static int cj_get_fft(uint16_t fft_points,char* cj_dst)
 	cJSON * root =  cJSON_CreateObject();
 	char *cj_src = NULL;
     float * fft_data_p = NULL;
-    uint16_t fft_n = 0;
+    uint16_t sample_cnt = 0;
 
-    fft_data_p = geo_get_fft(&fft_n);
-    fft_n = min(fft_n,fft_points);
+    fft_data_p = geo_get_fft(&sample_cnt);
 
-    cJSON_AddItemToObject(root, "fft_n", cJSON_CreateNumber(fft_n));//根节点下添加
+    sample_cnt = min(sample_cnt,fft_points);
+
+    cJSON_AddItemToObject(root, "fft_n", cJSON_CreateNumber(sample_cnt));//根节点下添加
     cJSON_AddItemToObject(root, "sample_rate", cJSON_CreateNumber(4000>>(g_sys.conf.geo.filter&0x0f)));//根节点下添加
     cJSON_AddItemToObject(root, "axis", cJSON_CreateNumber(g_sys.conf.gen.sample_channel));//根节点下添加
     if(fft_data_p != NULL)
     {
-    	cJSON_AddItemToObject(root, "fft_data", cJSON_CreateFloatArray(fft_data_p,fft_n/2));
+    	cJSON_AddItemToObject(root, "fft_data", cJSON_CreateFloatArray(fft_data_p,sample_cnt/2));
     	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
     }
     else
@@ -146,15 +147,17 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
 	extern sys_reg_st  g_sys;
 	cJSON * root =  cJSON_CreateObject();
 	char *cj_src = NULL;
-	uint16_t out_len;
+	uint16_t out_len,min_points;
 	float * time_data_p = NULL;
 
-	time_data_p = geo_get_time(&out_len,time_points);
+	time_data_p = geo_get_time(&out_len);
+
+	min_points = min(out_len,time_points);
 
     cJSON_AddItemToObject(root, "sample_cnts", cJSON_CreateNumber(out_len));//根节点下添加
     cJSON_AddItemToObject(root, "sample_rate", cJSON_CreateNumber(4000>>(g_sys.conf.geo.filter&0x0f)));//根节点下添加
     cJSON_AddItemToObject(root, "axis", cJSON_CreateNumber(g_sys.conf.gen.sample_channel));//根节点下添加
-    cJSON_AddItemToObject(root, "sample_data", cJSON_CreateFloatArray(time_data_p,out_len));
+    cJSON_AddItemToObject(root, "sample_data", cJSON_CreateFloatArray(time_data_p,min_points));
 
     if(out_len != 0)
     {
@@ -166,6 +169,7 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
     }
 
     cj_src = cJSON_PrintUnformatted(root);
+    printf("[size: %d]\n",strlen(cj_src));
     strcpy(cj_dst,cj_src);
     free(cj_src);
     cJSON_Delete(root);
@@ -322,22 +326,20 @@ esp_err_t fft_get_handler(httpd_req_t *req)
     char*  buf;
     size_t buf_len;
     char param[32];
-    uint16_t fft_n=0;
-//    float* fft_data_p=NULL;
-//    char * cj_buf = malloc(4096);
+    uint16_t sample_cnts=0;
     char * cj_buf = cjson_buf;
 
     /* Get header value string length and allocate memory for length + 1,
      * extra byte for null termination */
-    buf_len = httpd_req_get_hdr_value_len(req, "Host") + 1;
-    if (buf_len > 1) {
-        buf = malloc(buf_len);
-        /* Copy null terminated value string into buffer */
-        if (httpd_req_get_hdr_value_str(req, "Host", buf, buf_len) == ESP_OK) {
-            ESP_LOGI(TAG, "Found header => Host: %s", buf);
-        }
-        free(buf);
-    }
+//    buf_len = httpd_req_get_hdr_value_len(req, "Host") + 1;
+//    if (buf_len > 1) {
+//        buf = malloc(buf_len);
+//        /* Copy null terminated value string into buffer */
+//        if (httpd_req_get_hdr_value_str(req, "Host", buf, buf_len) == ESP_OK) {
+//            ESP_LOGI(TAG, "Found header => Host: %s", buf);
+//        }
+//        free(buf);
+//    }
 
     /* Read URL query string length and allocate memory for length + 1,
      * extra byte for null termination */
@@ -345,19 +347,19 @@ esp_err_t fft_get_handler(httpd_req_t *req)
     if (buf_len > 1) {
         buf = malloc(buf_len);
         if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
-            ESP_LOGI(TAG, "Found URL query => %s", buf);
+//            ESP_LOGI(TAG, "Found URL query => %s", buf);
             /* Get value of expected key from query string */
             if (httpd_query_key_value(buf, "sample_cnts", param, sizeof(param)) != ESP_OK) {
                 ESP_LOGI(TAG, "Found URL query parameter => sample_cnts=%d", atoi(param));
 //                ret = -1;
             }
             else
-            	fft_n = atoi(param);
+            	sample_cnts = atoi(param);
         }
         free(buf);
     }
 
-    cj_get_fft(fft_n,cj_buf);
+    cj_get_fft(sample_cnts,cj_buf);
 
     httpd_resp_send(req, cj_buf, strlen(cj_buf));
 
@@ -379,25 +381,13 @@ esp_err_t time_get_handler(httpd_req_t *req)
     uint16_t times=0;
     char * cj_buf = cjson_buf;
 
-    /* Get header value string length and allocate memory for length + 1,
-     * extra byte for null termination */
-    buf_len = httpd_req_get_hdr_value_len(req, "Host") + 1;
-    if (buf_len > 1) {
-        buf = malloc(buf_len);
-        /* Copy null terminated value string into buffer */
-        if (httpd_req_get_hdr_value_str(req, "Host", buf, buf_len) == ESP_OK) {
-            ESP_LOGI(TAG, "Found header => Host: %s", buf);
-        }
-        free(buf);
-    }
-
     /* Read URL query string length and allocate memory for length + 1,
      * extra byte for null termination */
     buf_len = httpd_req_get_url_query_len(req) + 1;
     if (buf_len > 1) {
         buf = malloc(buf_len);
         if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
-            ESP_LOGI(TAG, "Found URL query => %s", buf);
+//            ESP_LOGI(TAG, "Found URL query => %s", buf);
             /* Get value of expected key from query string */
             if (httpd_query_key_value(buf, "sample_cnts", param, sizeof(param)) != ESP_OK) {
                 ESP_LOGI(TAG, "Found URL query parameter => sample_cnts=%d", atoi(param));

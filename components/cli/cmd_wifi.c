@@ -20,7 +20,6 @@
 #include "esp_event_loop.h"
 #include "cmd_wifi.h"
 #include "mqtt_client.h"
-#include "web_sock.h"
 #include "threads.h"
 #include "sys_conf.h"
 #include "bit_op.h"

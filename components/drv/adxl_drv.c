@@ -41,7 +41,7 @@ kfifo_t 		kf_a,kf_s;
 typedef struct
 {
 	uint8_t		state;
-	uint16_t	level;
+	uint16_t	ibuf_cnt;
     float		ibuf[DEV_GEO_FIFO_SIZE];
     float		obuf[DEV_GEO_FIFO_SIZE];
 }fft_st;
@@ -73,67 +73,9 @@ static int32_t decode(uint32_t din)
 	return (int32_t)temp;
 }
 
-static int16_t calc_fft(void)
+float* geo_get_time(uint16_t *out_len)
 {
-	extern sys_reg_st  g_sys;
-	uint16_t fft_maxlevel,kbuf_size,kout_len,off;
-
-	int16_t ret = -1,i;
-	fft_maxlevel = (1<<g_sys.conf.fft.n);
-	kbuf_size = sizeof(kf_buf_s);
-
-	uint32_t * temp = malloc(kbuf_size);
-	fft_inst.state = 0;
-
-	if(g_sys.conf.fft.en == 1)
-	{
-		if(kfifo_len(&kf_s)/4 >= fft_maxlevel)
-		{
-			kout_len = kfifo_out_peek(&kf_s,temp,kbuf_size);
-			off = kout_len/4 - fft_maxlevel;
-			for(i=0;i<fft_maxlevel;i++)
-			{
-				fft_inst.ibuf[i] = (float)decode(*(temp+off+i))*0.0000039;
-			}
-			fft_new(fft_maxlevel);
-			fft_calc(fft_inst.ibuf,fft_inst.obuf);
-			printf("in:%f,%f,%f\n",fft_inst.ibuf[0],fft_inst.ibuf[1],fft_inst.ibuf[2]);
-			printf("out:%f,%f,%f\n",fft_inst.obuf[0],fft_inst.obuf[1],fft_inst.obuf[2]);
-
-			g_sys.conf.fft.en = 0;
-			fft_inst.state = 1;
-			fft_inst.level = fft_maxlevel;
-			ret = 0;
-		}
-		else
-			ret = -2;
-	}
-	else
-		ret = -1;
-	free(temp);
-	return ret;
-}
-
-float* geo_get_fft(uint16_t* fft_len)
-{
-	if(fft_inst.state == 1)
-	{
-		*fft_len = fft_inst.level;
-		fft_inst.state = 0;
-		return fft_inst.obuf;
-	}
-	else
-	{
-		*fft_len = 0;
-		return NULL;
-	}
-}
-
-float* geo_get_time(uint16_t *out_len,uint16_t get_len)
-{
-	extern sys_reg_st  g_sys;
-
-	uint16_t min_len,kbuf_size,kout_len,off,i;
+	uint16_t kbuf_size,kout_len,i;
 
 	kbuf_size = sizeof(kf_buf_s);
 
@@ -144,18 +86,42 @@ float* geo_get_time(uint16_t *out_len,uint16_t get_len)
 	if(kout_len ==0)
 		return NULL;
 
-	min_len = min(kout_len/4,get_len);
+	fft_inst.ibuf_cnt = kout_len/4;
 
-	*out_len = min_len;
+	*out_len = fft_inst.ibuf_cnt;
 
-	off = kout_len/4 - min_len;
-
-	for(i=0;i<min_len;i++)
-		fft_inst.ibuf[i] = (float)decode(*(temp+off+i))*0.0000039;
+	for(i=0;i<fft_inst.ibuf_cnt;i++)
+		fft_inst.ibuf[i] = (float)decode(*(temp+i))*0.0000039;
 
 	free(temp);
-	return fft_inst.obuf;
+	return fft_inst.ibuf;
 }
+
+float* geo_get_fft(uint16_t* fft_len)
+{
+	extern sys_reg_st  g_sys;
+	uint16_t fft_max = 0,off;
+
+	fft_max = (1<<g_sys.conf.fft.n);
+
+	off = fft_inst.ibuf_cnt - min(fft_max,fft_inst.ibuf_cnt);
+
+	if(fft_inst.ibuf_cnt > 0)
+	{
+		fft_new(1<<g_sys.conf.fft.n);
+		fft_calc((fft_inst.ibuf+off),fft_inst.obuf);
+		fft_inst.state = 1;
+		*fft_len = fft_inst.ibuf_cnt;
+		return fft_inst.obuf;
+	}
+	else
+	{
+		fft_inst.state = 0;
+		*fft_len = 0;
+		return NULL;
+	}
+}
+
 
 void geo_ds_init(void)
 {
@@ -222,7 +188,7 @@ void adxl_init(void)
     };
     spi_device_interface_config_t devcfg=
     {
-        .clock_speed_hz=16*1000*1000,           //Clock out at 10 MHz
+        .clock_speed_hz=16*1000*1000,           //Clock out at 16 MHz
         .mode=0,                                //SPI mode 0
         .spics_io_num=PIN_NUM_CS,               //CS pin
         .queue_size=7,                          //We want to be able to queue 7 transactions at a time
@@ -308,7 +274,7 @@ static int16_t raw_data_buf(uint32_t din, uint8_t axis)
 			if(!(din & 0x1))
 			{
 				dbuf[2] = din;
-				if(kfifo_len(&kf_s) >=  kf_s.size -sizeof(uint32_t))
+				if(kfifo_len(&kf_s) >=  kf_s.size)
 					kfifo_out(&kf_s,&dummy,sizeof(uint32_t));
 				kfifo_in(&kf_s,&dbuf[axis],sizeof(uint32_t));
 
@@ -345,7 +311,7 @@ void adxl355_scanfifo(void)
 
     status = adxl_rd_reg(ADXL_STATUS,rxd_temp,1);
     if((status&0x6) != 0)
-    	printf("adxl_fifo fuov!\n");
+    	printf("af f!\n");
 
     sample_cnt = adxl_rd_reg(ADXL_FIFO_ENTRIES,rxd_temp,1);
 
@@ -361,14 +327,7 @@ void adxl355_scanfifo(void)
 //            if(err_no != 0)
 //            	printf("geo missing code:%d\n",err_no);
         }
-		if(g_sys.conf.fft.en == 1)
-		{
-			err_no = calc_fft();
-			if(err_no == 0)
-				printf("fft done!\n");
-		}
     }
-
 }
 
 static int adxl_info(int argc, char **argv)

@@ -13,41 +13,17 @@ typedef struct
 {	
     uint32_t 		sample_mode;
     uint32_t 		sample_channel;
-//    uint32_t 		temp_offset;
-//    uint32_t 		temp_win;
 }conf_gen_st;
 
-typedef struct
-{
-    uint32_t 	enable;
-    uint32_t 	baudrate;
-    uint32_t    sample_period;
-    uint32_t 	dev_bitmap_holding;         //0: disable; 1:enable
-    uint32_t 	dev_bitmap_input;           //0: disable; 1:enable
-    uint32_t    plc_bitmap;
-    uint32_t    arr_slave_hbase_regn[MBM_TOTAL_SLAVE_NUM];
-    uint32_t    arr_slave_ibase_regn[MBM_TOTAL_SLAVE_NUM];    
-}conf_mbm_st;
 
 typedef struct
 {
     uint32_t    tcp_en;
     uint32_t    tcp_period;
-//    uint32_t    reconnect_period;
-//    uint32_t    dhcp_en;
-//    uint32_t    remote_ip;
-//    uint32_t    remote_port;
-//    uint32_t    local_ip;
-//    uint32_t    local_gateway;
-//    uint32_t    local_mask;
-//    uint32_t    local_port;
-//    uint32_t    dns_server;
-//    uint32_t    dns_en;
 }conf_eth_st;
 
 typedef struct
 {
-	uint32_t    en;
     uint32_t    n;
     uint32_t    win;
 }conf_fft_st;
@@ -62,16 +38,7 @@ typedef struct
 
 typedef struct
 {
-    uint32_t    plc;
-    uint32_t    eth;
-    uint32_t    mbm;
-}conf_dbg_st;
-
-typedef struct
-{
     conf_gen_st gen;
-    conf_dbg_st dbg;
-    conf_mbm_st mbm;
     conf_eth_st eth;
     conf_geo_st geo;
     conf_fft_st fft;
@@ -85,29 +52,7 @@ typedef struct
     uint32_t    software_ver;
     uint32_t    hardware_ver;
     uint32_t    status_bm;
-    uint32_t    reset_counts;
-    uint32_t 	time;
-    uint32_t    lcd_type;
 }stat_gen_st;
-
-typedef struct
-{	
-	uint32_t 	plc_bitmap;
-}stat_mbm_st;
-
-typedef struct
-{	
-    uint32_t    server_ip;
-    uint32_t    dns_ip;
-}stat_eth_st;
-
-typedef struct
-{	
-    char    ssid[32];
-    char    pwd[32];
-    size_t	slen;
-    size_t	plen;
-}stat_wifi_st;
 
 typedef struct
 {
@@ -119,9 +64,6 @@ typedef struct
 typedef struct
 {
 	stat_gen_st 	gen;
-    stat_mbm_st 	mbm;
-    stat_eth_st 	eth;
-    stat_wifi_st 	wifi;
     stat_man_st 	man;
 }status_st;
 
