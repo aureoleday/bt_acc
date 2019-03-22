@@ -6,7 +6,7 @@
 #include "esp_timer.h"
 #include "esp_log.h"
 #include "adxl_drv.h"
-//#include "drv_adxl355.h"
+#include "modulator.h"
 
 //extern sys_reg_st g_sys;
 //
@@ -110,5 +110,30 @@ uint16_t geo_pwr_opt(uint32_t pram)
     return 1;
 }
 
+uint16_t mod_en_opt(uint32_t pram)
+{
+    uint8_t data = pram&0x0ff;
 
+    mod_en(data);
+
+    return 1;
+}
+
+uint16_t mod_volum_opt(uint32_t pram)
+{
+    uint8_t data = pram&0x0ff;
+
+    mod_volum_mdf(data);
+
+    return 1;
+}
+
+uint16_t mod_freq_opt(uint32_t pram)
+{
+    uint8_t data = pram&0x0ff;
+
+    mod_volum_mdf(data);
+
+    return 1;
+}
 

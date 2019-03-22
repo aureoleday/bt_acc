@@ -39,9 +39,17 @@ typedef struct
 
 typedef struct
 {
+    uint32_t    enable;
+    uint32_t    volum;
+    uint32_t    freq;
+}conf_mod_st;
+
+typedef struct
+{
     conf_gen_st gen;
     conf_eth_st eth;
     conf_geo_st geo;
+    conf_mod_st mod;
     conf_fft_st fft;
 }config_st;
 

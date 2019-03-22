@@ -47,12 +47,14 @@
 
 void join_wifi(void)
 {
-    char ssid[24];
-    char pwd[24];
-    size_t slen,plen;
+	char ssid[24];
+	char lcssid[24];
+	char pwd[24];
+	char lcpwd[24];
+    size_t slen,lslen,plen,lplen;
     wifi_config_t wifi_config = { 0 };
 
-    get_wifi_info(ssid,pwd,&slen,&plen);
+    get_wifi_info(ssid,lcssid,pwd,lcpwd,&slen,&lslen,&plen,&lplen);
 
     printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,slen,plen);
     printf("connecting to station: %s...\n",ssid);

@@ -24,6 +24,7 @@
 #include "sys_conf.h"
 #include "bit_op.h"
 #include "web_srv.h"
+#include "global_var.h"
 
 #include "nvs_flash.h"
 #include "nvs.h"
@@ -190,15 +191,34 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 
 static void initialise_wifi(void* arg)
 {
-	wifi_config_t wifi_config = {
-		.ap = {
-			.ssid = "geo_acc",
-			.ssid_len = 7,
-			.max_connection = 4,
-			.password = "12345678",
-			.authmode = WIFI_AUTH_WPA_WPA2_PSK
-		},
-	};
+
+	char ssid[24];
+	char lcssid[24];
+	char pwd[24];
+	char lcpwd[24];
+    size_t slen,lslen,plen,lplen;
+    wifi_config_t wifi_config = { 0 };
+
+    get_wifi_info(ssid,lcssid,pwd,lcpwd,&slen,&lslen,&plen,&lplen);
+
+    printf("ap ssid:%s,pwd:%s\n",lcssid,lcpwd);
+
+    strncpy((char*) wifi_config.ap.ssid, lcssid, lslen-1);
+    strncpy((char*) wifi_config.ap.password, lcpwd, lplen-1);
+
+    wifi_config.ap.max_connection = 4;
+    wifi_config.ap.authmode = WIFI_AUTH_WPA_WPA2_PSK;
+
+//	wifi_config_t wifi_config = {
+//		.ap = {
+//			.ssid = "geo_acc",
+//			.ssid_len = 7,
+//			.max_connection = 4,
+//			.password = "12345678",
+//			.authmode = WIFI_AUTH_WPA_WPA2_PSK
+//		},
+//	};
+
     esp_log_level_set("wifi", ESP_LOG_WARN);
     static bool initialized = false;
     if (initialized) {

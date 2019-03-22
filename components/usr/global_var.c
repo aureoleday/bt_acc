@@ -26,10 +26,10 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	5,		&g_sys.conf.geo.sample_period,               0,		    1000,           5,			    0,      NULL              },
 	{	6,		&g_sys.conf.geo.filter,                      0,		    255,            36,			    0,      geo_filter_opt    },
 	{	7,		&g_sys.conf.fft.n,		                     2,		    10,             10,			    0,      NULL       		  },
-	{	8,  	NULL,                                        0,		    0,				0,				0,      NULL   	          },
-	{	9,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
-	{	10,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
-	{	11,		&g_sys.conf.eth.tcp_en,               		 0,		    1,				1,				0,      NULL   	          },
+	{	8,  	&g_sys.conf.mod.enable,                      0,		    1,				0,				0,      mod_en_opt        },
+	{	9,		&g_sys.conf.mod.volum,                       0,		    1,				0,				0,      mod_volum_opt     },
+	{	10,		&g_sys.conf.mod.freq,                        0,		    1,				0,				0,      mod_freq_opt      },
+	{	11,		&g_sys.conf.eth.tcp_en,               		 0,		    1,				0,				0,      NULL   	          },
 	{	12,   	&g_sys.conf.eth.tcp_period,                  1,		    0xffffffff,		30,			    0,      NULL     		  },
 	{	13,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	14,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
@@ -46,7 +46,7 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	25,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	26,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	27,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
-	{	28,		NULL,                                        0,		    0xffffffff,     0,				1,      set_timestamp     },
+	{	28,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	29,		NULL,                                        1,		    2,				0,				1,      save_conf_opt     },
 	{	30,		NULL,                                        1,		    4,				0,				1,      set_boot_opt   	  },
 	{	31,		NULL,                                        0,		    0xffffffff,		0,				1,      sys_reset_opt     }
@@ -293,7 +293,7 @@ static int load_conf(const char *load_type)
     return ESP_OK;
 }
 
-static int save_wifi(const char *ssid, const char *pwd)
+static int save_station(const char *ssid, const char *pwd)
 {
 	nvs_handle my_handle;
 	esp_err_t err;
@@ -314,7 +314,28 @@ static int save_wifi(const char *ssid, const char *pwd)
     return ESP_OK;
 }
 
-int get_wifi_info(char* ssid, char* pwd, size_t* s_len, size_t* p_len)
+static int save_ap(const char *ssid, const char *pwd)
+{
+	nvs_handle my_handle;
+	esp_err_t err;
+
+    // Open
+    err = nvs_open(WIFI_NAMESPACE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) return err;
+
+    nvs_set_str(my_handle,"lcssid",ssid);
+    nvs_set_str(my_handle,"lcpwd",pwd);
+
+    // Commit
+    err = nvs_commit(my_handle);
+    if (err != ESP_OK) return err;
+
+    // Close
+    nvs_close(my_handle);
+    return ESP_OK;
+}
+
+int get_wifi_info(char* ssid, char* lcssid, char* pwd, char* lcpwd, size_t* s_len, size_t* ls_len, size_t* p_len, size_t* lp_len)
 {
 	nvs_handle my_handle;
 	esp_err_t err;
@@ -326,8 +347,14 @@ int get_wifi_info(char* ssid, char* pwd, size_t* s_len, size_t* p_len)
     nvs_get_str(my_handle,"ssid",ssid,s_len);
     nvs_get_str(my_handle,"ssid",ssid,s_len);
 
+    nvs_get_str(my_handle,"lcssid",lcssid,ls_len);
+    nvs_get_str(my_handle,"lcssid",lcssid,ls_len);
+
     nvs_get_str(my_handle,"wpwd",pwd,p_len);
     nvs_get_str(my_handle,"wpwd",pwd,p_len);
+
+    nvs_get_str(my_handle,"lcpwd",lcpwd,lp_len);
+    nvs_get_str(my_handle,"lcpwd",lcpwd,lp_len);
 
     // Close
     nvs_close(my_handle);
@@ -350,7 +377,7 @@ static struct {
     struct arg_end *end;
 } wifi_args;
 
-static int save_wifi_arg(int argc, char **argv)
+static int save_station_arg(int argc, char **argv)
 {
     esp_err_t err;
 
@@ -360,21 +387,36 @@ static int save_wifi_arg(int argc, char **argv)
         return 1;
     }
 
-    err = save_wifi(wifi_args.ssid->sval[0],wifi_args.pwd->sval[0]);
+    err = save_station(wifi_args.ssid->sval[0],wifi_args.pwd->sval[0]);
     return err;
 }
+
+static int save_ap_arg(int argc, char **argv)
+{
+    esp_err_t err;
+
+    int nerrors = arg_parse(argc, argv, (void**) &wifi_args);
+    if (nerrors != 0) {
+        arg_print_errors(stderr, wifi_args.end, argv[0]);
+        return 1;
+    }
+
+    err = save_ap(wifi_args.ssid->sval[0],wifi_args.pwd->sval[0]);
+    return err;
+}
+
 
 int print_wifi(int argc, char **argv)
 {
     esp_err_t err = 0;
     char ssid[32];
+    char lcssid[32];
     char pwd[32];
-    size_t slen,plen;
+    char lcpwd[32];
+    size_t slen,lslen,plen,lplen;
 
-//    get_wifi_info(ssid,pwd,&slen,&plen);
-//    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,slen,plen);
-    get_wifi_info(ssid,pwd,&slen,&plen);
-    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,slen,plen);
+    get_wifi_info(ssid,lcssid,pwd,lcpwd,&slen,&lslen,&plen,&lplen);
+    printf("saved ssid:%s, lcssid:%s, pwd:%s, lcpwd:%s,s_len:%d,ls_len:%d,p_len:%d,lp_len:%d\n",ssid,lcssid,pwd,lcpwd,slen,lslen,plen,lplen);
     return err;
 }
 
@@ -572,16 +614,31 @@ static void register_wr_reg()
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
 }
 
-static void register_save_wifi()
+static void register_save_station()
 {
 	wifi_args.ssid = arg_str1(NULL, NULL, "<ssid>", "ssid of AP");
 	wifi_args.pwd = arg_str0(NULL, NULL, "<pwd>", "psk of AP");
 	wifi_args.end = arg_end(2);
     const esp_console_cmd_t cmd = {
-        .command = "save_wifi",
+        .command = "save_station",
         .help = "save ssid and pwd",
         .hint = NULL,
-        .func = &save_wifi_arg,
+        .func = &save_station_arg,
+		.argtable = &wifi_args
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
+static void register_save_ap()
+{
+	wifi_args.ssid = arg_str1(NULL, NULL, "<ssid>", "ssid of MYAP");
+	wifi_args.pwd = arg_str0(NULL, NULL, "<pwd>", "psk of MYAP");
+	wifi_args.end = arg_end(2);
+    const esp_console_cmd_t cmd = {
+        .command = "save_ap",
+        .help = "save ssid and pwd",
+        .hint = NULL,
+        .func = &save_ap_arg,
 		.argtable = &wifi_args
     };
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
@@ -605,7 +662,8 @@ void gvar_register(void)
 	register_save_conf();
 	register_print_conf();
 	register_load_conf();
-	register_save_wifi();
+	register_save_station();
+	register_save_ap();
 	register_print_wifi();
 }
 
