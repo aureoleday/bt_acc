@@ -76,6 +76,8 @@ void test_thread(void* param)
 	while(1)
 	{
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
+		if(g_sys.conf.gen.restart == 9527)
+			esp_restart();
 	}
 }
 

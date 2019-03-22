@@ -77,9 +77,6 @@ static int cj_rd_reg(uint16_t reg_addr,uint16_t reg_cnt, char* cj_dst)
     	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
     }
 
-
-
-
     cj_src = cJSON_PrintUnformatted(root);
     strcpy(cj_dst,cj_src);
     free(cj_src);

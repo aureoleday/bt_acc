@@ -8,6 +8,8 @@ uint16_t sys_local_var_init(void);
 void gvar_register(void);
 void init_load_status(void);
 uint8_t reset_runtime(uint16_t param);
+int save_conf(const char *save_type);
+int load_conf(const char *load_type);
 uint8_t load_factory_pram(void);
 int32_t gvar_init(void);
 int get_wifi_info(char* ssid, char* lcssid, char* pwd, char* lcpwd, size_t* s_len, size_t* ls_len, size_t* p_len, size_t* lp_len);

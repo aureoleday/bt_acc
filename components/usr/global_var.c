@@ -47,9 +47,9 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	26,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	27,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	28,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
-	{	29,		NULL,                                        1,		    2,				0,				1,      save_conf_opt     },
-	{	30,		NULL,                                        1,		    4,				0,				1,      set_boot_opt   	  },
-	{	31,		NULL,                                        0,		    0xffffffff,		0,				1,      sys_reset_opt     }
+	{	29,		NULL,                                        0,		    1,				0,				1,      save_conf_opt     },
+	{	30,		NULL,                                        0,		    1,				0,				1,      load_conf_opt     },
+	{	31,		&g_sys.conf.gen.restart,                     0,		    0xffffffff,		0,				1,      NULL     		  }
 };      
  
 
@@ -210,7 +210,7 @@ uint16 reg_map_read(uint16 reg_addr,uint32_t* reg_data,uint8_t read_cnt)
     return err_code;
 }
 
-static int save_conf(const char *save_type)
+int save_conf(const char *save_type)
 {
 	nvs_handle my_handle;
 	esp_err_t err;
@@ -246,7 +246,7 @@ static int save_conf(const char *save_type)
     return ESP_OK;
 }
 
-static int load_conf(const char *load_type)
+int load_conf(const char *load_type)
 {
 	nvs_handle my_handle;
 	esp_err_t err;

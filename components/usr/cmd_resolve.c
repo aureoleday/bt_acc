@@ -648,8 +648,8 @@ uint16_t report_data(void)
     cmd_reg_inst.tx_cmd	= CMD_RP_PKG;
     cmd_reg_inst.tx_cnt = rd_cnt;
     cmd_reg_inst.tx_errcode = err_code;
-		cmd_response();
-		return err_code;
+	cmd_response();
+	return err_code;
 }
 
 //static int16_t get_geo_data(uint32_t * buf_ptr)

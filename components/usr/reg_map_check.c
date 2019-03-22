@@ -8,6 +8,8 @@
 #include "adxl_drv.h"
 #include "modulator.h"
 
+
+
 //extern sys_reg_st g_sys;
 //
 uint16_t dhcp_trigger(uint32_t pram)
@@ -16,12 +18,17 @@ uint16_t dhcp_trigger(uint32_t pram)
     return 1;
 }
 
-uint16_t sys_reset_opt(uint32_t pram)
-{  
-	if(pram == 0x9527)
-		esp_restart();
-    return 1;
-}
+//static void reset_timeout(void* arg)
+//{
+//	printf("restart1\n");
+//	esp_restart();
+//}
+//
+//static esp_timer_handle_t reset_timer;
+//uint16_t sys_reset_opt(uint32_t pram)
+//{
+//
+//}
 
 uint16_t set_boot_opt(uint32_t pram)
 {  
@@ -32,11 +39,22 @@ uint16_t set_boot_opt(uint32_t pram)
 
 uint16_t save_conf_opt(uint32_t pram)
 {  
-//    save_conf((uint8_t)pram);
-//    rt_kprintf("set save opt: %d\n", pram);
+	if(pram == 1)
+	{
+		save_conf("usr");
+	}
     return 1;
 }
 
+uint16_t load_conf_opt(uint32_t pram)
+{
+	if(pram == 1)
+	{
+		load_conf("x");
+		save_conf("usr");
+	}
+    return 1;
+}
 
 uint16_t set_timestamp(uint32_t pram)
 {

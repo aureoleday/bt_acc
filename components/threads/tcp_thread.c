@@ -140,56 +140,6 @@ void tcp_thread(void *pvParameters)
 	vTaskDelete(NULL);
 }
 
-
-//			while (1)
-//			{
-//				int len = recv(sock, rx_buffer, sizeof(rx_buffer) - 1, 0);
-//				// Error occured during receiving
-//				if (len < 0) {
-//					ESP_LOGE(TAG, "recv failed: errno %d", errno);
-//					break;
-//				}
-//				// Connection closed
-//				else if (len == 0) {
-//					ESP_LOGI(TAG, "Connection closed");
-//					break;
-//				}
-//				// Data received
-//				else
-//				{
-//					// Get the sender's ip address as string
-//					if (sourceAddr.sin6_family == PF_INET)
-//					{
-//						inet_ntoa_r(((struct sockaddr_in *)&sourceAddr)->sin_addr.s_addr, addr_str, sizeof(addr_str) - 1);
-//					}
-//					else if (sourceAddr.sin6_family == PF_INET6)
-//					{
-//						inet6_ntoa_r(sourceAddr.sin6_addr, addr_str, sizeof(addr_str) - 1);
-//					}
-//
-//					rx_buffer[len] = 0; // Null-terminate whatever we received and treat like a string
-//					ESP_LOGI(TAG, "Received %d bytes from %s:", len, addr_str);
-//					ESP_LOGI(TAG, "%s", rx_buffer);
-//
-//					/*int err = send(sock, rx_buffer, len, 0);
-//					if (err < 0) {
-//						ESP_LOGE(TAG, "Error occured during sending: errno %d", errno);
-//						break;
-//					}*/
-//				}
-//			}
-//
-//		if (sock != -1)
-//		{
-//			ESP_LOGE(TAG, "Shutting down socket and restarting...");
-//			shutdown(sock, 0);
-//			close(sock);
-//        }
-//    }
-//    vTaskDelete(NULL);
-//}
-
-
 static void tcp_tx_thread(void* parameter)
 {
     int t_sock,i,ret;
