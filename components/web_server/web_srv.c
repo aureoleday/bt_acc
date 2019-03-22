@@ -173,6 +173,31 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
     return strlen(cj_src);
 }
 
+static int cj_get_fft_peak(char* cj_dst)
+{
+	extern fft_st fft_inst;
+	cJSON * root =  cJSON_CreateObject();
+	char *cj_src = NULL;
+
+    cJSON_AddItemToObject(root, "freq_arr", cJSON_CreateFloatArray(fft_inst.freq_arr,fft_inst.arr_cnt));
+    cJSON_AddItemToObject(root, "ampl_arr", cJSON_CreateFloatArray(fft_inst.ampl_arr,fft_inst.arr_cnt));
+
+    if(fft_inst.arr_cnt != 0)
+    {
+    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
+    }
+    else
+    {
+    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
+    }
+
+    cj_src = cJSON_PrintUnformatted(root);
+    strcpy(cj_dst,cj_src);
+    free(cj_src);
+    cJSON_Delete(root);
+    return strlen(cj_src);
+}
+
 esp_err_t rd_reg_get_handler(httpd_req_t *req)
 {
     char*  buf;
@@ -409,6 +434,43 @@ httpd_uri_t time = {
     .user_ctx  = NULL
 };
 
+esp_err_t pfft_get_handler(httpd_req_t *req)
+{
+    size_t buf_len;
+    char * cj_buf = cjson_buf;
+
+    /* Read URL query string length and allocate memory for length + 1,
+     * extra byte for null termination */
+    buf_len = httpd_req_get_url_query_len(req) + 1;
+    if (buf_len > 1) {
+//        buf = malloc(buf_len);
+//        if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
+////            ESP_LOGI(TAG, "Found URL query => %s", buf);
+//            /* Get value of expected key from query string */
+//            if (httpd_query_key_value(buf, "sample_cnts", param, sizeof(param)) != ESP_OK) {
+//                ESP_LOGI(TAG, "Found URL query parameter => sample_cnts=%d", atoi(param));
+//            }
+//            else
+//            	times = atoi(param);
+//        }
+//        free(buf);
+    	ESP_LOGI(TAG, "FFT PEAK REQ");
+    }
+
+    cj_get_fft_peak(cj_buf);
+
+    httpd_resp_send(req, cj_buf, strlen(cj_buf));
+
+    return ESP_OK;
+}
+
+httpd_uri_t fft_peak = {
+    .uri       = "/fft_peak",
+    .method    = HTTP_GET,
+    .handler   = pfft_get_handler,
+    .user_ctx  = NULL
+};
+
 /* An HTTP POST handler */
 esp_err_t timeb_post_handler(httpd_req_t *req)
 {
@@ -549,6 +611,7 @@ httpd_handle_t start_webserver(void)
         httpd_register_uri_handler(server, &rd_reg);
         httpd_register_uri_handler(server, &wr_reg);
         httpd_register_uri_handler(server, &fft);
+        httpd_register_uri_handler(server, &fft_peak);
         httpd_register_uri_handler(server, &fftb);
         httpd_register_uri_handler(server, &time);
         httpd_register_uri_handler(server, &timeb);

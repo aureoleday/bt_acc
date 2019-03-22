@@ -29,22 +29,13 @@
 #define PIN_NUM_CLK  18
 #define PIN_NUM_CS   5
 
-#define DEV_GEO_RTX_SIZE    512
-#define DEV_GEO_FIFO_SIZE   2048
+
 
 static uint8_t 	rxd_temp[DEV_GEO_RTX_SIZE];
 static uint8_t 	kf_buf_a[DEV_GEO_FIFO_SIZE];
 static uint8_t 	kf_buf_s[DEV_GEO_FIFO_SIZE*4];
 kfifo_t 		kf_a,kf_s;
 
-
-typedef struct
-{
-	uint8_t		state;
-	uint16_t	ibuf_cnt;
-    float		ibuf[DEV_GEO_FIFO_SIZE];
-    float		obuf[DEV_GEO_FIFO_SIZE];
-}fft_st;
 
 typedef struct
 {
@@ -97,6 +88,50 @@ float* geo_get_time(uint16_t *out_len)
 	return fft_inst.ibuf;
 }
 
+
+static void fft_max_ind(void)
+{
+	extern sys_reg_st  g_sys;
+	uint16_t fft_max = 0,i;
+
+	float max_temp;
+	float max_ind;
+//	float tt1;
+
+	fft_max = (1<<g_sys.conf.fft.n);
+	max_temp = fft_inst.obuf[0];
+	max_ind = 0.001;
+	for(i=1;i<fft_max;i++)
+	{
+		if(max_temp < fft_inst.obuf[i])
+		{
+			max_temp = fft_inst.obuf[i];
+			max_ind = ((float)4000/(float)((1<<(g_sys.conf.geo.filter&0x0f))<<g_sys.conf.fft.n))*(float)i;
+		}
+	}
+//	tt0 = (1<<(g_sys.conf.geo.filter&0x0f))<<g_sys.conf.fft.n;
+//	tt1 =((float)4000/(float)tt0);
+//	printf("i:%d,filt:%x\n",i,g_sys.conf.geo.filter);
+//	printf("freq:%f,ampl:%f,tt1:%f,tt0:%d\n",max_ind,max_temp,tt1,tt0);
+
+	if(fft_inst.arr_cnt <16)
+	{
+		fft_inst.ampl_arr[fft_inst.arr_cnt] = max_temp;
+		fft_inst.freq_arr[fft_inst.arr_cnt] = max_ind;
+		fft_inst.arr_cnt++;
+	}
+	else
+	{
+		for(i=0;i<15;i++)
+		{
+			fft_inst.ampl_arr[i] = fft_inst.ampl_arr[i+1];
+			fft_inst.freq_arr[i] = fft_inst.freq_arr[i+1];
+		}
+		fft_inst.ampl_arr[15] = max_temp;
+		fft_inst.freq_arr[15] = max_ind;
+	}
+}
+
 float* geo_get_fft(uint16_t* fft_len)
 {
 	extern sys_reg_st  g_sys;
@@ -112,6 +147,7 @@ float* geo_get_fft(uint16_t* fft_len)
 		fft_calc((fft_inst.ibuf+off),fft_inst.obuf);
 		fft_inst.state = 1;
 		*fft_len = fft_inst.ibuf_cnt;
+		fft_max_ind();
 		return fft_inst.obuf;
 	}
 	else
@@ -126,6 +162,13 @@ float* geo_get_fft(uint16_t* fft_len)
 void geo_ds_init(void)
 {
 	kf_init();
+	fft_inst.arr_cnt = 0;
+	for(int i=0;i<16;i++)
+	{
+		fft_inst.freq_arr[i] = 0.00000001;
+		fft_inst.ampl_arr[i] = 0.00000001;
+	}
+
 }
 
 uint8_t adxl_wr_reg(uint8_t addr, uint8_t data)
@@ -344,18 +387,32 @@ static int adxl_info(int argc, char **argv)
 	return 0;
 }
 
+//static int fft_info(int argc, char **argv)
+//{
+//	uint32_t temp[16];
+//	int len;
+//	int i;
+//	for(i=0;i<16;i++)
+//		temp[i] = 0;
+//	len = kfifo_out_peek(&kf_s,temp,16*4);
+//	for(i=0;i<16;i++)
+//	{
+//		printf("%d:%x\n",i,temp[i]);
+//	}
+//	printf("rd len:%d\n",len);
+//
+//	return 0;
+//}
+
 static int fft_info(int argc, char **argv)
 {
-	uint32_t temp[16];
-	int len;
-	int i;
-	for(i=0;i<16;i++)
-		temp[i] = 0;
-	len = kfifo_out_peek(&kf_s,temp,16*4);
-	for(i=0;i<16;i++)
-		printf("%d:%x\n",i,temp[i]);
-	printf("rd len:%d\n",len);
 
+	int i;
+	printf("ind\tfreq\t\tamp\n");
+	for(i=0;i<16;i++)
+	{
+		printf("%d\t%f\t%f\n",i,fft_inst.freq_arr[i],fft_inst.ampl_arr[i]);
+	}
 	return 0;
 }
 
