@@ -144,17 +144,26 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
 	extern sys_reg_st  g_sys;
 	cJSON * root =  cJSON_CreateObject();
 	char *cj_src = NULL;
-	uint16_t out_len,min_points;
+	uint16_t out_len,get_points,offset;
 	float * time_data_p = NULL;
 
 	time_data_p = geo_get_time(&out_len);
 
-	min_points = min(out_len,time_points);
+	if(out_len > time_points)
+	{
+		offset = out_len - time_points;
+		get_points = time_points;
+	}
+	else
+	{
+		offset = 0;
+		get_points = out_len;
+	}
 
     cJSON_AddItemToObject(root, "sample_cnts", cJSON_CreateNumber(out_len));//根节点下添加
     cJSON_AddItemToObject(root, "sample_rate", cJSON_CreateNumber(4000>>(g_sys.conf.geo.filter&0x0f)));//根节点下添加
     cJSON_AddItemToObject(root, "axis", cJSON_CreateNumber(g_sys.conf.gen.sample_channel));//根节点下添加
-    cJSON_AddItemToObject(root, "sample_data", cJSON_CreateFloatArray(time_data_p,min_points));
+    cJSON_AddItemToObject(root, "sample_data", cJSON_CreateFloatArray((float*)(time_data_p+offset),get_points));
 
     if(out_len != 0)
     {

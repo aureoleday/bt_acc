@@ -10,11 +10,12 @@
 #include "my_fft.h"
 #include "kfifo.h"
 #include "global_var.h"
+#include "modulator.h"
 
 //#define MEOW_FFT_IMPLEMENTAION
 //
 //#include "meow_fft.h"
-
+//
 //const float sine_wave[64] = { 	0.   ,  0.098,  0.195,  0.29 ,  0.383,  0.471,  0.556,  0.634,
 //								0.707,  0.773,  0.831,  0.882,  0.924,  0.957,  0.981,  0.995,
 //								1.   ,  0.995,  0.981,  0.957,  0.924,  0.882,  0.831,  0.773,
@@ -70,6 +71,7 @@ void test_thread(void* param)
 {
 	extern sys_reg_st  g_sys;
 	vTaskDelay(5000 / portTICK_PERIOD_MS);
+//	fft_test1();
 	if(g_sys.conf.gen.wifi_mode == 1)
 		join_wifi();
 

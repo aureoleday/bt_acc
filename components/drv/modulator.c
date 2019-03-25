@@ -7,15 +7,17 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
+#include "global_var.h"
 
-#define MOD_FREQ_INC 	12
-#define MOD_FREQ_DEC 	14
-#define MOD_PWR_INC 	27
-#define MOD_PWR_DEC 	26
-#define MOD_EN		 	25
+#define MOD_FREQ_INC 	14
+#define MOD_FREQ_DEC 	27
+#define MOD_PWR_INC 	26
+#define MOD_PWR_DEC 	25
+#define MOD_EN		 	33
 
 #define GPIO_OUTPUT_PIN_SEL ((1ULL<<MOD_FREQ_INC) | (1ULL<<MOD_FREQ_DEC) | (1ULL<<MOD_PWR_INC) | (1ULL<<MOD_PWR_DEC) | (1ULL<<MOD_EN))
 
+extern sys_reg_st  g_sys;
 
 void mod_init(void)
 {
@@ -45,9 +47,9 @@ void mod_en(uint8_t enable)
 	if(enable == 1)
 	{
 		gpio_set_level(MOD_EN, 1);
-		vTaskDelay(100 / portTICK_PERIOD_MS);
+		vTaskDelay(g_sys.conf.mod.setup_time / portTICK_PERIOD_MS);
 		gpio_set_level(MOD_EN, 0);
-		vTaskDelay(200 / portTICK_PERIOD_MS);
+		vTaskDelay(g_sys.conf.mod.hold_time / portTICK_PERIOD_MS);
 		gpio_set_level(MOD_EN, 1);
 	}
 }
@@ -57,17 +59,17 @@ void mod_volum_mdf(uint8_t dir)
 	if(dir == 1)
 	{
 		gpio_set_level(MOD_PWR_INC, 1);
-		vTaskDelay(100 / portTICK_PERIOD_MS);
+		vTaskDelay(g_sys.conf.mod.setup_time / portTICK_PERIOD_MS);
 		gpio_set_level(MOD_PWR_INC, 0);
-		vTaskDelay(200 / portTICK_PERIOD_MS);
+		vTaskDelay(g_sys.conf.mod.hold_time / portTICK_PERIOD_MS);
 		gpio_set_level(MOD_PWR_INC, 1);
 	}
 	else if(dir == 0)
 	{
 		gpio_set_level(MOD_PWR_DEC, 1);
-		vTaskDelay(100 / MOD_PWR_DEC);
-		gpio_set_level(MOD_PWR_INC, 0);
-		vTaskDelay(200 / portTICK_PERIOD_MS);
+		vTaskDelay(g_sys.conf.mod.setup_time / portTICK_PERIOD_MS);
+		gpio_set_level(MOD_PWR_DEC, 0);
+		vTaskDelay(g_sys.conf.mod.hold_time / portTICK_PERIOD_MS);
 		gpio_set_level(MOD_PWR_DEC, 1);
 	}
 }
@@ -77,17 +79,17 @@ void mod_freq_mdf(uint8_t dir)
 	if(dir == 1)
 	{
 		gpio_set_level(MOD_FREQ_INC, 1);
-		vTaskDelay(100 / portTICK_PERIOD_MS);
+		vTaskDelay(g_sys.conf.mod.setup_time / portTICK_PERIOD_MS);
 		gpio_set_level(MOD_FREQ_INC, 0);
-		vTaskDelay(200 / portTICK_PERIOD_MS);
+		vTaskDelay(g_sys.conf.mod.hold_time / portTICK_PERIOD_MS);
 		gpio_set_level(MOD_FREQ_INC, 1);
 	}
 	else if(dir == 0)
 	{
 		gpio_set_level(MOD_FREQ_DEC, 1);
-		vTaskDelay(100 / MOD_PWR_DEC);
+		vTaskDelay(g_sys.conf.mod.setup_time / portTICK_PERIOD_MS);
 		gpio_set_level(MOD_FREQ_DEC, 0);
-		vTaskDelay(200 / portTICK_PERIOD_MS);
+		vTaskDelay(g_sys.conf.mod.hold_time / portTICK_PERIOD_MS);
 		gpio_set_level(MOD_FREQ_DEC, 1);
 	}
 }

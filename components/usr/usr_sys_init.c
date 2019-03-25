@@ -9,6 +9,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "adxl_drv.h"
+#include "modulator.h"
 #include "global_var.h"
 #include "nvs.h"
 #include "nvs_flash.h"
@@ -33,7 +34,7 @@ void usr_sys_init(void)
 {
 //	extern sys_reg_st  g_sys;
 	initialize_nvs();
-
+	mod_init();
 	adxl_init();
 	adxl_register();
 //	usr_spp_register();

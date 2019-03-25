@@ -28,6 +28,8 @@ typedef struct
 {
     uint32_t    n;
     uint32_t    win;
+    uint32_t    acc_times;
+    uint32_t    intv_cnts;
 }conf_fft_st;
 
 typedef struct
@@ -43,6 +45,8 @@ typedef struct
     uint32_t    enable;
     uint32_t    volum;
     uint32_t    freq;
+    uint32_t    setup_time;
+    uint32_t    hold_time;
 }conf_mod_st;
 
 typedef struct
