@@ -29,13 +29,12 @@
 #define PIN_NUM_CLK  18
 #define PIN_NUM_CS   5
 
-
-
 static uint8_t 	rxd_temp[DEV_GEO_RTX_SIZE];
 static uint8_t 	kf_buf_a[DEV_GEO_FIFO_SIZE];
 static uint8_t 	kf_buf_s[DEV_GEO_FIFO_SIZE*4];
 kfifo_t 		kf_a,kf_s;
 
+static SemaphoreHandle_t geospi_mutex = NULL;
 
 typedef struct
 {
@@ -64,30 +63,17 @@ static int32_t decode(uint32_t din)
 	return (int32_t)temp;
 }
 
-float* geo_get_time(uint16_t *out_len)
+int16_t geo_get_time(float* dst_ptr,uint16_t len)
 {
-	uint16_t kbuf_size,kout_len,i;
+	int16_t ret;
 
-	kbuf_size = sizeof(kf_buf_s);
+	ret = kfifo_out_peek(&kf_s,dst_ptr,(len<<2));
+	fft_inst.ibuf_cnt = ret;
+	memcpy(fft_inst.ibuf,dst_ptr,ret);
 
-	uint32_t * temp = malloc(kbuf_size);
-
-	kout_len = kfifo_out_peek(&kf_s,temp,kbuf_size);
-
-	if(kout_len ==0)
-		return NULL;
-
-	fft_inst.ibuf_cnt = kout_len/4;
-
-	*out_len = fft_inst.ibuf_cnt;
-
-	for(i=0;i<fft_inst.ibuf_cnt;i++)
-		fft_inst.ibuf[i] = (float)decode(*(temp+i))*0.0000039;
-
-	free(temp);
-	return fft_inst.ibuf;
+	ret /= 4;
+	return ret;
 }
-
 
 static void fft_max_ind(void)
 {
@@ -109,10 +95,6 @@ static void fft_max_ind(void)
 			max_ind = ((float)4000/(float)((1<<(g_sys.conf.geo.filter&0x0f))<<g_sys.conf.fft.n))*(float)i;
 		}
 	}
-//	tt0 = (1<<(g_sys.conf.geo.filter&0x0f))<<g_sys.conf.fft.n;
-//	tt1 =((float)4000/(float)tt0);
-//	printf("i:%d,filt:%x\n",i,g_sys.conf.geo.filter);
-//	printf("freq:%f,ampl:%f,tt1:%f,tt0:%d\n",max_ind,max_temp,tt1,tt0);
 
 	if(fft_inst.arr_cnt <16)
 	{
@@ -168,6 +150,7 @@ void geo_ds_init(void)
 		fft_inst.freq_arr[i] = 0.00000001;
 		fft_inst.ampl_arr[i] = 0.00000001;
 	}
+	geospi_mutex = xSemaphoreCreateMutex();
 
 }
 
@@ -176,6 +159,8 @@ uint8_t adxl_wr_reg(uint8_t addr, uint8_t data)
     spi_transaction_t t;
 
     memset(&t, 0, sizeof(t));
+
+    xSemaphoreTake( geospi_mutex, portMAX_DELAY );
 
     t.length=8*2;
     t.user=(void*)0;
@@ -188,6 +173,7 @@ uint8_t adxl_wr_reg(uint8_t addr, uint8_t data)
 
     esp_err_t ret = spi_device_polling_transmit(spi_geo_dev_inst.spi_device_h, &t);
 
+    xSemaphoreGive( geospi_mutex );
     return ret;
 }
 
@@ -197,6 +183,8 @@ uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt)
     spi_transaction_t t;
 
     memset(&t, 0, sizeof(t));
+
+    xSemaphoreTake( geospi_mutex, portMAX_DELAY );
 
     t.length=8*(cnt+1);
     t.rx_buffer = rx_buf;
@@ -212,6 +200,8 @@ uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt)
 
 //    spi_device_polling_transmit(spi_geo_dev_inst.spi_device_h, &t);
     spi_device_transmit(spi_geo_dev_inst.spi_device_h, &t);
+
+    xSemaphoreGive( geospi_mutex );
 
     return *(rx_buf+1);
 }
@@ -258,6 +248,7 @@ static int16_t raw_data_buf(uint32_t din, uint8_t axis)
 {
 	static uint8_t stage = 0;  //0: idle;1: x;2:y;3:z;
 	static uint32_t dbuf[3]={0,0,0};
+	float temp;
 	uint32_t dummy;
 	int16_t ret = 0;
 
@@ -321,7 +312,8 @@ static int16_t raw_data_buf(uint32_t din, uint8_t axis)
 				dbuf[2] = din;
 				if(kfifo_len(&kf_s) >=  kf_s.size)
 					kfifo_out(&kf_s,&dummy,sizeof(uint32_t));
-				kfifo_in(&kf_s,&dbuf[axis],sizeof(uint32_t));
+				temp = (float)decode(dbuf[axis])*0.0000039;
+				kfifo_in(&kf_s,&temp,sizeof(uint32_t));
 
 				stage = 1;
 				ret = 0;

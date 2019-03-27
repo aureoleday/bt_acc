@@ -9,9 +9,10 @@
 #define COMPONENTS_DRV_ADXL_DRV_H_
 
 #include <stdio.h>
+#include <my_fft.h>
 
 #define DEV_GEO_RTX_SIZE    512
-#define DEV_GEO_FIFO_SIZE   2048
+#define DEV_GEO_FIFO_SIZE   FFT_MAX_ORD
 
 typedef struct
 {
@@ -70,7 +71,7 @@ void adxl355_scanfifo(void);
 uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt);
 uint8_t adxl_wr_reg(uint8_t addr, uint8_t data);
 float* geo_get_fft(uint16_t* sample_cnts);
-float* geo_get_time(uint16_t* sample_cnts);
+int16_t geo_get_time(float* dst_ptr,uint16_t len);
 int16_t geo_get_fft_peak(float* freq_arr,float* ampl_arr,uint16_t *arr_cnt);
 
 

@@ -25,7 +25,7 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	4,		&g_sys.conf.geo.pkg_period,                  0,		    1000000,        10,			    0,      geo_timer_opt     },
 	{	5,		&g_sys.conf.geo.sample_period,               0,		    1000,           5,			    0,      NULL              },
 	{	6,		&g_sys.conf.geo.filter,                      0,		    255,            36,			    0,      geo_filter_opt    },
-	{	7,		&g_sys.conf.fft.n,		                     2,		    10,             10,			    0,      NULL       		  },
+	{	7,		&g_sys.conf.fft.n,		                     2,		    12,             10,			    0,      NULL       		  },
 	{	8,  	&g_sys.conf.mod.enable,                      0,		    1,				0,				0,      mod_en_opt        },
 	{	9,		&g_sys.conf.mod.volum,                       0,		    3,				0,				0,      mod_volum_opt     },
 	{	10,		&g_sys.conf.mod.freq,                        0,		    3,				0,				0,      mod_freq_opt      },

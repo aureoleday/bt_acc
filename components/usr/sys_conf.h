@@ -43,6 +43,8 @@ typedef struct
 typedef struct
 {
     uint32_t    enable;
+    uint32_t	mod_freq_off;
+    uint32_t	symbol_period;
     uint32_t    volum;
     uint32_t    freq;
     uint32_t    setup_time;

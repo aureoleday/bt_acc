@@ -94,4 +94,20 @@ void mod_freq_mdf(uint8_t dir)
 	}
 }
 
+void mod_start(void)
+{
+	uint16_t i;
+	for(i=0;i<4;i++)
+	{
+		mod_freq_mdf(0);
+		vTaskDelay(2 / portTICK_PERIOD_MS);
+	}
+
+	for(i=0;i<g_sys.conf.mod.mod_freq_off;i++)
+	{
+		mod_freq_mdf(1);
+		vTaskDelay(2 / portTICK_PERIOD_MS);
+	}
+
+}
 

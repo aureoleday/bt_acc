@@ -64,6 +64,13 @@ static void tasks_create(void)
 //    			SPP_THREAD_PRIO,
 //    			NULL);
 
+//	xTaskCreate(&tcp_thread,
+//				"Task_tcp",
+//				TCP_THREAD_STACK_SIZE,
+//				NULL,
+//				TCP_THREAD_PRIO,
+//				NULL);
+
     xTaskCreate(&geo_thread,
                 "Task_geo",
 				GEO_THREAD_STACK_SIZE,

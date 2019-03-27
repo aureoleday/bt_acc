@@ -51,6 +51,10 @@ enum
 #define CMD_RP_PKG        0x0080
 #define CMD_RP_GEO        0x0100
 
+
+//static uint8_t 	cmd_kbuf_tx[CMD_RTX_BUF_DEPTH*8];
+//kfifo_t 		kc_buf_tx;
+
 fifo32_cb_td cmd_rx_fifo;
 fifo32_cb_td cmd_tx_fifo;
 esp_timer_handle_t geo_timer;
@@ -100,6 +104,9 @@ static void cmd_buf_init(void)
     //rx fifo initialization
     fifo32_init(&cmd_rx_fifo,1,CMD_RTX_BUF_DEPTH);
     fifo32_init(&cmd_tx_fifo,1,CMD_RTX_BUF_DEPTH*2);
+
+//	memset(&kc_buf_tx, 0, sizeof(kc_buf_tx));
+//	kfifo_init(&kc_buf_tx, (void *)cmd_kbuf_tx, sizeof(cmd_kbuf_tx));
 }
 
 
@@ -125,20 +132,6 @@ static void geo_timeout(void* arg)
   * @param  none
   * @retval none
   */
-//rt_timer_t tm_tcp_repo;
-//static uint16_t	cmd_timer_init(void)
-//{
-//    extern sys_reg_st  g_sys;
-////		rt_timer_t tm_tcp_repo;
-//		tm_tcp_repo = rt_timer_create("tm_tcp_repo",
-//									cmd_timeout,
-//									RT_NULL,
-//									(g_sys.conf.eth.tcp_period*RT_TICK_PER_SECOND),
-//									RT_TIMER_FLAG_PERIODIC);
-//		rt_timer_start(tm_tcp_repo);
-//		return 1;
-//}
-//
 
 static uint16_t	geo_timer_init(void)
 {
@@ -262,6 +255,7 @@ uint16_t cmd_frame_recv(void)
 static void cmd_response(void)
 {
 	uint32_t i,check_sum;
+	uint32_t ret;
 
 	cmd_reg_inst.tx_buf[FRAME_SYNC_POS] = CMD_FRAME_TAG_S_SYNC;
 
@@ -269,9 +263,12 @@ static void cmd_response(void)
 	
 	check_sum = frame_checksum_gen(&cmd_reg_inst.tx_buf[0],(cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE-1));		//response frame checksum caculate
 	cmd_reg_inst.tx_buf[cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE-1] = check_sum;
+//	kfifo_in(&kc_buf_tx,cmd_reg_inst.tx_buf,(cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE)*4);
 	for(i=0;i<(cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE);i++)																															//fifo test
 	{
-		fifo32_push(&cmd_tx_fifo,&cmd_reg_inst.tx_buf[i]);
+		ret = fifo32_push(&cmd_tx_fifo,&cmd_reg_inst.tx_buf[i]);
+		if(ret==0)
+			printf("etf\n");
 	}
 }
 

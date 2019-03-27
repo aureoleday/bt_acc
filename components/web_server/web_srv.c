@@ -36,8 +36,9 @@
  * ie. #define EXAMPLE_WIFI_SSID "mywifissid"
 */
 
-static const char *TAG="HTTP";
-static char cjson_buf[24576];
+static const char 	*TAG="HTTP";
+static char 		cjson_buf[16384];
+float 		rt_buf[DEV_GEO_FIFO_SIZE];
 
 static void js_err(char * err_info, char* cj_dst)
 {
@@ -145,9 +146,8 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
 	cJSON * root =  cJSON_CreateObject();
 	char *cj_src = NULL;
 	uint16_t out_len,get_points,offset;
-	float * time_data_p = NULL;
 
-	time_data_p = geo_get_time(&out_len);
+	out_len = geo_get_time(rt_buf,DEV_GEO_FIFO_SIZE);
 
 	if(out_len > time_points)
 	{
@@ -163,7 +163,49 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
     cJSON_AddItemToObject(root, "sample_cnts", cJSON_CreateNumber(out_len));//根节点下添加
     cJSON_AddItemToObject(root, "sample_rate", cJSON_CreateNumber(4000>>(g_sys.conf.geo.filter&0x0f)));//根节点下添加
     cJSON_AddItemToObject(root, "axis", cJSON_CreateNumber(g_sys.conf.gen.sample_channel));//根节点下添加
-    cJSON_AddItemToObject(root, "sample_data", cJSON_CreateFloatArray((float*)(time_data_p+offset),get_points));
+    cJSON_AddItemToObject(root, "sample_data", cJSON_CreateFloatArray((float*)(rt_buf+offset),get_points));
+
+    if(out_len != 0)
+    {
+    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
+    }
+    else
+    {
+    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
+    }
+
+    cj_src = cJSON_PrintUnformatted(root);
+    strcpy(cj_dst,cj_src);
+    free(cj_src);
+    cJSON_Delete(root);
+    return strlen(cj_src);
+}
+
+static int cj_get_btimes(uint8_t index, uint16_t time_points,char* cj_dst)
+{
+	extern sys_reg_st  g_sys;
+	cJSON * root =  cJSON_CreateObject();
+	char *cj_src = NULL;
+	uint16_t out_len,get_points,offset;
+
+	out_len = geo_get_time(rt_buf,DEV_GEO_FIFO_SIZE);
+
+	if(out_len > time_points)
+	{
+		offset = out_len - time_points;
+		get_points = time_points;
+	}
+	else
+	{
+		offset = 0;
+		get_points = out_len;
+	}
+
+    cJSON_AddItemToObject(root, "sample_cnts", cJSON_CreateNumber(out_len));//根节点下添加
+    cJSON_AddItemToObject(root, "index", cJSON_CreateNumber(index));//根节点下添加
+    cJSON_AddItemToObject(root, "sample_rate", cJSON_CreateNumber(4000>>(g_sys.conf.geo.filter&0x0f)));//根节点下添加
+    cJSON_AddItemToObject(root, "axis", cJSON_CreateNumber(g_sys.conf.gen.sample_channel));//根节点下添加
+    cJSON_AddItemToObject(root, "sample_data", cJSON_CreateFloatArray((float*)(rt_buf+offset),get_points));
 
     if(out_len != 0)
     {
@@ -181,6 +223,7 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
     cJSON_Delete(root);
     return strlen(cj_src);
 }
+
 
 static int cj_get_fft_peak(char* cj_dst)
 {
@@ -481,14 +524,49 @@ httpd_uri_t fft_peak = {
 };
 
 /* An HTTP POST handler */
-esp_err_t timeb_post_handler(httpd_req_t *req)
+esp_err_t timeb_get_handler(httpd_req_t *req)
 {
-    uint16_t out_len;
-	float * time_data_p = NULL;
+	char*  buf;
+	char param[32];
+    uint16_t buf_len,times;
+    char * cj_buf = cjson_buf;
 
-	time_data_p = geo_get_time(&out_len);
+    times = 0;
 
-	httpd_resp_send_chunk(req, (char *)time_data_p, out_len*4);
+//    buf_len = httpd_req_get_url_query_len(req) + 1;
+//    if (buf_len > 1) {
+//        buf = malloc(buf_len);
+//        if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
+////            ESP_LOGI(TAG, "Found URL query => %s", buf);
+//            /* Get value of expected key from query string */
+//            if (httpd_query_key_value(buf, "times", param, sizeof(param)) != ESP_OK) {
+//                ESP_LOGI(TAG, "Found URL query parameter => times=%d", atoi(param));
+//            }
+//            else
+//            	times = atoi(param);
+//        }
+//        free(buf);
+//    }
+
+    cj_get_btimes(0,500,cj_buf);
+
+    httpd_resp_send_chunk(req, cj_buf, strlen(cj_buf));
+
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+
+    cj_get_btimes(1,500,cj_buf);
+
+    httpd_resp_send_chunk(req, cj_buf, strlen(cj_buf));
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+
+    cj_get_btimes(2,500,cj_buf);
+
+    httpd_resp_send_chunk(req, cj_buf, strlen(cj_buf));
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+
+    cj_get_btimes(3,500,cj_buf);
+
+    httpd_resp_send_chunk(req, cj_buf, strlen(cj_buf));
 
     httpd_resp_send_chunk(req, NULL, 0);
 
@@ -497,8 +575,8 @@ esp_err_t timeb_post_handler(httpd_req_t *req)
 
 httpd_uri_t timeb = {
     .uri       = "/timeb",
-    .method    = HTTP_POST,
-    .handler   = timeb_post_handler,
+    .method    = HTTP_GET,
+    .handler   = timeb_get_handler,
     .user_ctx  = NULL
 };
 
@@ -526,43 +604,43 @@ httpd_uri_t fftb = {
 };
 
 /* An HTTP POST handler */
-esp_err_t echo_post_handler(httpd_req_t *req)
-{
-    char buf[100];
-    int ret, remaining = req->content_len;
-
-    while (remaining > 0) {
-        /* Read the data for the request */
-        if ((ret = httpd_req_recv(req, buf,
-                        MIN(remaining, sizeof(buf)))) <= 0) {
-            if (ret == HTTPD_SOCK_ERR_TIMEOUT) {
-                /* Retry receiving if timeout occurred */
-                continue;
-            }
-            return ESP_FAIL;
-        }
-
-        /* Send back the same data */
-        httpd_resp_send_chunk(req, buf, ret);
-        remaining -= ret;
-
-        /* Log data received */
-        ESP_LOGI(TAG, "=========== RECEIVED DATA ==========");
-        ESP_LOGI(TAG, "%.*s", ret, buf);
-        ESP_LOGI(TAG, "====================================");
-    }
-
-    // End response
-    httpd_resp_send_chunk(req, NULL, 0);
-    return ESP_OK;
-}
-
-httpd_uri_t echo = {
-    .uri       = "/echo",
-    .method    = HTTP_POST,
-    .handler   = echo_post_handler,
-    .user_ctx  = NULL
-};
+//esp_err_t echo_post_handler(httpd_req_t *req)
+//{
+//    char buf[100];
+//    int ret, remaining = req->content_len;
+//
+//    while (remaining > 0) {
+//        /* Read the data for the request */
+//        if ((ret = httpd_req_recv(req, buf,
+//                        MIN(remaining, sizeof(buf)))) <= 0) {
+//            if (ret == HTTPD_SOCK_ERR_TIMEOUT) {
+//                /* Retry receiving if timeout occurred */
+//                continue;
+//            }
+//            return ESP_FAIL;
+//        }
+//
+//        /* Send back the same data */
+//        httpd_resp_send_chunk(req, buf, ret);
+//        remaining -= ret;
+//
+//        /* Log data received */
+//        ESP_LOGI(TAG, "=========== RECEIVED DATA ==========");
+//        ESP_LOGI(TAG, "%.*s", ret, buf);
+//        ESP_LOGI(TAG, "====================================");
+//    }
+//
+//    // End response
+//    httpd_resp_send_chunk(req, NULL, 0);
+//    return ESP_OK;
+//}
+//
+//httpd_uri_t echo = {
+//    .uri       = "/echo",
+//    .method    = HTTP_POST,
+//    .handler   = echo_post_handler,
+//    .user_ctx  = NULL
+//};
 
 /* An HTTP PUT handler. This demonstrates realtime
  * registration and deregistration of URI handlers
@@ -609,13 +687,16 @@ httpd_handle_t start_webserver(void)
     httpd_handle_t server = NULL;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
 
+    config.stack_size = 4096;
+    config.task_priority = 7;
+
     // Start the httpd server
     ESP_LOGI(TAG, "Starting server on port: '%d'", config.server_port);
     if (httpd_start(&server, &config) == ESP_OK) {
     	bit_op_set(&g_sys.stat.gen.status_bm,GBM_HTTP,1);
         // Set URI handlers
         ESP_LOGI(TAG, "Registering URI handlers");
-        httpd_register_uri_handler(server, &echo);
+//        httpd_register_uri_handler(server, &echo);
 //        httpd_register_uri_handler(server, &ctrl);
         httpd_register_uri_handler(server, &rd_reg);
         httpd_register_uri_handler(server, &wr_reg);

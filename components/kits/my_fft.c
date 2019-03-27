@@ -11,8 +11,8 @@
 #include "meow_fft.h"
 #include <math.h>
 #include <stdio.h>
+#include <my_fft.h>
 
-#define FFT_MAX_ORD 1024
 
 typedef struct
 {
@@ -29,6 +29,7 @@ static void win_init(uint16_t ord);
 
 int16_t fft_init(void)
 {
+//	extern float rt_buf[FFT_MAX_ORD];
 	if(my_fft_inst.out_dbuf_ptr != NULL)
 		return -1;
 	else
@@ -70,9 +71,5 @@ void fft_calc(float* input_dbuf,float* output_dbuf)
 		*(output_dbuf+i) = sqrt(pow(my_fft_inst.out_dbuf_ptr[i].r,2) + pow(my_fft_inst.out_dbuf_ptr[i].j,2))/(my_fft_inst.ord/2);
 	}
 }
-
-
-
-
 
 
