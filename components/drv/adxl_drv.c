@@ -68,7 +68,7 @@ int16_t geo_get_time(float* dst_ptr,uint16_t len)
 	int16_t ret;
 
 	ret = kfifo_out_peek(&kf_s,dst_ptr,(len<<2));
-	fft_inst.ibuf_cnt = ret;
+	fft_inst.ibuf_cnt = ret/4;
 	memcpy(fft_inst.ibuf,dst_ptr,ret);
 
 	ret /= 4;

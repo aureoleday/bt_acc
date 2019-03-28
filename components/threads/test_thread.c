@@ -35,7 +35,7 @@
 //	for(i=0;i<N;i++)
 //	    	*(ind+i)= sine_wave[2*i%64];
 //
-//	fft_init();
+////	fft_init();
 //	fft_new(N);
 //	fft_calc(ind,outd);
 //	for(i=0;i<N/2;i++)

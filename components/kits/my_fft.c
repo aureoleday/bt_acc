@@ -5,14 +5,12 @@
  *      Author: Administrator
  */
 
-
 #define MEOW_FFT_IMPLEMENTAION
 #define _USE_MATH_DEFINES
 #include "meow_fft.h"
 #include <math.h>
 #include <stdio.h>
 #include <my_fft.h>
-
 
 typedef struct
 {
@@ -29,7 +27,7 @@ static void win_init(uint16_t ord);
 
 int16_t fft_init(void)
 {
-//	extern float rt_buf[FFT_MAX_ORD];
+	extern float rt_buf[FFT_MAX_ORD];
 	if(my_fft_inst.out_dbuf_ptr != NULL)
 		return -1;
 	else
@@ -38,7 +36,7 @@ int16_t fft_init(void)
 		my_fft_inst.out_dbuf_ptr = malloc(sizeof(Meow_FFT_Complex) * FFT_MAX_ORD);
 		my_fft_inst.fft_sbuf_ptr = (Meow_FFT_Workset_Real*) malloc(workset_bytes);
 		my_fft_inst.win_buf_ptr = (float*) malloc(sizeof(float) * FFT_MAX_ORD);
-		my_fft_inst.inbuf = (float*) malloc(sizeof(float) * FFT_MAX_ORD);
+		my_fft_inst.inbuf = rt_buf;
 		return 0;
 	}
 }
