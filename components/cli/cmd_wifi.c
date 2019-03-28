@@ -142,25 +142,25 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
     switch(event->event_id) {
     case SYSTEM_EVENT_AP_START:
     	ESP_LOGI(TAG, "AP started!\n");
-//    	connected_ops();
+    	connected_ops();
     	break;
     case SYSTEM_EVENT_STA_GOT_IP:
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
         /* Start the web server */
-        if (*server == NULL) {
-            *server = start_webserver();
-        }
+//        if (*server == NULL) {
+//            *server = start_webserver();
+//        }
         break;
     case SYSTEM_EVENT_STA_DISCONNECTED:
         esp_wifi_connect();
         xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,0);
         /* Stop the web server */
-        if (*server) {
-            stop_webserver(*server);
-            *server = NULL;
-        }
+//        if (*server) {
+//            stop_webserver(*server);
+//            *server = NULL;
+//        }
         break;
     case SYSTEM_EVENT_AP_STACONNECTED:
         ESP_LOGI(TAG, "station:"MACSTR" join, AID=%d",

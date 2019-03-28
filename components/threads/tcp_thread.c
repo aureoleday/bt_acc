@@ -30,7 +30,7 @@ static uint8_t  rx_buf[BUFSZ];
 
 extern  sys_reg_st  g_sys;
 extern  fifo32_cb_td cmd_rx_fifo;
-extern  fifo32_cb_td cmd_tx_fifo;
+//extern  fifo32_cb_td cmd_tx_fifo;
 
 static uint8_t  tcp_flag;
 
@@ -141,55 +141,10 @@ void tcp_thread(void *pvParameters)
 	vTaskDelete(NULL);
 }
 
-static void tcp_tx_thread(void* parameter)
-{
-    int t_sock,i,ret;
-    uint16_t buf_len;
-	vTaskDelay(100 / portTICK_PERIOD_MS);
-
-    t_sock = *(int*)parameter;
-
-    fifo32_reset(&cmd_tx_fifo);
-
-    ret = 0;
-	while(1)
-	{
-		/* 发送数据到sock连接 */
-		if(is_fifo32_empty(&cmd_tx_fifo) == 0)
-		{
-			buf_len = get_fifo32_length(&cmd_tx_fifo);
-			for(i=0;i<buf_len;i++)
-			{
-				fifo32_pop(&cmd_tx_fifo, &tx_buf[i]);
-			}
-
-
-			ret = send(t_sock, tx_buf, (buf_len<<2), 0);
-			if (ret < 0)
-			{
-				printf("\nsend error, close socket %x.\r\n",ret);
-				tcp_flag |= 2;
-				vTaskDelay(1000000 / portTICK_PERIOD_MS);
-			}
-			else if (ret == 0)
-			{
-				/* 打印send函数返回值为0的警告信息 */
-				printf("\nSend warning,send function return 0.\r\n");
-			}
-//			else
-//			{
-//				printf("%d.\n",ret);
-//			}
-		}
-		vTaskDelay(10 / portTICK_PERIOD_MS);
-	}
-}
-
 //static void tcp_tx_thread(void* parameter)
 //{
-//	extern kfifo_t 		kc_buf_tx;
-//    int t_sock,ret;
-//    uint16_t buf_len,get_len;
+//    int t_sock,i,ret;
+//    uint16_t buf_len;
 //	vTaskDelay(100 / portTICK_PERIOD_MS);
 //
 //    t_sock = *(int*)parameter;
@@ -200,12 +155,15 @@ static void tcp_tx_thread(void* parameter)
 //	while(1)
 //	{
 //		/* 发送数据到sock连接 */
-//		buf_len = kfifo_len(&kc_buf_tx);
-//		if(kfifo_len(&kc_buf_tx) > 0)
+//		if(is_fifo32_empty(&cmd_tx_fifo) == 0)
 //		{
-//			get_len = kfifo_out(&kc_buf_tx,tx_buf,buf_len);
+//			buf_len = get_fifo32_length(&cmd_tx_fifo);
+//			for(i=0;i<buf_len;i++)
+//			{
+//				fifo32_pop(&cmd_tx_fifo, &tx_buf[i]);
+//			}
 //
-//			ret = send(t_sock, tx_buf, (get_len<<2), 0);
+//			ret = send(t_sock, tx_buf, (buf_len<<2), 0);
 //			if (ret < 0)
 //			{
 //				printf("\nsend error, close socket %x.\r\n",ret);
@@ -225,6 +183,48 @@ static void tcp_tx_thread(void* parameter)
 //		vTaskDelay(10 / portTICK_PERIOD_MS);
 //	}
 //}
+
+static void tcp_tx_thread(void* parameter)
+{
+	extern kfifo_t 		kc_buf_tx;
+    int t_sock,ret;
+    uint16_t buf_len,get_len;
+	vTaskDelay(100 / portTICK_PERIOD_MS);
+
+    t_sock = *(int*)parameter;
+
+    kfifo_reset(&kc_buf_tx);
+//    fifo32_reset(&cmd_tx_fifo);
+
+    ret = 0;
+	while(1)
+	{
+		/* 发送数据到sock连接 */
+		buf_len = kfifo_len(&kc_buf_tx);
+		if(kfifo_len(&kc_buf_tx) > 0)
+		{
+			get_len = kfifo_out(&kc_buf_tx,tx_buf,buf_len);
+
+			ret = send(t_sock, tx_buf, get_len, 0);
+			if (ret < 0)
+			{
+				printf("\nsend error, close socket %x.\r\n",ret);
+				tcp_flag |= 2;
+				vTaskDelay(1000000 / portTICK_PERIOD_MS);
+			}
+			else if (ret == 0)
+			{
+				/* 打印send函数返回值为0的警告信息 */
+				printf("\nSend warning,send function return 0.\r\n");
+			}
+//			else
+//			{
+//				printf("%d.\n",ret);
+//			}
+		}
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+	}
+}
 
 
 
