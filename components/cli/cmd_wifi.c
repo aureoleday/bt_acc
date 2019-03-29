@@ -148,9 +148,9 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
         /* Start the web server */
-//        if (*server == NULL) {
-//            *server = start_webserver();
-//        }
+        if (*server == NULL) {
+            *server = start_webserver();
+        }
         break;
     case SYSTEM_EVENT_STA_DISCONNECTED:
         esp_wifi_connect();
@@ -168,9 +168,9 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
                  event->event_info.sta_connected.aid);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
         /* stop the web server */
-//        if (*server == NULL) {
-//            *server = start_webserver();
-//        }
+        if (*server == NULL) {
+            *server = start_webserver();
+        }
         break;
     case SYSTEM_EVENT_AP_STADISCONNECTED:
         ESP_LOGI(TAG, "station:"MACSTR"leave, AID=%d",

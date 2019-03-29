@@ -30,9 +30,8 @@
 #define PIN_NUM_CS   5
 
 static uint8_t 	rxd_temp[DEV_GEO_RTX_SIZE];
-static uint8_t 	kf_buf_a[DEV_GEO_FIFO_SIZE];
 static uint8_t 	kf_buf_s[DEV_GEO_FIFO_SIZE*4];
-kfifo_t 		kf_a,kf_s;
+kfifo_t 		kf_s;
 
 static SemaphoreHandle_t geospi_mutex = NULL;
 
@@ -48,9 +47,7 @@ fft_st fft_inst;
 
 static void kf_init(void)
 {
-	memset(&kf_a, 0, sizeof(kf_a));
 	memset(&kf_s, 0, sizeof(kf_s));
-	kfifo_init(&kf_a, (void *)kf_buf_a, sizeof(kf_buf_a));
 	kfifo_init(&kf_s, (void *)kf_buf_s, sizeof(kf_buf_s));
 }
 
@@ -251,12 +248,6 @@ static int16_t raw_data_buf(uint32_t din, uint8_t axis)
 	float temp;
 	uint32_t dummy;
 	int16_t ret = 0;
-
-	kfifo_in(&kf_a,&din,sizeof(uint32_t));
-
-	if(kfifo_len(&kf_a) >=  kf_a.size -sizeof(uint32_t))
-		kfifo_out(&kf_a,&dummy,sizeof(uint32_t));
-	kfifo_in(&kf_a,&din,sizeof(uint32_t));
 
 	switch (stage)
 	{

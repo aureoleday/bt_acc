@@ -668,13 +668,13 @@ uint16_t report_data(void)
 //    return fifo_len;
 //}
 
-static int16_t get_geo_data(uint32_t * buf_ptr)
+
+static int16_t get_geo_fdata(float* buf_ptr)
 {
-    extern kfifo_t kf_a;
+    extern kfifo_t kf_s;
 
-    return kfifo_out(&kf_a,buf_ptr,sizeof(uint32_t)*256);
+    return kfifo_out(&kf_s,buf_ptr,sizeof(uint32_t)*256);
 }
-
 
 uint16_t report_geo_data(void)
 {
@@ -686,7 +686,8 @@ uint16_t report_geo_data(void)
     if((bit_op_get(g_sys.stat.gen.status_bm,GBM_BT) == 0)&&(bit_op_get(g_sys.stat.gen.status_bm,GBM_TCP) == 0))
         return CMD_NOT_READY;
   
-    rd_cnt = get_geo_data(&cmd_reg_inst.tx_buf[FRAME_D_AL_POS])/4;
+//    rd_cnt = get_geo_data(&cmd_reg_inst.tx_buf[FRAME_D_AL_POS])/4;
+    rd_cnt = get_geo_fdata((float*)&cmd_reg_inst.tx_buf[FRAME_D_AL_POS])/4;
     
     if(rd_cnt == 0)
         return 0;

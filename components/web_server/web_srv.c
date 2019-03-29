@@ -38,6 +38,7 @@
 
 static const char 	*TAG="HTTP";
 static char 		cjson_buf[16384];
+//static char 		cjson_buf[16];
 float 		rt_buf[DEV_GEO_FIFO_SIZE];
 
 static void js_err(char * err_info, char* cj_dst)
@@ -523,85 +524,6 @@ httpd_uri_t fft_peak = {
     .user_ctx  = NULL
 };
 
-/* An HTTP POST handler */
-esp_err_t timeb_get_handler(httpd_req_t *req)
-{
-	char*  buf;
-	char param[32];
-    uint16_t buf_len,times;
-    char * cj_buf = cjson_buf;
-
-    times = 0;
-
-//    buf_len = httpd_req_get_url_query_len(req) + 1;
-//    if (buf_len > 1) {
-//        buf = malloc(buf_len);
-//        if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
-////            ESP_LOGI(TAG, "Found URL query => %s", buf);
-//            /* Get value of expected key from query string */
-//            if (httpd_query_key_value(buf, "times", param, sizeof(param)) != ESP_OK) {
-//                ESP_LOGI(TAG, "Found URL query parameter => times=%d", atoi(param));
-//            }
-//            else
-//            	times = atoi(param);
-//        }
-//        free(buf);
-//    }
-
-    cj_get_btimes(0,500,cj_buf);
-
-    httpd_resp_send_chunk(req, cj_buf, strlen(cj_buf));
-
-    vTaskDelay(500 / portTICK_PERIOD_MS);
-
-    cj_get_btimes(1,500,cj_buf);
-
-    httpd_resp_send_chunk(req, cj_buf, strlen(cj_buf));
-    vTaskDelay(500 / portTICK_PERIOD_MS);
-
-    cj_get_btimes(2,500,cj_buf);
-
-    httpd_resp_send_chunk(req, cj_buf, strlen(cj_buf));
-    vTaskDelay(500 / portTICK_PERIOD_MS);
-
-    cj_get_btimes(3,500,cj_buf);
-
-    httpd_resp_send_chunk(req, cj_buf, strlen(cj_buf));
-
-    httpd_resp_send_chunk(req, NULL, 0);
-
-    return ESP_OK;
-}
-
-httpd_uri_t timeb = {
-    .uri       = "/timeb",
-    .method    = HTTP_GET,
-    .handler   = timeb_get_handler,
-    .user_ctx  = NULL
-};
-
-/* An HTTP POST handler */
-esp_err_t fftb_post_handler(httpd_req_t *req)
-{
-    uint16_t out_len;
-
-	float * fft_data_p = NULL;
-
-	fft_data_p = geo_get_fft(&out_len);
-
-	httpd_resp_send_chunk(req, (char *)fft_data_p, out_len*4);
-
-    httpd_resp_send_chunk(req, NULL, 0);
-
-    return ESP_OK;
-}
-
-httpd_uri_t fftb = {
-    .uri       = "/fftb",
-    .method    = HTTP_POST,
-    .handler   = fftb_post_handler,
-    .user_ctx  = NULL
-};
 
 /* An HTTP POST handler */
 //esp_err_t echo_post_handler(httpd_req_t *req)
@@ -696,15 +618,11 @@ httpd_handle_t start_webserver(void)
     	bit_op_set(&g_sys.stat.gen.status_bm,GBM_HTTP,1);
         // Set URI handlers
         ESP_LOGI(TAG, "Registering URI handlers");
-//        httpd_register_uri_handler(server, &echo);
-//        httpd_register_uri_handler(server, &ctrl);
         httpd_register_uri_handler(server, &rd_reg);
         httpd_register_uri_handler(server, &wr_reg);
         httpd_register_uri_handler(server, &fft);
         httpd_register_uri_handler(server, &fft_peak);
-        httpd_register_uri_handler(server, &fftb);
         httpd_register_uri_handler(server, &time);
-        httpd_register_uri_handler(server, &timeb);
         return server;
     }
     ESP_LOGI(TAG, "Error starting server!");
