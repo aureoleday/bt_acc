@@ -52,7 +52,7 @@ enum
 #define CMD_RP_GEO        0x0100
 
 
-static uint8_t 	cmd_kbuf_tx[CMD_RTX_BUF_DEPTH*8];
+static uint8_t 	cmd_kbuf_tx[CMD_RTX_BUF_DEPTH*16];
 kfifo_t 		kc_buf_tx;
 
 fifo32_cb_td cmd_rx_fifo;

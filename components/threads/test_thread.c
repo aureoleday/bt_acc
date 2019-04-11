@@ -70,7 +70,7 @@ void join_wifi(void)
 void test_thread(void* param)
 {
 	extern sys_reg_st  g_sys;
-	vTaskDelay(5000 / portTICK_PERIOD_MS);
+	vTaskDelay(2000 / portTICK_PERIOD_MS);
 //	fft_test1();
 	if(g_sys.conf.gen.wifi_mode == 1)
 		join_wifi();
