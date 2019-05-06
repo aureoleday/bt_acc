@@ -6,7 +6,6 @@
 #include "esp_timer.h"
 #include "esp_log.h"
 #include "adxl_drv.h"
-#include "modulator.h"
 
 
 
@@ -130,107 +129,107 @@ uint16_t geo_pwr_opt(uint32_t pram)
 
 uint16_t mod_en_opt(uint32_t pram)
 {
-    uint8_t data = pram&0x0ff;
-
-    mod_en(data);
+//    uint8_t data = pram&0x0ff;
+//
+//    mod_en(data);
 
     return 1;
 }
 
 uint16_t mod_volum_opt(uint32_t pram)
 {
-    uint8_t data = pram&0x0ff;
-    uint8_t i;
-
-    switch (data)
-    {
-    	case 0:
-    	{
-    		for(i=0;i<4;i++)
-    		{
-    			mod_volum_mdf(0);
-    			vTaskDelay(5 / portTICK_PERIOD_MS);
-    		}
-    		break;
-    	}
-    	case 1:
-    	{
-   			mod_volum_mdf(0);
-    		break;
-    	}
-    	case 2:
-    	{
-   			mod_volum_mdf(1);
-    		break;
-    	}
-    	case 3:
-    	{
-    		for(i=0;i<4;i++)
-    		{
-    			mod_volum_mdf(1);
-    			vTaskDelay(5 / portTICK_PERIOD_MS);
-    		}
-    		break;
-    	}
-    	default:
-    	{
-    		for(i=0;i<4;i++)
-    		{
-    			mod_volum_mdf(0);
-    			vTaskDelay(5 / portTICK_PERIOD_MS);
-    		}
-    		break;
-    	}
-    }
+//    uint8_t data = pram&0x0ff;
+//    uint8_t i;
+//
+//    switch (data)
+//    {
+//    	case 0:
+//    	{
+//    		for(i=0;i<4;i++)
+//    		{
+//    			mod_volum_mdf(0);
+//    			vTaskDelay(5 / portTICK_PERIOD_MS);
+//    		}
+//    		break;
+//    	}
+//    	case 1:
+//    	{
+//   			mod_volum_mdf(0);
+//    		break;
+//    	}
+//    	case 2:
+//    	{
+//   			mod_volum_mdf(1);
+//    		break;
+//    	}
+//    	case 3:
+//    	{
+//    		for(i=0;i<4;i++)
+//    		{
+//    			mod_volum_mdf(1);
+//    			vTaskDelay(5 / portTICK_PERIOD_MS);
+//    		}
+//    		break;
+//    	}
+//    	default:
+//    	{
+//    		for(i=0;i<4;i++)
+//    		{
+//    			mod_volum_mdf(0);
+//    			vTaskDelay(5 / portTICK_PERIOD_MS);
+//    		}
+//    		break;
+//    	}
+//    }
 
     return 1;
 }
 
 uint16_t mod_freq_opt(uint32_t pram)
 {
-    uint8_t data = pram&0x0ff;
-    uint8_t i;
-
-    switch (data)
-    {
-    	case 0:
-    	{
-    		for(i=0;i<4;i++)
-    		{
-    			mod_freq_mdf(0);
-    			vTaskDelay(5 / portTICK_PERIOD_MS);
-    		}
-    		break;
-    	}
-    	case 1:
-    	{
-    		mod_freq_mdf(0);
-    		break;
-    	}
-    	case 2:
-    	{
-    		mod_freq_mdf(1);
-    		break;
-    	}
-    	case 3:
-    	{
-    		for(i=0;i<4;i++)
-    		{
-    			mod_freq_mdf(1);
-    			vTaskDelay(5 / portTICK_PERIOD_MS);
-    		}
-    		break;
-    	}
-    	default:
-    	{
-    		for(i=0;i<4;i++)
-    		{
-    			mod_freq_mdf(0);
-    			vTaskDelay(5 / portTICK_PERIOD_MS);
-    		}
-    		break;
-    	}
-    }
+//    uint8_t data = pram&0x0ff;
+//    uint8_t i;
+//
+//    switch (data)
+//    {
+//    	case 0:
+//    	{
+//    		for(i=0;i<4;i++)
+//    		{
+//    			mod_freq_mdf(0);
+//    			vTaskDelay(5 / portTICK_PERIOD_MS);
+//    		}
+//    		break;
+//    	}
+//    	case 1:
+//    	{
+//    		mod_freq_mdf(0);
+//    		break;
+//    	}
+//    	case 2:
+//    	{
+//    		mod_freq_mdf(1);
+//    		break;
+//    	}
+//    	case 3:
+//    	{
+//    		for(i=0;i<4;i++)
+//    		{
+//    			mod_freq_mdf(1);
+//    			vTaskDelay(5 / portTICK_PERIOD_MS);
+//    		}
+//    		break;
+//    	}
+//    	default:
+//    	{
+//    		for(i=0;i<4;i++)
+//    		{
+//    			mod_freq_mdf(0);
+//    			vTaskDelay(5 / portTICK_PERIOD_MS);
+//    		}
+//    		break;
+//    	}
+//    }
 
     return 1;
 }

@@ -104,7 +104,7 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 
 static void initialise_wifi(void* arg)
 {
-
+	esp_err_t err;
 	char ssid[24];
 	char lcssid[24];
 	char pwd[24];
@@ -112,7 +112,13 @@ static void initialise_wifi(void* arg)
     size_t slen,lslen,plen,lplen;
     wifi_config_t wifi_config = { 0 };
 
-    get_wifi_info(ssid,lcssid,pwd,lcpwd,&slen,&lslen,&plen,&lplen);
+    err = get_wifi_info(ssid,lcssid,pwd,lcpwd,&slen,&lslen,&plen,&lplen);
+
+    if(ESP_OK != err)
+    {
+    	printf("get wifi err!\n");
+    	return;
+    }
 
     printf("ap ssid:%s,pwd:%s\n",lcssid,lcpwd);
 

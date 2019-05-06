@@ -124,6 +124,7 @@ void tcp_thread(void *pvParameters)
 			{
 				if((tcp_flag != 0)||(g_sys.conf.eth.tcp_en == 0)||(!bit_op_get(g_sys.stat.gen.status_bm,GBM_LINK)))
 				{
+					printf("tcp_flag: %d,tcp_en:%d,gbm_link:%d\n",tcp_flag,g_sys.conf.eth.tcp_en,g_sys.stat.gen.status_bm);
 					vTaskDelete(tx_xHandle);
 					vTaskDelete(rx_xHandle);
 					printf("detach tcp_rtx threads\n");

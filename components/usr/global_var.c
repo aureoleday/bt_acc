@@ -26,15 +26,15 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	5,		&g_sys.conf.geo.sample_period,               0,		    1000,           2,			    0,      NULL              },
 	{	6,		&g_sys.conf.geo.filter,                      0,		    255,            34,			    0,      geo_filter_opt    },
 	{	7,		&g_sys.conf.fft.n,		                     2,		    12,             10,			    0,      NULL       		  },
-	{	8,  	&g_sys.conf.mod.enable,                      0,		    1,				0,				0,      mod_en_opt        },
-	{	9,		&g_sys.conf.mod.volum,                       0,		    3,				0,				0,      mod_volum_opt     },
-	{	10,		&g_sys.conf.mod.freq,                        0,		    3,				0,				0,      mod_freq_opt      },
+	{	8,  	NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	9,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	10,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	11,		&g_sys.conf.eth.tcp_en,               		 0,		    1,				0,				0,      NULL   	          },
 	{	12,   	&g_sys.conf.eth.tcp_period,                  1,		    0xffffffff,		30,			    0,      NULL     		  },
 	{	13,		&g_sys.conf.fft.acc_times,                   1,		    128,            1,				0,      NULL   	          },
 	{	14,		&g_sys.conf.fft.intv_cnts,                   1,		    1024,           1,				0,      NULL   	          },
-	{	15,		&g_sys.conf.mod.setup_time,                  1,		    500,			1,				0,      NULL   	          },
-	{	16,		&g_sys.conf.mod.hold_time,                   1,		    500,			1,				0,      NULL              },
+	{	15,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	16,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	17,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	18,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	19,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
@@ -63,7 +63,7 @@ const sts_reg_map_st status_reg_map_inst[STAT_REG_MAP_NUM]=
      {	4,      &g_sys.stat.man.serial_no,				    SERIAL_NO},
      {	5,      &g_sys.stat.man.man_date,					MAN_DATE},
      {	6,      &g_sys.stat.man.dev_type,					DEVICE_TYPE},
-     {	7,      NULL,						                0},
+     {	7,      &g_sys.stat.gen.status_bm,					0},
      {	8,      NULL,						                0},
      {	9,      NULL,						                0},
      {	10,		NULL,						                0},
@@ -302,6 +302,7 @@ static int save_station(const char *ssid, const char *pwd)
     err = nvs_open(WIFI_NAMESPACE, NVS_READWRITE, &my_handle);
     if (err != ESP_OK) return err;
 
+    nvs_set_str(my_handle,"station","station_flag");
     nvs_set_str(my_handle,"ssid",ssid);
     nvs_set_str(my_handle,"wpwd",pwd);
 
@@ -323,6 +324,7 @@ static int save_ap(const char *ssid, const char *pwd)
     err = nvs_open(WIFI_NAMESPACE, NVS_READWRITE, &my_handle);
     if (err != ESP_OK) return err;
 
+    nvs_set_str(my_handle,"ap","ap_flag");
     nvs_set_str(my_handle,"lcssid",ssid);
     nvs_set_str(my_handle,"lcpwd",pwd);
 
@@ -339,10 +341,20 @@ int get_wifi_info(char* ssid, char* lcssid, char* pwd, char* lcpwd, size_t* s_le
 {
 	nvs_handle my_handle;
 	esp_err_t err;
+	char sta_flag[20];
+	char ap_flag[20];
+	size_t sta_len,ap_len;
 
     // Open
     err = nvs_open(WIFI_NAMESPACE, NVS_READWRITE, &my_handle);
     if (err != ESP_OK) return err;
+
+    nvs_get_str(my_handle,"station",sta_flag, &sta_len);
+    nvs_get_str(my_handle,"ap",ap_flag, &ap_len);
+    if((strcmp(sta_flag,"station_flag")||strcmp(sta_flag,"station_flag")) != 0)
+    	return -1;
+    printf("station: %s,%d\n",sta_flag,sta_len);
+    printf("ap: %s,%d\n",ap_flag,ap_len);
 
     nvs_get_str(my_handle,"ssid",ssid,s_len);
     nvs_get_str(my_handle,"ssid",ssid,s_len);
@@ -359,7 +371,11 @@ int get_wifi_info(char* ssid, char* lcssid, char* pwd, char* lcpwd, size_t* s_le
     // Close
     nvs_close(my_handle);
 //    printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,*s_len,*p_len);
-    return ESP_OK;
+
+    if((0 == s_len)||(0 == ls_len)||(0 == p_len)||(0 == lp_len))
+    	err = -1;
+
+    return err;
 }
 
 int32_t gvar_init(void)

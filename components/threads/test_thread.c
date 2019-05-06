@@ -9,8 +9,8 @@
 #include <math.h>
 #include "my_fft.h"
 #include "kfifo.h"
+#include "led_drv.h"
 #include "global_var.h"
-#include "modulator.h"
 
 //#define MEOW_FFT_IMPLEMENTAION
 //
@@ -52,10 +52,16 @@ void join_wifi(void)
 	char lcssid[24];
 	char pwd[24];
 	char lcpwd[24];
+	int err;
     size_t slen,lslen,plen,lplen;
     wifi_config_t wifi_config = { 0 };
 
-    get_wifi_info(ssid,lcssid,pwd,lcpwd,&slen,&lslen,&plen,&lplen);
+    err = get_wifi_info(ssid,lcssid,pwd,lcpwd,&slen,&lslen,&plen,&lplen);
+
+    if(err != 0)
+    {
+    	return;
+    }
 
     printf("saved ssid:%s,pwd:%s,s_len:%d,p_len:%d\n",ssid,pwd,slen,plen);
     printf("connecting to station: %s...\n",ssid);
@@ -71,12 +77,12 @@ void test_thread(void* param)
 {
 	extern sys_reg_st  g_sys;
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
-//	fft_test1();
 	if(g_sys.conf.gen.wifi_mode == 1)
 		join_wifi();
 
 	while(1)
 	{
+		toggle_led(0);
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 		if(g_sys.conf.gen.restart == 9527)
 			esp_restart();
