@@ -500,7 +500,7 @@ void recv_frame_fsm(void)
 	while ((fifo32_pop(&cmd_rx_fifo, &rx_data) == 1)
 			&& (cmd_reg_inst.rx_tag == 0))
 	{
-        printf("tcp: %x\n ",rx_data);
+//        printf("tcp: %x\n ",rx_data);
 		switch (cmd_reg_inst.cmd_fsm_cstate)
 		{
 			case (CMD_FRAME_FSM_SYNC): {
