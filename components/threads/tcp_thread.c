@@ -111,7 +111,7 @@ void tcp_thread(void *pvParameters)
 						"thread_tcp_tx",
 						4096,
 						&sock,
-						25,
+						15,
 						&tx_xHandle);
 
 			xTaskCreate(&tcp_rx_thread,
@@ -222,7 +222,7 @@ static void tcp_tx_thread(void* parameter)
 //				printf("%d.\n",ret);
 //			}
 		}
-		vTaskDelay(10 / portTICK_PERIOD_MS);
+		vTaskDelay(g_sys.conf.eth.tcp_period / portTICK_PERIOD_MS);
 	}
 }
 

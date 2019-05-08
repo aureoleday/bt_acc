@@ -339,11 +339,12 @@ void adxl355_scanfifo(void)
 
     status = adxl_rd_reg(ADXL_STATUS,rxd_temp,1);
     if((status&0x6) != 0)
-    	printf("af f!\n");
+    	printf("AF: %x!\n",status);
 
     sample_cnt = adxl_rd_reg(ADXL_FIFO_ENTRIES,rxd_temp,1);
 
-    total_cnt = sample_cnt*3*3;
+    total_cnt = sample_cnt*3;
+//    total_cnt = sample_cnt*3*3;
 
     if(rxd_temp[1] > 0)
     {
