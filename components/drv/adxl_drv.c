@@ -327,8 +327,9 @@ static int16_t raw_data_buf(uint32_t din, uint8_t axis)
 	return ret;
 }
 
-void adxl355_scanfifo(void)
+int16_t adxl355_scanfifo(void)
 {
+	static int16_t cooldown = 0;
 	extern sys_reg_st  g_sys;
 	int16_t  err_no;
     uint16_t i;
@@ -337,26 +338,30 @@ void adxl355_scanfifo(void)
     uint32_t buf_temp;
     uint8_t status;
 
-    status = adxl_rd_reg(ADXL_STATUS,rxd_temp,1);
-    if((status&0x6) != 0)
-    	printf("AF: %x!\n",status);
+    err_no = 0;
+    status = adxl_rd_reg(ADXL_STATUS,rxd_temp,2);
+    if(((status&0x6) != 0)&&(cooldown==0))
+    {
+    	printf("AF: %x,sc:%d\n",status,rxd_temp[2]);
+    	cooldown = 1000;
+    }
+    if(cooldown > 0)
+    	cooldown--;
 
-    sample_cnt = adxl_rd_reg(ADXL_FIFO_ENTRIES,rxd_temp,1);
+    sample_cnt = rxd_temp[2];
 
     total_cnt = sample_cnt*3;
-//    total_cnt = sample_cnt*3*3;
 
-    if(rxd_temp[1] > 0)
+    if(status > 0)
     {
         adxl_rd_reg(ADXL_FIFO_DATA, rxd_temp, total_cnt);
         for(i=0;i<sample_cnt;i++)
         {
             buf_temp = (rxd_temp[1+i*3]<<16)|(rxd_temp[2+i*3]<<8)|(rxd_temp[3+i*3]);
             err_no = raw_data_buf(buf_temp,g_sys.conf.gen.sample_channel);
-//            if(err_no != 0)
-//            	printf("geo missing code:%d\n",err_no);
         }
     }
+    return err_no;
 }
 
 static int adxl_info(int argc, char **argv)

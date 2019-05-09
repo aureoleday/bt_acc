@@ -265,13 +265,10 @@ static void cmd_response(void)
 	cmd_reg_inst.tx_buf[cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE-1] = check_sum;
 	ret = kfifo_in(&kc_buf_tx,cmd_reg_inst.tx_buf,(cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE)*4);
 	if(ret==0)
+	{
+		kfifo_reset(&kc_buf_tx);
 		printf("etf\n");
-//	for(i=0;i<(cmd_reg_inst.tx_cnt+CMD_FRAME_OVSIZE);i++)																															//fifo test
-//	{
-//		ret = fifo32_push(&cmd_tx_fifo,&cmd_reg_inst.tx_buf[i]);
-//		if(ret==0)
-//			printf("etf\n");
-//	}
+	}
 }
 
 /**

@@ -23,7 +23,7 @@ void geo_thread(void* param)
 
 	while(1)
 	{
-		if((g_sys.conf.geo.enable == 1)&&((bit_op_get(g_sys.stat.gen.status_bm,GBM_BT) == 1)||(bit_op_get(g_sys.stat.gen.status_bm,GBM_TCP) == 1)||(bit_op_get(g_sys.stat.gen.status_bm,GBM_HTTP) == 1)))
+		if(g_sys.conf.geo.enable == 1)
 		{
 			adxl355_scanfifo();
 			vTaskDelay(g_sys.conf.geo.sample_period / portTICK_PERIOD_MS);

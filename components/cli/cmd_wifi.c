@@ -61,7 +61,7 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
         /* Start the web server */
-        if (*server == NULL) {
+        if ((*server == NULL)&&(g_sys.conf.eth.http_en)) {
             *server = start_webserver();
         }
         break;
@@ -81,7 +81,7 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
                  event->event_info.sta_connected.aid);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
         /* stop the web server */
-        if (*server == NULL) {
+        if ((*server == NULL)&&(g_sys.conf.eth.http_en)) {
             *server = start_webserver();
         }
         break;

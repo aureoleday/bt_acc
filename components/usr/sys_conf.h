@@ -22,6 +22,7 @@ typedef struct
 {
     uint32_t    tcp_en;
     uint32_t    tcp_period;
+    uint32_t    http_en;
 }conf_eth_st;
 
 typedef struct
