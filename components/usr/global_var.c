@@ -4,6 +4,7 @@
 #include "bit_op.h"
 
 #include "esp_system.h"
+#include "esp_heap_caps.h"
 #include "argtable3/argtable3.h"
 #include "esp_console.h"
 #include "nvs_flash.h"
@@ -351,7 +352,7 @@ int get_wifi_info(char* ssid, char* lcssid, char* pwd, char* lcpwd, size_t* s_le
 
     nvs_get_str(my_handle,"station",sta_flag, &sta_len);
     nvs_get_str(my_handle,"ap",ap_flag, &ap_len);
-    if((strcmp(sta_flag,"station_flag")||strcmp(sta_flag,"station_flag")) != 0)
+    if((strcmp(sta_flag,"station_flag")||strcmp(ap_flag,"ap_flag")) != 0)
     	return -1;
     printf("station: %s,%d\n",sta_flag,sta_len);
     printf("ap: %s,%d\n",ap_flag,ap_len);

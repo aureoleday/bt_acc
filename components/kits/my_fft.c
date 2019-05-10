@@ -11,6 +11,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <my_fft.h>
+//#include "esp_heap_caps.h"
 
 typedef struct
 {
@@ -33,6 +34,9 @@ int16_t fft_init(void)
 	else
 	{
 		size_t workset_bytes = meow_fft_generate_workset_real(FFT_MAX_ORD, NULL);
+//		my_fft_inst.out_dbuf_ptr = heap_caps_malloc(sizeof(Meow_FFT_Complex) * FFT_MAX_ORD,MALLOC_CAP_SPIRAM);
+//		my_fft_inst.fft_sbuf_ptr = (Meow_FFT_Workset_Real*) heap_caps_malloc(workset_bytes,MALLOC_CAP_SPIRAM);
+//		my_fft_inst.win_buf_ptr = (float*) heap_caps_malloc(sizeof(float) * FFT_MAX_ORD,MALLOC_CAP_SPIRAM);
 		my_fft_inst.out_dbuf_ptr = malloc(sizeof(Meow_FFT_Complex) * FFT_MAX_ORD);
 		my_fft_inst.fft_sbuf_ptr = (Meow_FFT_Workset_Real*) malloc(workset_bytes);
 		my_fft_inst.win_buf_ptr = (float*) malloc(sizeof(float) * FFT_MAX_ORD);

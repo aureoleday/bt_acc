@@ -16,6 +16,7 @@
 
 #include <esp_log.h>
 #include <esp_system.h>
+//#include "esp_heap_caps.h"
 #include <sys/param.h>
 #include <string.h>
 #include <esp_http_server.h>
@@ -408,7 +409,7 @@ esp_err_t fft_get_handler(httpd_req_t *req)
      * extra byte for null termination */
 //    buf_len = httpd_req_get_hdr_value_len(req, "Host") + 1;
 //    if (buf_len > 1) {
-//        buf = malloc(buf_len);
+//        buf = heap_caps_malloc(buf_len,MALLOC_CAP_SPIRAM);
 //        /* Copy null terminated value string into buffer */
 //        if (httpd_req_get_hdr_value_str(req, "Host", buf, buf_len) == ESP_OK) {
 //            ESP_LOGI(TAG, "Found header => Host: %s", buf);
@@ -496,7 +497,7 @@ esp_err_t pfft_get_handler(httpd_req_t *req)
      * extra byte for null termination */
     buf_len = httpd_req_get_url_query_len(req) + 1;
     if (buf_len > 1) {
-//        buf = malloc(buf_len);
+//        buf = heap_caps_malloc(buf_len,MALLOC_CAP_SPIRAM);
 //        if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
 ////            ESP_LOGI(TAG, "Found URL query => %s", buf);
 //            /* Get value of expected key from query string */
