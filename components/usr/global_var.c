@@ -9,9 +9,11 @@
 #include "esp_console.h"
 #include "nvs_flash.h"
 #include "nvs.h"
+#include "mdns.h"
 
 #define CONFIG_NAMESPACE 	"config"
 #define WIFI_NAMESPACE 		"wifi"
+#define MDNS_NAMESPACE 		"mdns"
 
 //configuration parameters
 sys_reg_st  g_sys; 															//global parameter declairation
@@ -23,7 +25,7 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	1,		&g_sys.conf.gen.sample_channel,            	 0,     	2,	    		2,				0,      NULL   	          },
 	{	2,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	3,		&g_sys.conf.geo.enable,                      0,		    1,              0,			    0,      geo_pwr_opt       },
-	{	4,		&g_sys.conf.geo.pkg_period,                  0,		    1000000,        100,			0,      geo_timer_opt     },
+	{	4,		&g_sys.conf.geo.pkg_period,                  0,		    1000000,        16,				0,      geo_timer_opt     },
 	{	5,		&g_sys.conf.geo.sample_period,               0,		    1000,           1,			    0,      NULL              },
 	{	6,		&g_sys.conf.geo.filter,                      0,		    255,            64,			    0,      geo_filter_opt    },
 	{	7,		&g_sys.conf.fft.n,		                     2,		    12,             10,			    0,      NULL       		  },
@@ -34,10 +36,10 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	12,   	&g_sys.conf.eth.tcp_period,                  1,		    0xffffffff,		80,			    0,      NULL     		  },
 	{	13,		&g_sys.conf.fft.acc_times,                   1,		    128,            1,				0,      NULL   	          },
 	{	14,		&g_sys.conf.fft.intv_cnts,                   1,		    1024,           1,				0,      NULL   	          },
-	{	15,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
-	{	16,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
-	{	17,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
-	{	18,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
+	{	15,		&g_sys.conf.gtz.n,                   		 32,		65535,          4000,			0,      NULL   	          },
+	{	16,		&g_sys.conf.gtz.target_freq,                 1,		    1000,           470,			0,      NULL   	          },
+	{	17,		&g_sys.conf.gtz.sample_freq,                 4000,		4000,           4000,			0,      NULL   	          },
+	{	18,		&g_sys.conf.gtz.target_span,                 0,			65,           	5,				0,      NULL   	          },
 	{	19,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	20,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	21,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
@@ -65,7 +67,7 @@ const sts_reg_map_st status_reg_map_inst[STAT_REG_MAP_NUM]=
      {	5,      &g_sys.stat.man.man_date,					MAN_DATE},
      {	6,      &g_sys.stat.man.dev_type,					DEVICE_TYPE},
      {	7,      &g_sys.stat.gen.status_bm,					0},
-     {	8,      NULL,						                0},
+     {	8,      &g_sys.stat.geo.kfifo_drop_cnt,             0},
      {	9,      NULL,						                0},
      {	10,		NULL,						                0},
      {	11,		NULL,						                0},
@@ -294,6 +296,92 @@ int load_conf(const char *load_type)
     return ESP_OK;
 }
 
+static int set_mdns_hostname(const char *hostname)
+{
+	nvs_handle my_handle;
+	esp_err_t err;
+
+    // Open
+    err = nvs_open(MDNS_NAMESPACE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) return err;
+
+    nvs_set_str(my_handle,"mdns","mdns_flag_usr");
+    nvs_set_str(my_handle,"hostname",hostname);
+
+    // Commit
+    err = nvs_commit(my_handle);
+    if (err != ESP_OK) return err;
+
+    // Close
+    nvs_close(my_handle);
+    return ESP_OK;
+}
+
+int get_mdns_info(char* hostname, size_t* h_len)
+{
+	nvs_handle my_handle;
+	esp_err_t err;
+	char flag[20];
+	char buf_hostname[20];
+	size_t buf_hlen,f_len;
+
+    // Open
+    err = nvs_open(MDNS_NAMESPACE, NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) return err;
+
+    nvs_get_str(my_handle,"mdns",flag, &f_len);
+    nvs_get_str(my_handle,"mdns",flag, &f_len);
+    nvs_get_str(my_handle,"hostname",buf_hostname, &buf_hlen);
+    nvs_get_str(my_handle,"hostname",buf_hostname, &buf_hlen);
+
+    if((strcmp(flag,"mdns_flag_usr")&&strcmp(flag,"mdns_flag_dft")) != 0)
+    {
+    	nvs_set_str(my_handle,"mdns","mdns_flag_dft");
+    	nvs_set_str(my_handle,"hostname","GEO_ACC_DFT");
+    	printf("mdns-nvs_init,flag:%s, hostname:%s!\n",flag,buf_hostname);
+    	return -1;
+    }
+    else
+    {
+    	nvs_get_str(my_handle,"hostname",hostname,h_len);
+    	nvs_get_str(my_handle,"hostname",hostname,h_len);
+    }
+    printf("mdns-flag: %s,%d\n",flag,f_len);
+    printf("mdns-hostname: %s\n",hostname);
+
+    // Close
+    nvs_close(my_handle);
+
+    if((0 == h_len))
+    	err = -1;
+
+    return err;
+}
+
+void start_mdns_service(void)
+{
+	char hostname[20];
+	size_t h_size;
+    //initialize mDNS service
+    esp_err_t err = mdns_init();
+    if (err) {
+        printf("MDNS Init failed: %d\n", err);
+        return;
+    }
+    printf("MDNS Init OK\n");
+
+    get_mdns_info(hostname, &h_size);
+    //set hostname
+    mdns_hostname_set(hostname);
+
+    //set default instance
+    mdns_instance_name_set("GEO_METRIC");
+
+    mdns_service_add(NULL, "_http", "_tcp", 80, NULL, 0);
+    mdns_service_add(NULL, "_geo_daq", "_tcp", 9996, NULL, 0);
+}
+
+
 static int save_station(const char *ssid, const char *pwd)
 {
 	nvs_handle my_handle;
@@ -385,6 +473,26 @@ int32_t gvar_init(void)
 	err = load_conf("usr");
 	init_load_status();
 	return err;
+}
+
+/** Arguments used by 'mdns' function */
+static struct {
+    struct arg_str *hostname;
+    struct arg_end *end;
+} mdns_args;
+
+static int save_mdns_arg(int argc, char **argv)
+{
+    esp_err_t err;
+
+    int nerrors = arg_parse(argc, argv, (void**) &mdns_args);
+    if (nerrors != 0) {
+        arg_print_errors(stderr, mdns_args.end, argv[0]);
+        return 1;
+    }
+
+    err = set_mdns_hostname(mdns_args.hostname->sval[0]);
+    return err;
 }
 
 /** Arguments used by 'blob' function */
@@ -631,6 +739,20 @@ static void register_wr_reg()
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
 }
 
+static void register_save_mdns()
+{
+	mdns_args.hostname = arg_str1(NULL, NULL, "<hostname>", "hostname of device");
+	mdns_args.end = arg_end(1);
+    const esp_console_cmd_t cmd = {
+        .command = "save_mnds",
+        .help = "save mdns hostname",
+        .hint = NULL,
+        .func = &save_mdns_arg,
+		.argtable = &mdns_args
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
 static void register_save_station()
 {
 	wifi_args.ssid = arg_str1(NULL, NULL, "<ssid>", "ssid of AP");
@@ -679,6 +801,7 @@ void gvar_register(void)
 	register_save_conf();
 	register_print_conf();
 	register_load_conf();
+	register_save_mdns();
 	register_save_station();
 	register_save_ap();
 	register_print_wifi();

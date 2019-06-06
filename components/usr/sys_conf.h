@@ -35,6 +35,14 @@ typedef struct
 
 typedef struct
 {
+    uint32_t    n;
+    uint32_t    target_freq;
+    uint32_t    sample_freq;
+    uint32_t    target_span;
+}conf_gtz_st;
+
+typedef struct
+{
     uint32_t    enable;
     uint32_t    pkg_period;
     uint32_t    sample_period;
@@ -59,6 +67,7 @@ typedef struct
     conf_geo_st geo;
     conf_mod_st mod;
     conf_fft_st fft;
+    conf_gtz_st gtz;
 }config_st;
 
 
@@ -80,8 +89,14 @@ typedef struct
 
 typedef struct
 {
+    uint32_t   kfifo_drop_cnt;
+}stat_geo_st;
+
+typedef struct
+{
 	stat_gen_st 	gen;
     stat_man_st 	man;
+    stat_geo_st		geo;
 }status_st;
 
 typedef struct

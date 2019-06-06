@@ -17,6 +17,8 @@
 void geo_thread(void* param)
 {
     extern sys_reg_st  g_sys;
+    int16_t  err_no;
+    static uint16_t e_cnt = 0;
 
     adxl355_reset();
     fft_init();
@@ -25,7 +27,17 @@ void geo_thread(void* param)
 	{
 		if(g_sys.conf.geo.enable == 1)
 		{
-			adxl355_scanfifo();
+			err_no = adxl355_scanfifo();
+//			if(err_no != 0)
+//			{
+//				e_cnt ++;
+//				if(e_cnt >=1000)
+//				{
+//					e_cnt = 0;
+//					printf("Scf!\n");
+//				}
+//			}
+
 			vTaskDelay(g_sys.conf.geo.sample_period / portTICK_PERIOD_MS);
 		}
 		else

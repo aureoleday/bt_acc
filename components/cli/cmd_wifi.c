@@ -24,6 +24,8 @@
 #include "sys_conf.h"
 #include "bit_op.h"
 #include "web_srv.h"
+#include "mdns.h"
+
 #include "global_var.h"
 
 #include "nvs_flash.h"
@@ -48,6 +50,7 @@ static void connected_ops(void)
 	    	     NULL);
 }
 
+
 static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
 	httpd_handle_t *server = (httpd_handle_t *) ctx;
@@ -60,6 +63,7 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
     case SYSTEM_EVENT_STA_GOT_IP:
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
+        start_mdns_service();
         /* Start the web server */
         if ((*server == NULL)&&(g_sys.conf.eth.http_en)) {
             *server = start_webserver();
@@ -117,6 +121,7 @@ static void initialise_wifi(void* arg)
     if(ESP_OK != err)
     {
     	printf("get wifi err!\n");
+    	bit_op_set(&g_sys.stat.gen.status_bm,GBM_WIFI,0);
     	return;
     }
 

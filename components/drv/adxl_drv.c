@@ -21,6 +21,7 @@
 #include "my_fft.h"
 #include "sys_conf.h"
 #include "kfifo.h"
+#include "goertzel.h"
 
 #define min(a,b)  ((a)>(b) ? (b) : (a))            /*  */
 
@@ -243,9 +244,11 @@ void adxl355_reset(void)
 
 static int16_t raw_data_buf(uint32_t din, uint8_t axis)
 {
+	extern sys_reg_st  g_sys;
 	static uint8_t stage = 0;  //0: idle;1: x;2:y;3:z;
 	static uint32_t dbuf[3]={0,0,0};
 	float temp;
+	float gtz_val;
 	uint32_t dummy;
 	int16_t ret = 0;
 
@@ -302,12 +305,21 @@ static int16_t raw_data_buf(uint32_t din, uint8_t axis)
 			{
 				dbuf[2] = din;
 				if(kfifo_len(&kf_s) >=  kf_s.size)
+				{
 					kfifo_out(&kf_s,&dummy,sizeof(uint32_t));
-				temp = (float)decode(dbuf[axis])*0.0000039;
-				kfifo_in(&kf_s,&temp,sizeof(uint32_t));
+					g_sys.stat.geo.kfifo_drop_cnt++;
+					ret = -4;
+				}
+				else
+					ret = 0;
 
+				temp = (float)decode(dbuf[axis])*0.0000039;
+				goertzel_lfilt(temp);
+//				if(gtz_val>0.0001)
+//					printf("gtz:%f\n",gtz_val);
+
+				kfifo_in(&kf_s,&temp,sizeof(uint32_t));
 				stage = 1;
-				ret = 0;
 			}
 			else
 			{
@@ -395,7 +407,6 @@ static int adxl_info(int argc, char **argv)
 
 static int fft_info(int argc, char **argv)
 {
-
 	int i;
 	printf("ind\tfreq\t\tamp\n");
 	for(i=0;i<16;i++)

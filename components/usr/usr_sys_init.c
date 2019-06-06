@@ -14,6 +14,7 @@
 #include "nvs.h"
 #include "nvs_flash.h"
 #include "threads.h"
+#include "goertzel.h"
 
 char ssid[24];
 char pwd[24];
@@ -37,6 +38,7 @@ void usr_sys_init(void)
 	usr_led_init();
 	adxl_init();
 	adxl_register();
+	gtz_register();
 //	usr_spp_register();
 
 	gvar_init();

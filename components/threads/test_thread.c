@@ -11,39 +11,7 @@
 #include "kfifo.h"
 #include "led_drv.h"
 #include "global_var.h"
-
-//#define MEOW_FFT_IMPLEMENTAION
-//
-//#include "meow_fft.h"
-//
-//const float sine_wave[64] = { 	0.   ,  0.098,  0.195,  0.29 ,  0.383,  0.471,  0.556,  0.634,
-//								0.707,  0.773,  0.831,  0.882,  0.924,  0.957,  0.981,  0.995,
-//								1.   ,  0.995,  0.981,  0.957,  0.924,  0.882,  0.831,  0.773,
-//								0.707,  0.634,  0.556,  0.471,  0.383,  0.29 ,  0.195,  0.098,
-//								0.   , -0.098, -0.195, -0.29 , -0.383, -0.471, -0.556, -0.634,
-//							   -0.707, -0.773, -0.831, -0.882, -0.924, -0.957, -0.981, -0.995,
-//							   -1.   , -0.995, -0.981, -0.957, -0.924, -0.882, -0.831, -0.773,
-//							   -0.707, -0.634, -0.556, -0.471, -0.383, -0.29 , -0.195, -0.098};
-//
-//void fft_test1(void)
-//{
-//	int i;
-//	unsigned          N   = 1024;
-//	float*            ind  = malloc(sizeof(float) * N);
-//	float*            outd  = malloc(sizeof(float) * N);
-//
-//	for(i=0;i<N;i++)
-//	    	*(ind+i)= sine_wave[2*i%64];
-//
-////	fft_init();
-//	fft_new(N);
-//	fft_calc(ind,outd);
-//	for(i=0;i<N/2;i++)
-//	{
-//		if(*(outd+i)>0)
-//			printf("%d: %f \n",i,*(outd+i));
-//	}
-//}
+#include "bit_op.h"
 
 
 void join_wifi(void)
@@ -77,8 +45,10 @@ void test_thread(void* param)
 {
 	extern sys_reg_st  g_sys;
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
-	if(g_sys.conf.gen.wifi_mode == 1)
+	if((g_sys.conf.gen.wifi_mode == 1)&&bit_op_get(&g_sys.stat.gen.status_bm,GBM_WIFI) == 1);
+	{
 		join_wifi();
+	}
 
 	while(1)
 	{

@@ -12,5 +12,6 @@ int save_conf(const char *save_type);
 int load_conf(const char *load_type);
 uint8_t load_factory_pram(void);
 int32_t gvar_init(void);
+void start_mdns_service(void);
 int get_wifi_info(char* ssid, char* lcssid, char* pwd, char* lcpwd, size_t* s_len, size_t* ls_len, size_t* p_len, size_t* lp_len);
 #endif //__GLOBAL_VAR
