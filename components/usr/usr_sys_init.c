@@ -38,7 +38,6 @@ void usr_sys_init(void)
 	usr_led_init();
 	adxl_init();
 	adxl_register();
-	gtz_register();
 //	usr_spp_register();
 
 	gvar_init();

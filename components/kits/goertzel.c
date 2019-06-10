@@ -4,9 +4,10 @@
  *  Created on: 2019Äê6ÔÂ6ÈÕ
  *      Author: Administrator
  */
-#include "esp_system.h"
-#include "freertos/FreeRTOS.h"
-#include "esp_console.h"
+//#include "esp_system.h"
+//#include "freertos/FreeRTOS.h"
+//#include "esp_console.h"
+#include <stdlib.h>     /* qsort */
 #include "global_var.h"
 #include <math.h>
 
@@ -35,6 +36,63 @@ static float window(uint32_t n, uint32_t ord)
 {
 	return (1-cosf(2*M_PI*n/(ord-1)))/2;
 }
+
+
+int compare(const void * a, const void * b)
+{
+	float fa =  *(float*)a;
+	float fb =  *(float*)b;
+	return (fa-fb)>0? -1:1;
+}
+
+static float gtz_snr(float* dbuf, uint16_t cnt)
+{
+	float buf[16];
+	float buf_2nd[4];
+	float signal_psd=0.0;
+	float noise_psd=0.0;
+	float snr = 0.0;
+
+	uint16_t i;
+	int16_t ind=0;
+
+	for(i=0;i<cnt;i++)
+		buf[i] = *(dbuf+i);
+
+	qsort(buf,cnt,sizeof(float),compare);
+
+	buf_2nd[0] = *(dbuf-1);
+	buf_2nd[1] = *(dbuf);
+	buf_2nd[2] = *(dbuf+1);
+	buf_2nd[3] = buf[2];
+
+	qsort(buf_2nd,4,sizeof(float),compare);
+
+	for(i=0;i<4;i++)
+	{
+		if(buf_2nd[i]<=buf[2])
+		{
+			ind = i;
+			break;
+		}
+	}
+
+	if(ind != 0)
+	{
+		for(i=0;i<ind;i++)
+			signal_psd += buf[i];
+		signal_psd /=ind;
+
+		for(i=ind;i<cnt;i++)
+			noise_psd += buf[i];
+		noise_psd /=(cnt-ind);
+
+		snr = signal_psd/noise_psd;
+	}
+
+	return snr;
+}
+
 
 
 int16_t goertzel_lfilt(float din)
@@ -84,7 +142,7 @@ int16_t goertzel_lfilt(float din)
 			else
 				g_sys.stat.gtz.freq_bar[2*(i-g_sys.conf.gtz.target_span)] = gtz_inst.res[i];
 		}
-		g_sys.stat.gtz.freq_bar[0] = gtz_inst.res[g_sys.conf.gtz.target_span];
+		g_sys.stat.gtz.snr = gtz_snr(gtz_inst.res,2*g_sys.conf.gtz.target_span+1);
 		gtz_inst.icnt = 0;
 		ret = 1;
 	}
@@ -113,30 +171,6 @@ float goertzel_calc(float* din)
 	return sqrtf((q1*q1 + q2*q2 - q1*q2*coef)*2/g_sys.conf.gtz.n);
 }
 
-//static int cmd_gtz_info(int argc, char **argv)
-//{
-//	extern sys_reg_st  g_sys;
-//	float coef;
-//	coef = goertzel_coef(g_sys.conf.gtz.target_freq,g_sys.conf.gtz.sample_freq, g_sys.conf.gtz.n);
-//	printf("goertzel coef:%f\n", coef);
-//	return 0;
-//}
-//
-//static void register_gtz_cal(void)
-//{
-//    const esp_console_cmd_t cmd = {
-//        .command = "calc gtz",
-//        .help = "Get gtz infomation",
-//        .hint = NULL,
-//        .func = &cmd_gtz_info
-//    };
-//    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
-//}
-
-void gtz_register(void)
-{
-//	register_gtz_cal();
-}
 
 
 

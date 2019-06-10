@@ -75,22 +75,22 @@ const sts_reg_map_st status_reg_map_inst[STAT_REG_MAP_NUM]=
      {	13,		NULL,						                0},
      {	14,		NULL,						                0},
      {	15,		NULL,						                0},
-	 {	16,		(void*)&g_sys.stat.gtz.freq_bar[0],		    0},
-	 {	17,		(void*)&g_sys.stat.gtz.freq_bar[1],		    0},
-	 {	18,		(void*)&g_sys.stat.gtz.freq_bar[2],		    0},
-	 {	19,		(void*)&g_sys.stat.gtz.freq_bar[3],		    0},
-	 {	10,		(void*)&g_sys.stat.gtz.freq_bar[4],		    0},
-	 {	21,		(void*)&g_sys.stat.gtz.freq_bar[5],		    0},
-	 {	22,		(void*)&g_sys.stat.gtz.freq_bar[6],		    0},
-	 {	23,		(void*)&g_sys.stat.gtz.freq_bar[7],		    0},
-	 {	24,		(void*)&g_sys.stat.gtz.freq_bar[8],		    0},
-	 {	25,		(void*)&g_sys.stat.gtz.freq_bar[9],		    0},
-	 {	26,		(void*)&g_sys.stat.gtz.freq_bar[10],		0},
-	 {	27,		(void*)&g_sys.stat.gtz.freq_bar[11],		0},
-	 {	28,		(void*)&g_sys.stat.gtz.freq_bar[12],		0},
-	 {	29,		(void*)&g_sys.stat.gtz.freq_bar[13],		0},
-	 {	30,		(void*)&g_sys.stat.gtz.freq_bar[14],		0},
-     {	31,		(void*)&g_sys.stat.gtz.freq_bar[15],		0}
+	 {	16,		(void*)&g_sys.stat.gtz.snr,				    0},
+	 {	17,		(void*)&g_sys.stat.gtz.freq_bar[0],		    0},
+	 {	18,		(void*)&g_sys.stat.gtz.freq_bar[1],		    0},
+	 {	19,		(void*)&g_sys.stat.gtz.freq_bar[2],		    0},
+	 {	10,		(void*)&g_sys.stat.gtz.freq_bar[3],		    0},
+	 {	21,		(void*)&g_sys.stat.gtz.freq_bar[4],		    0},
+	 {	22,		(void*)&g_sys.stat.gtz.freq_bar[5],		    0},
+	 {	23,		(void*)&g_sys.stat.gtz.freq_bar[6],		    0},
+	 {	24,		(void*)&g_sys.stat.gtz.freq_bar[7],		    0},
+	 {	25,		(void*)&g_sys.stat.gtz.freq_bar[8],		    0},
+	 {	26,		(void*)&g_sys.stat.gtz.freq_bar[9],			0},
+	 {	27,		(void*)&g_sys.stat.gtz.freq_bar[10],		0},
+	 {	28,		(void*)&g_sys.stat.gtz.freq_bar[11],		0},
+	 {	29,		(void*)&g_sys.stat.gtz.freq_bar[12],		0},
+	 {	30,		(void*)&g_sys.stat.gtz.freq_bar[13],		0},
+     {	31,		(void*)&g_sys.stat.gtz.freq_bar[14],		0}
 };
 
 /**
@@ -561,6 +561,21 @@ int print_wifi(int argc, char **argv)
     return err;
 }
 
+static int gtz_info(int argc, char **argv)
+{
+	esp_err_t err = 0;
+	uint32_t i;
+	printf("center_freq is: %d\n",g_sys.conf.gtz.target_freq);
+	printf("snr is: %f\n",g_sys.stat.gtz.snr);
+	printf("[0]\t\t[-1]\t\t[+1]\t\t[-2]\t\t[+2]\t\t[-3]\t\t[+3]\t\t[-4]\t\t[+4]\n");
+	for(i=0;i<(2*g_sys.conf.gtz.target_span+1);i++)
+	{
+		printf("%f\t",g_sys.stat.gtz.freq_bar[i]);
+	}
+	printf("\n");
+    return err;
+}
+
 
 /** Arguments used by 'blob' function */
 static struct {
@@ -810,6 +825,18 @@ static void register_print_wifi()
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
 }
 
+static void register_gtz_info()
+{
+    const esp_console_cmd_t cmd = {
+        .command = "gtz_info",
+        .help = "print gtz freq bins",
+        .hint = NULL,
+        .func = &gtz_info
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
+
 void gvar_register(void)
 {
 	register_rd_reg();
@@ -821,6 +848,7 @@ void gvar_register(void)
 	register_save_station();
 	register_save_ap();
 	register_print_wifi();
+	register_gtz_info();
 }
 
 
