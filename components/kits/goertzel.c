@@ -45,7 +45,7 @@ int16_t goertzel_lfilt(float din)
 
 	if(gtz_inst.icnt == 0)
 	{
-		for(i=0;i<(2*g_sys.conf.gtz.target_span);i++)
+		for(i=0;i<(2*g_sys.conf.gtz.target_span+1);i++)
 		{
 			gtz_inst.coef[i] = goertzel_coef(g_sys.conf.gtz.target_freq-g_sys.conf.gtz.target_span+i,g_sys.conf.gtz.sample_freq, g_sys.conf.gtz.n);
 		}
@@ -70,11 +70,16 @@ int16_t goertzel_lfilt(float din)
 	{
 		for(i=0;i<(2*g_sys.conf.gtz.target_span+1);i++)
 		{
-			gtz_inst.res[i] = sqrtf((gtz_inst.q1[i]*gtz_inst.q1[i] + gtz_inst.q2[i]*gtz_inst.q2[i] - gtz_inst.q1[i]*gtz_inst.q2[i]*gtz_inst.coef[i])*2/g_sys.conf.gtz.n);
+			printf("\t%d\t",g_sys.conf.gtz.target_freq-g_sys.conf.gtz.target_span+i);
+		}
+		printf("\n");
+		for(i=0;i<(2*g_sys.conf.gtz.target_span+1);i++)
+		{
+			gtz_inst.res[i] = sqrtf(gtz_inst.q1[i]*gtz_inst.q1[i] + gtz_inst.q2[i]*gtz_inst.q2[i] - gtz_inst.q1[i]*gtz_inst.q2[i]*gtz_inst.coef[i])*2/g_sys.conf.gtz.n;
 			gtz_inst.q0[i] = 0.0;
 			gtz_inst.q1[i] = 0.0;
 			gtz_inst.q2[i] = 0.0;
-			printf("\t%f\t",gtz_inst.res[i]);
+			printf("\t%f",gtz_inst.res[i]);
 		}
 		printf("\n\n");
 		gtz_inst.icnt = 0;
