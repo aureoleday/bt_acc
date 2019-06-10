@@ -17,8 +17,8 @@
 void geo_thread(void* param)
 {
     extern sys_reg_st  g_sys;
-    int16_t  err_no;
-    static uint16_t e_cnt = 0;
+//    int16_t  err_no;
+//    static uint16_t e_cnt = 0;
 
     adxl355_reset();
     fft_init();
@@ -27,7 +27,8 @@ void geo_thread(void* param)
 	{
 		if(g_sys.conf.geo.enable == 1)
 		{
-			err_no = adxl355_scanfifo();
+			adxl355_scanfifo();
+//			err_no = adxl355_scanfifo();
 
 			vTaskDelay(g_sys.conf.geo.sample_period / portTICK_PERIOD_MS);
 		}

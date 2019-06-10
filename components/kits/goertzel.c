@@ -36,6 +36,7 @@ static float window(uint32_t n, uint32_t ord)
 	return (1-cosf(2*M_PI*n/(ord-1)))/2;
 }
 
+
 int16_t goertzel_lfilt(float din)
 {
 	extern sys_reg_st  g_sys;
@@ -68,21 +69,22 @@ int16_t goertzel_lfilt(float din)
 
 	if(gtz_inst.icnt>=g_sys.conf.gtz.n)
 	{
-//		for(i=0;i<(2*g_sys.conf.gtz.target_span+1);i++)
-//		{
-//			printf("\t%d\t",g_sys.conf.gtz.target_freq-g_sys.conf.gtz.target_span+i);
-//		}
-//		printf("\n");
+
 		for(i=0;i<(2*g_sys.conf.gtz.target_span+1);i++)
 		{
 			gtz_inst.res[i] = sqrtf(gtz_inst.q1[i]*gtz_inst.q1[i] + gtz_inst.q2[i]*gtz_inst.q2[i] - gtz_inst.q1[i]*gtz_inst.q2[i]*gtz_inst.coef[i])*2/g_sys.conf.gtz.n;
 			gtz_inst.q0[i] = 0.0;
 			gtz_inst.q1[i] = 0.0;
 			gtz_inst.q2[i] = 0.0;
-//			printf("\t%f",gtz_inst.res[i]);
+			//sort list
+			if(i==g_sys.conf.gtz.target_span)
+				g_sys.stat.gtz.freq_bar[0] = gtz_inst.res[i];
+			else if(i<g_sys.conf.gtz.target_span)
+				g_sys.stat.gtz.freq_bar[2*i+1] = gtz_inst.res[i];
+			else
+				g_sys.stat.gtz.freq_bar[2*(i-g_sys.conf.gtz.target_span)] = gtz_inst.res[i];
 		}
 		g_sys.stat.gtz.freq_bar[0] = gtz_inst.res[g_sys.conf.gtz.target_span];
-//		printf("\n\n");
 		gtz_inst.icnt = 0;
 		ret = 1;
 	}

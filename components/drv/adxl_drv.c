@@ -222,7 +222,7 @@ void adxl_init(void)
         .clock_speed_hz=16*1000*1000,           //Clock out at 16 MHz
         .mode=0,                                //SPI mode 0
         .spics_io_num=PIN_NUM_CS,               //CS pin
-        .queue_size=7,                          //We want to be able to queue 7 transactions at a time
+        .queue_size=12,                          //We want to be able to queue 7 transactions at a time
 //        .pre_cb=lcd_spi_pre_transfer_callback,  //Specify pre-transfer callback to handle D/C line
     };
     //Initialize the SPI bus
@@ -351,11 +351,18 @@ int16_t adxl355_scanfifo(void)
 
     err_no = 0;
     status = adxl_rd_reg(ADXL_STATUS,rxd_temp,2);
-    if(((status&0x4) != 0)&&(cooldown==0))
+    if((status&0x4) != 0)
     {
-    	printf("F_OVR!\n");
-    	cooldown = 2000;
+    	if(cooldown==0)
+    	{
+    		cooldown = 1000;
+    		printf("F_OVR!\n");
+    	}
+    	adxl_rd_reg(ADXL_FIFO_DATA, rxd_temp, 96*2);
+    	err_no = -1;
+    	return err_no;
     }
+
     if(cooldown > 0)
     	cooldown--;
 
