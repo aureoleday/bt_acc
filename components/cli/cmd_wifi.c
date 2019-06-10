@@ -124,7 +124,7 @@ static void initialise_wifi(void* arg)
     	bit_op_set(&g_sys.stat.gen.status_bm,GBM_WIFI,0);
     	return;
     }
-
+    bit_op_set(&g_sys.stat.gen.status_bm,GBM_WIFI,1);
     printf("ap ssid:%s,pwd:%s\n",lcssid,lcpwd);
 
     strncpy((char*) wifi_config.ap.ssid, lcssid, lslen-1);

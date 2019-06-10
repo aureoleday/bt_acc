@@ -248,7 +248,6 @@ static int16_t raw_data_buf(uint32_t din, uint8_t axis)
 	static uint8_t stage = 0;  //0: idle;1: x;2:y;3:z;
 	static uint32_t dbuf[3]={0,0,0};
 	float temp;
-	float gtz_val;
 	uint32_t dummy;
 	int16_t ret = 0;
 
@@ -352,10 +351,10 @@ int16_t adxl355_scanfifo(void)
 
     err_no = 0;
     status = adxl_rd_reg(ADXL_STATUS,rxd_temp,2);
-    if(((status&0x6) != 0)&&(cooldown==0))
+    if(((status&0x4) != 0)&&(cooldown==0))
     {
-    	printf("AF: %x,sc:%d\n",status,rxd_temp[2]);
-    	cooldown = 1000;
+    	printf("F_OVR!\n");
+    	cooldown = 2000;
     }
     if(cooldown > 0)
     	cooldown--;

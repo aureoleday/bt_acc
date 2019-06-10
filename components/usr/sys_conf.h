@@ -94,9 +94,15 @@ typedef struct
 
 typedef struct
 {
+    float	   freq_bar[16];
+}stat_gtz_st;
+
+typedef struct
+{
 	stat_gen_st 	gen;
     stat_man_st 	man;
     stat_geo_st		geo;
+    stat_gtz_st		gtz;
 }status_st;
 
 typedef struct

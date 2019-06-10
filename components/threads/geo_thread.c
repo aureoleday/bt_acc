@@ -28,15 +28,6 @@ void geo_thread(void* param)
 		if(g_sys.conf.geo.enable == 1)
 		{
 			err_no = adxl355_scanfifo();
-//			if(err_no != 0)
-//			{
-//				e_cnt ++;
-//				if(e_cnt >=1000)
-//				{
-//					e_cnt = 0;
-//					printf("Scf!\n");
-//				}
-//			}
 
 			vTaskDelay(g_sys.conf.geo.sample_period / portTICK_PERIOD_MS);
 		}
