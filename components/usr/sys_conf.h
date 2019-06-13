@@ -15,6 +15,7 @@ typedef struct
     uint32_t 		sample_channel;
     uint32_t 		wifi_mode;
     uint32_t 		restart;
+    uint32_t 		dbg;
 }conf_gen_st;
 
 
@@ -39,6 +40,8 @@ typedef struct
     uint32_t    target_freq;
     uint32_t    sample_freq;
     uint32_t    target_span;
+    uint32_t    signal_th;
+    uint32_t    snr_mav_cnt;
 }conf_gtz_st;
 
 typedef struct
@@ -89,13 +92,17 @@ typedef struct
 
 typedef struct
 {
-    uint32_t   kfifo_drop_cnt;
+    uint32_t   	kfifo_drop_cnt;
 }stat_geo_st;
 
 typedef struct
 {
-    float	   freq_bar[16];
-    float	   snr;
+    float	   	freq_bar[16];
+    float	   	snr;
+    float	   	ma_snr;
+    float		signal_level;
+    float		noise_level;
+    uint32_t   	rank;
 }stat_gtz_st;
 
 typedef struct

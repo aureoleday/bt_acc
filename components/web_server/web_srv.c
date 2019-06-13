@@ -25,6 +25,7 @@
 #include "bit_op.h"
 #include "global_var.h"
 #include "adxl_drv.h"
+#include "goertzel.h"
 
 #define min(a,b)  ((a)>(b) ? (b) : (a))            /*  */
 
@@ -38,7 +39,7 @@
 */
 
 static const char 	*TAG="HTTP";
-static char 		cjson_buf[16384];
+static char 		cjson_buf[8192];
 //static char 		cjson_buf[16];
 float 		rt_buf[DEV_GEO_FIFO_SIZE];
 
@@ -183,33 +184,20 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
     return strlen(cj_src);
 }
 
-static int cj_get_btimes(uint8_t index, uint16_t time_points,char* cj_dst)
+static int cj_get_freq_bar(char* cj_dst)
 {
 	extern sys_reg_st  g_sys;
+	float	freq_bins[33];
+	uint16_t bin_cnt;
 	cJSON * root =  cJSON_CreateObject();
 	char *cj_src = NULL;
-	uint16_t out_len,get_points,offset;
 
-	out_len = geo_get_time(rt_buf,DEV_GEO_FIFO_SIZE);
+    cJSON_AddItemToObject(root, "center_freq", cJSON_CreateNumber(g_sys.conf.gtz.target_freq));
+    cJSON_AddItemToObject(root, "freq_span", cJSON_CreateNumber(g_sys.conf.gtz.target_span));
+    gtz_freq_bins(freq_bins,&bin_cnt);
+    cJSON_AddItemToObject(root, "freq_bins", cJSON_CreateFloatArray(freq_bins,bin_cnt));
 
-	if(out_len > time_points)
-	{
-		offset = out_len - time_points;
-		get_points = time_points;
-	}
-	else
-	{
-		offset = 0;
-		get_points = out_len;
-	}
-
-    cJSON_AddItemToObject(root, "sample_cnts", cJSON_CreateNumber(out_len));//根节点下添加
-    cJSON_AddItemToObject(root, "index", cJSON_CreateNumber(index));//根节点下添加
-    cJSON_AddItemToObject(root, "sample_rate", cJSON_CreateNumber(4000>>(g_sys.conf.geo.filter&0x0f)));//根节点下添加
-    cJSON_AddItemToObject(root, "axis", cJSON_CreateNumber(g_sys.conf.gen.sample_channel));//根节点下添加
-    cJSON_AddItemToObject(root, "sample_data", cJSON_CreateFloatArray((float*)(rt_buf+offset),get_points));
-
-    if(out_len != 0)
+    if(bin_cnt != 0)
     {
     	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
     }
@@ -219,31 +207,29 @@ static int cj_get_btimes(uint8_t index, uint16_t time_points,char* cj_dst)
     }
 
     cj_src = cJSON_PrintUnformatted(root);
-//    printf("[size: %d]\n",strlen(cj_src));
     strcpy(cj_dst,cj_src);
     free(cj_src);
     cJSON_Delete(root);
     return strlen(cj_src);
 }
 
-
-static int cj_get_fft_peak(char* cj_dst)
+static int cj_get_gtz(char* cj_dst)
 {
-	extern fft_st fft_inst;
+	extern sys_reg_st  g_sys;
 	cJSON * root =  cJSON_CreateObject();
 	char *cj_src = NULL;
 
-    cJSON_AddItemToObject(root, "freq_arr", cJSON_CreateFloatArray(fft_inst.freq_arr,fft_inst.arr_cnt));
-    cJSON_AddItemToObject(root, "ampl_arr", cJSON_CreateFloatArray(fft_inst.ampl_arr,fft_inst.arr_cnt));
+	cJSON_AddItemToObject(root, "center_freq", cJSON_CreateNumber(g_sys.conf.gtz.target_freq));
+	cJSON_AddItemToObject(root, "freq_span", cJSON_CreateNumber(g_sys.conf.gtz.target_span));
+	cJSON_AddItemToObject(root, "snr_mav_cnt", cJSON_CreateNumber(g_sys.conf.gtz.snr_mav_cnt));
 
-    if(fft_inst.arr_cnt != 0)
-    {
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
-    }
-    else
-    {
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
-    }
+	cJSON_AddNumberToObject(root, "ma_snr",(float)g_sys.stat.gtz.ma_snr);
+	cJSON_AddNumberToObject(root, "cur_snr", (float)g_sys.stat.gtz.snr);
+	cJSON_AddNumberToObject(root, "signal_level", (float)g_sys.stat.gtz.signal_level);
+	cJSON_AddNumberToObject(root, "noise_level", (float)g_sys.stat.gtz.noise_level);
+	cJSON_AddNumberToObject(root, "rank", g_sys.stat.gtz.rank);
+
+	cJSON_AddStringToObject(root, "status", "ok");
 
     cj_src = cJSON_PrintUnformatted(root);
     strcpy(cj_dst,cj_src);
@@ -488,7 +474,7 @@ httpd_uri_t time = {
     .user_ctx  = NULL
 };
 
-esp_err_t pfft_get_handler(httpd_req_t *req)
+esp_err_t freq_bar_get_handler(httpd_req_t *req)
 {
     size_t buf_len;
     char * cj_buf = cjson_buf;
@@ -508,23 +494,50 @@ esp_err_t pfft_get_handler(httpd_req_t *req)
 //            	times = atoi(param);
 //        }
 //        free(buf);
-    	ESP_LOGI(TAG, "FFT PEAK REQ");
+    	ESP_LOGI(TAG, "FREQ BAR REQ");
     }
 
-    cj_get_fft_peak(cj_buf);
+    cj_get_freq_bar(cj_buf);
 
     httpd_resp_send(req, cj_buf, strlen(cj_buf));
 
     return ESP_OK;
 }
 
-httpd_uri_t fft_peak = {
-    .uri       = "/fft_peak",
+httpd_uri_t freq_bin = {
+    .uri       = "/freq_bin",
     .method    = HTTP_GET,
-    .handler   = pfft_get_handler,
+    .handler   = freq_bar_get_handler,
     .user_ctx  = NULL
 };
 
+esp_err_t gtz_status_get_handler(httpd_req_t *req)
+{
+    size_t buf_len;
+    char * cj_buf = cjson_buf;
+
+    /* Read URL query string length and allocate memory for length + 1,
+     * extra byte for null termination */
+    buf_len = httpd_req_get_url_query_len(req) + 1;
+    if (buf_len > 1)
+    {
+    	ESP_LOGI(TAG, "FREQ BAR REQ");
+    }
+
+    cj_get_gtz(cj_buf);
+
+    httpd_resp_send(req, cj_buf, strlen(cj_buf));
+
+    return ESP_OK;
+}
+
+
+httpd_uri_t gtz_status = {
+    .uri       = "/gtz_status",
+    .method    = HTTP_GET,
+    .handler   = gtz_status_get_handler,
+    .user_ctx  = NULL
+};
 
 /* An HTTP POST handler */
 //esp_err_t echo_post_handler(httpd_req_t *req)
@@ -622,8 +635,9 @@ httpd_handle_t start_webserver(void)
         httpd_register_uri_handler(server, &rd_reg);
         httpd_register_uri_handler(server, &wr_reg);
         httpd_register_uri_handler(server, &fft);
-        httpd_register_uri_handler(server, &fft_peak);
+        httpd_register_uri_handler(server, &freq_bin);
         httpd_register_uri_handler(server, &time);
+        httpd_register_uri_handler(server, &gtz_status);
         return server;
     }
     ESP_LOGI(TAG, "Error starting server!");
