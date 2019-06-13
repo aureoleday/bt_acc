@@ -11,7 +11,7 @@
 #include "global_var.h"
 #include <math.h>
 
-#define FREQ_SPAN_MAX	33
+#define FREQ_SPAN_MAX	65
 
 typedef struct
 {
@@ -45,7 +45,7 @@ static float goertzel_coef(uint32_t target_freq, uint32_t sample_freq, uint32_t 
 	return 2*cosf(w);
 }
 
-static float window(uint32_t n, uint32_t ord)
+inline static float window(uint32_t n, uint32_t ord)
 {
 	return (1-cosf(2*M_PI*n/(ord-1)))/2;
 }
@@ -159,9 +159,8 @@ static float gtz_snr(float* dbuf, uint16_t cnt, snr_st *snr_sptr)
 int16_t goertzel_lfilt(float din)
 {
 	extern sys_reg_st  g_sys;
-
+	float x = 0.0;
 	int16_t ret = 0;
-
 	uint32_t i;
 
 	if(gtz_inst.icnt == 0)
@@ -171,8 +170,6 @@ int16_t goertzel_lfilt(float din)
 			gtz_inst.coef[i] = goertzel_coef(g_sys.conf.gtz.target_freq-g_sys.conf.gtz.target_span+i,g_sys.conf.gtz.sample_freq, g_sys.conf.gtz.n);
 		}
 	}
-
-	float x = 0.0;
 
 	if(gtz_inst.icnt<g_sys.conf.gtz.n)
 	{
@@ -196,13 +193,6 @@ int16_t goertzel_lfilt(float din)
 			gtz_inst.q0[i] = 0.0;
 			gtz_inst.q1[i] = 0.0;
 			gtz_inst.q2[i] = 0.0;
-			//sort list
-//			if(i==g_sys.conf.gtz.target_span)
-//				g_sys.stat.gtz.freq_bar[0] = gtz_inst.res[i];
-//			else if(i<g_sys.conf.gtz.target_span)
-//				g_sys.stat.gtz.freq_bar[2*i+1] = gtz_inst.res[i];
-//			else
-//				g_sys.stat.gtz.freq_bar[2*(i-g_sys.conf.gtz.target_span)] = gtz_inst.res[i];
 		}
 		g_sys.stat.gtz.snr = gtz_snr(gtz_inst.res,2*g_sys.conf.gtz.target_span+1, &snr_inst);
 		g_sys.stat.gtz.rank = snr_inst.rank;

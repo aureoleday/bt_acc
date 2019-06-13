@@ -40,7 +40,7 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	16,		&g_sys.conf.gtz.target_freq,                 1,		    1000,           470,			0,      NULL   	          },
 	{	17,		&g_sys.conf.gtz.sample_freq,                 4000,		4000,           4000,			0,      NULL   	          },
 	{	18,		&g_sys.conf.gtz.target_span,                 0,			65,           	7,				0,      NULL   	          },
-	{	19,		&g_sys.conf.gtz.snr_mav_cnt,                 1,		    16,				5,				0,      NULL   	          },
+	{	19,		&g_sys.conf.gtz.snr_mav_cnt,                 1,		    32,				5,				0,      NULL   	          },
 	{	20,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	21,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	22,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
