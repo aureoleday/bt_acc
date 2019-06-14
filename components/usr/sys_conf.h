@@ -42,11 +42,13 @@ typedef struct
     uint32_t    target_span;
     uint32_t    signal_th;
     uint32_t    snr_mav_cnt;
+    uint32_t    acc_q;
 }conf_gtz_st;
 
 typedef struct
 {
     uint32_t    enable;
+    uint32_t    pkg_en;
     uint32_t    pkg_period;
     uint32_t    sample_period;
     uint32_t    filter;
@@ -97,12 +99,13 @@ typedef struct
 
 typedef struct
 {
-    float	   	freq_bar[16];
-    float	   	snr;
-    float	   	ma_snr;
+    float	   	freq_bar[33];
+    float	   	ins_snr;
+    float	   	acc_snr;
     float		signal_level;
     float		noise_level;
     uint32_t   	rank;
+    uint32_t   	acc_rank;
 }stat_gtz_st;
 
 typedef struct

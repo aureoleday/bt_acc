@@ -223,11 +223,12 @@ static int cj_get_gtz(char* cj_dst)
 	cJSON_AddItemToObject(root, "freq_span", cJSON_CreateNumber(g_sys.conf.gtz.target_span));
 	cJSON_AddItemToObject(root, "snr_mav_cnt", cJSON_CreateNumber(g_sys.conf.gtz.snr_mav_cnt));
 
-	cJSON_AddNumberToObject(root, "ma_snr",(float)g_sys.stat.gtz.ma_snr);
-	cJSON_AddNumberToObject(root, "cur_snr", (float)g_sys.stat.gtz.snr);
+	cJSON_AddNumberToObject(root, "acc_snr",(float)g_sys.stat.gtz.acc_snr);
+	cJSON_AddNumberToObject(root, "cur_snr", (float)g_sys.stat.gtz.ins_snr);
 	cJSON_AddNumberToObject(root, "signal_level", (float)g_sys.stat.gtz.signal_level);
 	cJSON_AddNumberToObject(root, "noise_level", (float)g_sys.stat.gtz.noise_level);
 	cJSON_AddNumberToObject(root, "rank", g_sys.stat.gtz.rank);
+	cJSON_AddNumberToObject(root, "acc_rank", g_sys.stat.gtz.acc_rank);
 
 	cJSON_AddStringToObject(root, "status", "ok");
 

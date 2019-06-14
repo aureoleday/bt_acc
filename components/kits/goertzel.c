@@ -25,16 +25,22 @@ typedef struct
 
 typedef struct
 {
-	float 		snr;
-	float 		ma_snr;
+	float		snr;
 	float 		signal_level;
 	float 		noise_level;
-	float		snr_queue[FREQ_SPAN_MAX];
 	uint16_t 	rank;
-}snr_st;
+}snr_sts_st;
+
+typedef struct
+{
+	uint32_t 	snr_queue_idx;
+	float		snr_queue[FREQ_SPAN_MAX];
+	float		freq_bins[FREQ_SPAN_MAX];
+}snr_buf_st;
+
 
 gtz_st gtz_inst;
-snr_st snr_inst;
+snr_buf_st snr_buf_inst;
 
 static float goertzel_coef(uint32_t target_freq, uint32_t sample_freq, uint32_t N)
 {
@@ -58,23 +64,22 @@ int compare(const void * a, const void * b)
 	return (fa-fb)>0? -1:1;
 }
 
-static float gtz_snr(float* dbuf, uint16_t cnt, snr_st *snr_sptr)
+static float calc_snr(float* dbuf, uint16_t cnt, snr_sts_st* snr_sts_ptr)
 {
-	extern sys_reg_st  g_sys;
 	float buf[FREQ_SPAN_MAX];
 	float buf_2nd[4];
 	float signal_psd=0.0;
 	float noise_psd=0.0;
 	float snr = 0.0;
-	float acc_snr = 0.0;
-//	float max_queue = 0.0;
 
 	uint16_t i;
 	uint16_t ind=0;
 	uint16_t mid = cnt/2;
 
 	for(i=0;i<cnt;i++)
+	{
 		buf[i] = *(dbuf+i);
+	}
 
 	qsort(buf,cnt,sizeof(float),compare);
 
@@ -94,8 +99,6 @@ static float gtz_snr(float* dbuf, uint16_t cnt, snr_st *snr_sptr)
 		}
 	}
 
-	snr_sptr->rank = ind;
-
 	if(ind != 0)
 	{
 		for(i=0;i<ind;i++)
@@ -105,55 +108,45 @@ static float gtz_snr(float* dbuf, uint16_t cnt, snr_st *snr_sptr)
 	else
 		signal_psd = *(dbuf+mid);
 
-	snr_sptr->signal_level = signal_psd;
-
-	for(i=3;i<cnt;i++)
+	for(i=ind;i<cnt;i++)
 		noise_psd += buf[i];
 	noise_psd /=(cnt-ind);
-	snr_sptr->noise_level = noise_psd;
 
 	snr = signal_psd/noise_psd;
-	snr_sptr->snr = snr;
 
-	for(i=1;i<g_sys.conf.gtz.snr_mav_cnt;i++)
-	{
-		snr_sptr->snr_queue[g_sys.conf.gtz.snr_mav_cnt-i] = snr_sptr->snr_queue[g_sys.conf.gtz.snr_mav_cnt-i-1];
-		acc_snr += (snr_sptr->snr_queue[g_sys.conf.gtz.snr_mav_cnt-i]);
-	}
-	if(ind==0)
-		snr_sptr->snr_queue[0]=snr/(4*g_sys.conf.gtz.snr_mav_cnt);
-	else if(snr_sptr->signal_level < 0.00003)
-		snr_sptr->snr_queue[0]=snr/(2*g_sys.conf.gtz.snr_mav_cnt);
-	else
-		snr_sptr->snr_queue[0]=snr/g_sys.conf.gtz.snr_mav_cnt;
-	snr_sptr->ma_snr = (acc_snr + snr_sptr->snr_queue[0]);
-
-//	if(g_sys.conf.gen.dbg == 1)
-//	{
-//		printf("snr:%f,rank:%d\n",snr,ind);
-//		printf("origin buf:\n");
-//		for(i=0;i<cnt;i++)
-//		{
-//			printf(" %f ",dbuf[i]);
-//		}
-//		printf("\n");
-//
-//		printf("sorted buf:\n");
-//		for(i=0;i<cnt;i++)
-//		{
-//			printf(" %f ",buf[i]);
-//		}
-//		printf("\n");
-//
-//		printf("sort buf_2nd:\n");
-//		for(i=0;i<4;i++)
-//		{
-//			printf(" %f ",buf_2nd[i]);
-//		}
-//		printf("\n");
-//	}
+	snr_sts_ptr->signal_level = signal_psd;
+	snr_sts_ptr->noise_level = noise_psd;
+	snr_sts_ptr->rank = ind;
+	snr_sts_ptr->snr = snr;
 
 	return snr;
+}
+
+static int32_t gtz_snr(float* dbuf, uint16_t cnt)
+{
+	extern sys_reg_st  g_sys;
+	snr_sts_st snr_ins_inst;
+	snr_sts_st snr_acc_inst;
+	float	beta = 1.0/(float)g_sys.conf.gtz.acc_q;
+	uint16_t i;
+
+	calc_snr(dbuf,cnt,&snr_ins_inst);
+
+	for(i=0;i<cnt;i++)
+	{
+		snr_buf_inst.freq_bins[i] = (1-beta)*snr_buf_inst.freq_bins[i] + *(dbuf+i)*beta;
+	}
+
+	g_sys.stat.gtz.ins_snr = snr_ins_inst.snr;
+	g_sys.stat.gtz.rank = snr_ins_inst.rank;
+	g_sys.stat.gtz.signal_level = snr_ins_inst.signal_level;
+	g_sys.stat.gtz.noise_level = snr_ins_inst.noise_level;
+
+	calc_snr(&snr_buf_inst.freq_bins[0],cnt,&snr_acc_inst);
+	g_sys.stat.gtz.acc_snr = snr_acc_inst.snr;
+	g_sys.stat.gtz.acc_rank = snr_acc_inst.rank;
+
+	return 0;
 }
 
 int16_t goertzel_lfilt(float din)
@@ -194,11 +187,8 @@ int16_t goertzel_lfilt(float din)
 			gtz_inst.q1[i] = 0.0;
 			gtz_inst.q2[i] = 0.0;
 		}
-		g_sys.stat.gtz.snr = gtz_snr(gtz_inst.res,2*g_sys.conf.gtz.target_span+1, &snr_inst);
-		g_sys.stat.gtz.rank = snr_inst.rank;
-		g_sys.stat.gtz.signal_level = snr_inst.signal_level;
-		g_sys.stat.gtz.noise_level = snr_inst.noise_level;
-		g_sys.stat.gtz.ma_snr = snr_inst.ma_snr;
+		gtz_snr(gtz_inst.res,2*g_sys.conf.gtz.target_span+1);
+
 		gtz_inst.icnt = 0;
 		ret = 1;
 	}
@@ -237,4 +227,12 @@ int32_t gtz_freq_bins(float* dst_buf, uint16_t *num)
 	return 0;
 }
 
-
+void goertzel_init(void)
+{
+	int16_t i;
+	for(i=0;i<FREQ_SPAN_MAX;i++)
+	{
+		snr_buf_inst.freq_bins[i] = 0.0;
+		snr_buf_inst.snr_queue[i] = 0.0;
+	}
+}

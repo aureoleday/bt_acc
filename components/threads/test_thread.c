@@ -54,7 +54,7 @@ void test_thread(void* param)
 	{
 		toggle_led(0);
 		if(g_sys.conf.gen.dbg == 1)
-			printf("eSNR:%f\n",g_sys.stat.gtz.ma_snr);
+			printf("aSRN:%3f,cSNR:%3f\n",g_sys.stat.gtz.acc_snr,g_sys.stat.gtz.ins_snr);
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 		if(g_sys.conf.gen.restart == 9527)
 			esp_restart();

@@ -10,6 +10,7 @@
 #include "nvs_flash.h"
 #include "nvs.h"
 #include "mdns.h"
+#include "goertzel.h"
 
 #define CONFIG_NAMESPACE 	"config"
 #define WIFI_NAMESPACE 		"wifi"
@@ -28,7 +29,7 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	4,		&g_sys.conf.geo.pkg_period,                  0,		    1000000,        40,				0,      geo_timer_opt     },
 	{	5,		&g_sys.conf.geo.sample_period,               0,		    1000,           1,			    0,      NULL              },
 	{	6,		&g_sys.conf.geo.filter,                      0,		    255,            64,			    0,      geo_filter_opt    },
-	{	7,		&g_sys.conf.fft.n,		                     2,		    12,             10,			    0,      NULL       		  },
+	{	7,		&g_sys.conf.geo.pkg_en,		                 0,		    1,              0,			    0,      NULL       		  },
 	{	8,  	NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	9,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	10,		&g_sys.conf.eth.http_en,                     0,		    1,				0,				0,      NULL   	          },
@@ -40,7 +41,7 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 	{	16,		&g_sys.conf.gtz.target_freq,                 1,		    1000,           470,			0,      NULL   	          },
 	{	17,		&g_sys.conf.gtz.sample_freq,                 4000,		4000,           4000,			0,      NULL   	          },
 	{	18,		&g_sys.conf.gtz.target_span,                 0,			65,           	7,				0,      NULL   	          },
-	{	19,		&g_sys.conf.gtz.snr_mav_cnt,                 1,		    32,				5,				0,      NULL   	          },
+	{	19,		&g_sys.conf.gtz.acc_q,                 		 2,		    32,				5,				0,      NULL   	          },
 	{	20,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	21,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
 	{	22,		NULL,                                        0,		    0,				0,				0,      NULL   	          },
@@ -69,28 +70,28 @@ const sts_reg_map_st status_reg_map_inst[STAT_REG_MAP_NUM]=
      {	7,      &g_sys.stat.gen.status_bm,					0},
      {	8,      &g_sys.stat.geo.kfifo_drop_cnt,             0},
      {	9,      NULL,						                0},
-     {	10,		NULL,						                0},
-     {	11,		NULL,						                0},
-     {	12,		(void*)&g_sys.stat.gtz.ma_snr,				0},
-     {	13,		(void*)&g_sys.stat.gtz.signal_level,        0},
-     {	14,		(void*)&g_sys.stat.gtz.noise_level,         0},
-     {	15,		&g_sys.stat.gtz.rank,		                0},
-	 {	16,		(void*)&g_sys.stat.gtz.snr,				    0},
-	 {	17,		(void*)&g_sys.stat.gtz.freq_bar[0],		    0},
-	 {	18,		(void*)&g_sys.stat.gtz.freq_bar[1],		    0},
-	 {	19,		(void*)&g_sys.stat.gtz.freq_bar[2],		    0},
-	 {	10,		(void*)&g_sys.stat.gtz.freq_bar[3],		    0},
-	 {	21,		(void*)&g_sys.stat.gtz.freq_bar[4],		    0},
-	 {	22,		(void*)&g_sys.stat.gtz.freq_bar[5],		    0},
-	 {	23,		(void*)&g_sys.stat.gtz.freq_bar[6],		    0},
-	 {	24,		(void*)&g_sys.stat.gtz.freq_bar[7],		    0},
-	 {	25,		(void*)&g_sys.stat.gtz.freq_bar[8],		    0},
-	 {	26,		(void*)&g_sys.stat.gtz.freq_bar[9],			0},
-	 {	27,		(void*)&g_sys.stat.gtz.freq_bar[10],		0},
-	 {	28,		(void*)&g_sys.stat.gtz.freq_bar[11],		0},
-	 {	29,		(void*)&g_sys.stat.gtz.freq_bar[12],		0},
-	 {	30,		(void*)&g_sys.stat.gtz.freq_bar[13],		0},
-     {	31,		(void*)&g_sys.stat.gtz.freq_bar[14],		0}
+     {	10,		(void*)&g_sys.stat.gtz.ins_snr,				0},
+     {	11,		(void*)&g_sys.stat.gtz.acc_snr,				0},
+     {	12,		(void*)&g_sys.stat.gtz.signal_level,        0},
+     {	13,		(void*)&g_sys.stat.gtz.noise_level,         0},
+     {	14,		&g_sys.stat.gtz.rank,		                0},
+     {	15,		&g_sys.stat.gtz.acc_rank,		            0},
+	 {	16,		NULL,						                0},
+	 {	17,		NULL,						                0},
+	 {	18,		NULL,						                0},
+	 {	19,		NULL,						                0},
+	 {	10,		NULL,						                0},
+	 {	21,		NULL,						                0},
+	 {	22,		NULL,						                0},
+	 {	23,		NULL,						                0},
+	 {	24,		NULL,						                0},
+	 {	25,		NULL,						                0},
+	 {	26,		NULL,						                0},
+	 {	27,		NULL,						                0},
+	 {	28,		NULL,						                0},
+	 {	29,		NULL,						                0},
+	 {	30,		NULL,						                0},
+     {	31,		NULL,						                0}
 };
 
 /**
@@ -564,14 +565,17 @@ int print_wifi(int argc, char **argv)
 static int gtz_info(int argc, char **argv)
 {
 	esp_err_t err = 0;
+	float fbin[65];
+	uint16_t bin_num;
 	uint32_t i;
 	printf("center_freq is: %d\n",g_sys.conf.gtz.target_freq);
 	printf("sl: %f,nl: %f\n",g_sys.stat.gtz.signal_level, g_sys.stat.gtz.noise_level);
-	printf("ma_snr:%f,snr: %f,rank: %d\n", g_sys.stat.gtz.ma_snr, g_sys.stat.gtz.snr, g_sys.stat.gtz.rank);
-	printf("[0]\t\t[-1]\t\t[+1]\t\t[-2]\t\t[+2]\t\t[-3]\t\t[+3]\t\t[-4]\t\t[+4]\n");
-	for(i=0;i<(2*g_sys.conf.gtz.target_span+1);i++)
+	printf("acc_snr:%f,snr: %f,rank: %d\n", g_sys.stat.gtz.acc_snr, g_sys.stat.gtz.ins_snr, g_sys.stat.gtz.rank);
+	printf("freq_bins:\n");
+	gtz_freq_bins(fbin,&bin_num);
+	for(i=0;i<bin_num;i++)
 	{
-		printf("%f\t",g_sys.stat.gtz.freq_bar[i]);
+		printf("%3f ",fbin[i]);
 	}
 	printf("\n");
     return err;

@@ -41,5 +41,6 @@ void usr_sys_init(void)
 //	usr_spp_register();
 
 	gvar_init();
+	goertzel_init();
 	gvar_register();
 }

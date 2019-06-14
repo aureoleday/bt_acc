@@ -8,6 +8,7 @@
 #ifndef COMPONENTS_KITS_GOERTZEL_H_
 #define COMPONENTS_KITS_GOERTZEL_H_
 
+void goertzel_init(void);
 float goertzel_calc(float* din);
 int16_t goertzel_lfilt(float din);
 void gtz_register(void);

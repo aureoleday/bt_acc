@@ -123,8 +123,10 @@ static void cmd_buf_init(void)
 
 static void geo_timeout(void* arg)
 {
+	extern sys_reg_st g_sys;
     uint16_t report_geo_data(void);
-    report_geo_data();
+    if(g_sys.conf.geo.pkg_en)
+    	report_geo_data();
 }
 
 /**
