@@ -41,7 +41,6 @@ typedef struct
     uint32_t    sample_freq;
     uint32_t    target_span;
     uint32_t    signal_th;
-    uint32_t    snr_mav_cnt;
     uint32_t    acc_q;
 }conf_gtz_st;
 
@@ -106,6 +105,8 @@ typedef struct
     float		noise_level;
     uint32_t   	rank;
     uint32_t   	acc_rank;
+    int32_t		offset;
+    int32_t		acc_offset;
 }stat_gtz_st;
 
 typedef struct

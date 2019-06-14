@@ -54,7 +54,11 @@ void test_thread(void* param)
 	{
 		toggle_led(0);
 		if(g_sys.conf.gen.dbg == 1)
-			printf("aSRN:%f,cSNR:%3f,sl:%f,nl:%f\n",g_sys.stat.gtz.acc_snr,g_sys.stat.gtz.ins_snr,g_sys.stat.gtz.signal_level,g_sys.stat.gtz.noise_level);
+		{
+			printf("\tacc\tcur\n");
+			printf("SNR:\t%0.3f\t%0.3f\n",g_sys.stat.gtz.acc_snr,g_sys.stat.gtz.ins_snr);
+			printf("offset:\t%d\t%d\n\n",g_sys.stat.gtz.acc_offset,g_sys.stat.gtz.offset);
+		}
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 		if(g_sys.conf.gen.restart == 9527)
 			esp_restart();

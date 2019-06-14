@@ -28,6 +28,7 @@ typedef struct
 	float		snr;
 	float 		signal_level;
 	float 		noise_level;
+	int16_t		offset;
 	uint16_t 	rank;
 }snr_sts_st;
 
@@ -82,11 +83,15 @@ static float calc_snr(float* dbuf, uint16_t cnt, snr_sts_st* snr_sts_ptr)
 	}
 
 	qsort(buf,cnt,sizeof(float),compare);
+	for(i=0;i<cnt;i++)
+		if(buf[0] == dbuf[i])
+			break;
+	snr_sts_ptr->offset = i - mid;
 
 	buf_2nd[0] = *(dbuf+mid-1);
 	buf_2nd[1] = *(dbuf+mid);
 	buf_2nd[2] = *(dbuf+mid+1);
-	buf_2nd[3] = buf[2];
+	buf_2nd[3] = buf[3];
 
 	qsort(buf_2nd,4,sizeof(float),compare);
 
@@ -141,10 +146,12 @@ static int32_t gtz_snr(float* dbuf, uint16_t cnt)
 	g_sys.stat.gtz.rank = snr_ins_inst.rank;
 	g_sys.stat.gtz.signal_level = snr_ins_inst.signal_level;
 	g_sys.stat.gtz.noise_level = snr_ins_inst.noise_level;
+	g_sys.stat.gtz.offset = snr_ins_inst.offset;
 
 	calc_snr(&snr_buf_inst.freq_bins[0],cnt,&snr_acc_inst);
 	g_sys.stat.gtz.acc_snr = snr_acc_inst.snr;
 	g_sys.stat.gtz.acc_rank = snr_acc_inst.rank;
+	g_sys.stat.gtz.acc_offset = snr_acc_inst.offset;
 
 	return 0;
 }

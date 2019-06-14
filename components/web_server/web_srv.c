@@ -187,7 +187,7 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
 static int cj_get_freq_bar(char* cj_dst)
 {
 	extern sys_reg_st  g_sys;
-	float	freq_bins[33];
+	float	freq_bins[65];
 	uint16_t bin_cnt;
 	cJSON * root =  cJSON_CreateObject();
 	char *cj_src = NULL;
@@ -221,7 +221,7 @@ static int cj_get_gtz(char* cj_dst)
 
 	cJSON_AddItemToObject(root, "center_freq", cJSON_CreateNumber(g_sys.conf.gtz.target_freq));
 	cJSON_AddItemToObject(root, "freq_span", cJSON_CreateNumber(g_sys.conf.gtz.target_span));
-	cJSON_AddItemToObject(root, "snr_mav_cnt", cJSON_CreateNumber(g_sys.conf.gtz.snr_mav_cnt));
+	cJSON_AddItemToObject(root, "acc_q", cJSON_CreateNumber(g_sys.conf.gtz.acc_q));
 
 	cJSON_AddNumberToObject(root, "acc_snr",(float)g_sys.stat.gtz.acc_snr);
 	cJSON_AddNumberToObject(root, "cur_snr", (float)g_sys.stat.gtz.ins_snr);
@@ -229,6 +229,8 @@ static int cj_get_gtz(char* cj_dst)
 	cJSON_AddNumberToObject(root, "noise_level", (float)g_sys.stat.gtz.noise_level);
 	cJSON_AddNumberToObject(root, "rank", g_sys.stat.gtz.rank);
 	cJSON_AddNumberToObject(root, "acc_rank", g_sys.stat.gtz.acc_rank);
+	cJSON_AddNumberToObject(root, "offset", g_sys.stat.gtz.offset);
+	cJSON_AddNumberToObject(root, "acc_offset", g_sys.stat.gtz.acc_offset);
 
 	cJSON_AddStringToObject(root, "status", "ok");
 

@@ -303,21 +303,20 @@ static int16_t raw_data_buf(uint32_t din, uint8_t axis)
 			if(!(din & 0x1))
 			{
 				dbuf[2] = din;
-				if(kfifo_len(&kf_s) >=  kf_s.size)
-				{
-					kfifo_out(&kf_s,&dummy,sizeof(uint32_t));
-					g_sys.stat.geo.kfifo_drop_cnt++;
-					ret = -4;
-				}
-				else
-					ret = 0;
-
 				temp = (float)decode(dbuf[axis])*0.0000039;
 				goertzel_lfilt(temp);
-//				if(gtz_val>0.0001)
-//					printf("gtz:%f\n",gtz_val);
-
-				kfifo_in(&kf_s,&temp,sizeof(uint32_t));
+				if(g_sys.conf.geo.pkg_en)
+				{
+					if(kfifo_len(&kf_s) >=  kf_s.size)
+					{
+						kfifo_out(&kf_s,&dummy,sizeof(uint32_t));
+						g_sys.stat.geo.kfifo_drop_cnt++;
+						ret = -4;
+					}
+					else
+						ret = 0;
+					kfifo_in(&kf_s,&temp,sizeof(uint32_t));
+				}
 				stage = 1;
 			}
 			else
