@@ -103,6 +103,8 @@ typedef struct
     float	   	acc_snr;
     float		signal_level;
     float		noise_level;
+    float		acc_signal_level;
+    float		acc_noise_level;
     uint32_t   	rank;
     uint32_t   	acc_rank;
     int32_t		offset;

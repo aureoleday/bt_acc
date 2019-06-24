@@ -152,6 +152,8 @@ static int32_t gtz_snr(float* dbuf, uint16_t cnt)
 	g_sys.stat.gtz.acc_snr = snr_acc_inst.snr;
 	g_sys.stat.gtz.acc_rank = snr_acc_inst.rank;
 	g_sys.stat.gtz.acc_offset = snr_acc_inst.offset;
+	g_sys.stat.gtz.acc_signal_level = snr_acc_inst.signal_level;
+	g_sys.stat.gtz.acc_noise_level = snr_acc_inst.noise_level;
 
 	return 0;
 }
