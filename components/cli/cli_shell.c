@@ -11,7 +11,7 @@
    Unless required by applicable law or agreed to in writing, this
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
    CONDITIONS OF ANY KIND, either express or implied.
-*/
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -115,7 +115,7 @@ static void initialize_console()
 
 void cli_thread(void* param)
 {
-//    initialize_nvs();
+    //    initialize_nvs();
 
 #if CONFIG_STORE_HISTORY
     initialize_filesystem();
@@ -135,18 +135,18 @@ void cli_thread(void* param)
     const char* prompt = LOG_COLOR_I "esp32> " LOG_RESET_COLOR;
 
     printf("\n"
-           "ESP-IDF console.\n"
-           "Type 'help' to get the list of commands.\n"
-           "Use UP/DOWN arrows to navigate through command history.\n"
-           "Press TAB when typing command name to auto-complete.\n");
+            "ESP-IDF console.\n"
+            "Type 'help' to get the list of commands.\n"
+            "Use UP/DOWN arrows to navigate through command history.\n"
+            "Press TAB when typing command name to auto-complete.\n");
 
     /* Figure out if the terminal supports escape sequences */
     int probe_status = linenoiseProbe();
     if (probe_status) { /* zero indicates success */
         printf("\n"
-               "Your terminal application does not support escape sequences.\n"
-               "Line editing and history features are disabled.\n"
-               "On Windows, try using Putty instead.\n");
+                "Your terminal application does not support escape sequences.\n"
+                "Line editing and history features are disabled.\n"
+                "On Windows, try using Putty instead.\n");
         linenoiseSetDumbMode(1);
 #if CONFIG_LOG_COLORS
         /* Since the terminal doesn't support escape sequences,

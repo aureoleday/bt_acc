@@ -89,12 +89,12 @@ void kfifo_init(struct kfifo *fifo, void *buffer, unsigned int size)
     fifo->buffer = buffer;
     fifo->size = size;
 
-	fifo->in = fifo->out = 0;
+    fifo->in = fifo->out = 0;
 }
 
 void kfifo_reset(struct kfifo *fifo)
 {
-	fifo->in = fifo->out = 0;
+    fifo->in = fifo->out = 0;
 }
 
 /**
@@ -107,11 +107,11 @@ void kfifo_reset(struct kfifo *fifo)
  */
 int kfifo_alloc(struct kfifo *fifo, unsigned int size/*, gfp_t gfp_mask*/)
 {
-	unsigned char *buffer;
+    unsigned char *buffer;
     /* 检查时候是2的指数倍  */
     if (size & (size-1))
     {
-//        size = 1UL << (roundup_pow_of_two(size) + 1);
+        //        size = 1UL << (roundup_pow_of_two(size) + 1);
         size = roundup_pow_of_two(size);
     }
     buffer = (unsigned char *)malloc(size);
@@ -136,7 +136,7 @@ int kfifo_alloc(struct kfifo *fifo, unsigned int size/*, gfp_t gfp_mask*/)
  * @return 实际放入缓冲区的长度(可能小于len或者为0)
  */
 unsigned int kfifo_in(struct kfifo *fifo, const void *from,
-				unsigned int len)
+        unsigned int len)
 {
     unsigned int l,off;
 
@@ -146,10 +146,10 @@ unsigned int kfifo_in(struct kfifo *fifo, const void *from,
     off = (fifo->in + 0) & (fifo->size - 1);/*==> (in+0) % size*/
     /* 分成2段,1.当前位置到size-1 2.0到0或者0到len-l(剩余的) */
     l = min(len, fifo->size - off);
-	memcpy(fifo->buffer + off, from, l);
+    memcpy(fifo->buffer + off, from, l);
 
     /* 将剩余的copy到buffer，如果len == l则啥也不干,好代码 */
-	memcpy(fifo->buffer, (char *)from + l, len - l);
+    memcpy(fifo->buffer, (char *)from + l, len - l);
 
     fifo->in += len;
 
@@ -168,40 +168,40 @@ unsigned int kfifo_in(struct kfifo *fifo, const void *from,
 unsigned int kfifo_out(struct kfifo *fifo, void *to, unsigned int len)
 {
     unsigned int off;
-	unsigned int l;
+    unsigned int l;
     /* 验证len是否大于缓冲区存的值  */
     len = min(fifo->in - fifo->out, len);
 
     off = (fifo->out + 0) & (fifo->size - 1);/*==> (out+0) % size*/
-	/* first get the data from fifo->out until the end of the buffer */
-	l = min(len, fifo->size - off);
-	memcpy(to, fifo->buffer + off, l);
-	/* then get the rest (if any) from the beginning of the buffer */
-	memcpy((char *)to + l, fifo->buffer, len - l);
+    /* first get the data from fifo->out until the end of the buffer */
+    l = min(len, fifo->size - off);
+    memcpy(to, fifo->buffer + off, l);
+    /* then get the rest (if any) from the beginning of the buffer */
+    memcpy((char *)to + l, fifo->buffer, len - l);
 
-  	fifo->out += len;
+    fifo->out += len;
 
-	return len;
+    return len;
 }
 
 unsigned int kfifo_out_peek(struct kfifo *fifo, void *to, unsigned int len)
 {
     unsigned int off;
-	unsigned int l;
+    unsigned int l;
     /* 验证len是否大于缓冲区存的值  */
     len = min(fifo->in - fifo->out, len);
 
     off = (fifo->out + 0) & (fifo->size - 1);/*==> (out+0) % size*/
-	/* first get the data from fifo->out until the end of the buffer */
-	l = min(len, fifo->size - off);
-	memcpy(to, fifo->buffer + off, l);
-	/* then get the rest (if any) from the beginning of the buffer */
-	memcpy((char *)to + l, fifo->buffer, len - l);
+    /* first get the data from fifo->out until the end of the buffer */
+    l = min(len, fifo->size - off);
+    memcpy(to, fifo->buffer + off, l);
+    /* then get the rest (if any) from the beginning of the buffer */
+    memcpy((char *)to + l, fifo->buffer, len - l);
 
-	return len;
+    return len;
 }
 
 unsigned int kfifo_len(struct kfifo *fifo)
 {
-	return fifo->in - fifo->out;
+    return fifo->in - fifo->out;
 }

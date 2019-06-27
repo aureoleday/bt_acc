@@ -15,4 +15,5 @@ uint16_t geo_filter_opt(uint32_t pram);
 uint16_t mod_en_opt(uint32_t pram);
 uint16_t mod_volum_opt(uint32_t pram);
 uint16_t mod_freq_opt(uint32_t pram);
+uint16_t gtz_rst_opt(uint32_t pram);
 #endif

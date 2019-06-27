@@ -33,14 +33,14 @@ static void initialize_nvs()
 
 void usr_sys_init(void)
 {
-//	extern sys_reg_st  g_sys;
-	initialize_nvs();
-	usr_led_init();
-	adxl_init();
-	adxl_register();
-//	usr_spp_register();
+    //	extern sys_reg_st  g_sys;
+    initialize_nvs();
+    usr_led_init();
+    adxl_init();
+    adxl_register();
+    //	usr_spp_register();
 
-	gvar_init();
-	goertzel_init();
-	gvar_register();
+    gvar_init();
+    goertzel_init();
+    gvar_register();
 }

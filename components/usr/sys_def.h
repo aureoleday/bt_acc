@@ -75,9 +75,9 @@ enum
     GBM_TCP,
     GBM_DNS,
     GBM_LCD,
-	GBM_BT,
-	GBM_HTTP,
-	GBM_WIFI,
+    GBM_BT,
+    GBM_HTTP,
+    GBM_WIFI,
     GBM_MBM,
 };
 

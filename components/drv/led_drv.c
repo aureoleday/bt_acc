@@ -32,34 +32,34 @@ void usr_led_init(void)
 
 void set_led(uint8_t pin_num, uint8_t value)
 {
-	if(pin_num == 0)
-	{
-		gpio_set_level(PIN_LED_INT,value);
-	}
-	else if(pin_num == 1)
-	{
-		gpio_set_level(PIN_LED_EXT,value);
-	}
+    if(pin_num == 0)
+    {
+        gpio_set_level(PIN_LED_INT,value);
+    }
+    else if(pin_num == 1)
+    {
+        gpio_set_level(PIN_LED_EXT,value);
+    }
 }
 
 void toggle_led(uint8_t pin_num)
 {
-	esp_err_t value;
-	if(pin_num == 0)
-	{
-		value = gpio_get_level(PIN_LED_INT);
-		if(value != 0)
-			gpio_set_level(PIN_LED_INT, 0);
-		else
-			gpio_set_level(PIN_LED_INT, 1);
-	}
-	else if(pin_num == 1)
-	{
-		value = gpio_get_level(PIN_LED_EXT);
-		if(value != 0)
-			gpio_set_level(PIN_LED_EXT, 0);
-		else
-			gpio_set_level(PIN_LED_EXT, 1);
-	}
+    esp_err_t value;
+    if(pin_num == 0)
+    {
+        value = gpio_get_level(PIN_LED_INT);
+        if(value != 0)
+            gpio_set_level(PIN_LED_INT, 0);
+        else
+            gpio_set_level(PIN_LED_INT, 1);
+    }
+    else if(pin_num == 1)
+    {
+        value = gpio_get_level(PIN_LED_EXT);
+        if(value != 0)
+            gpio_set_level(PIN_LED_EXT, 0);
+        else
+            gpio_set_level(PIN_LED_EXT, 1);
+    }
 }
 

@@ -114,7 +114,7 @@ typedef struct
 
 typedef struct
 {
-	stat_gen_st 	gen;
+    stat_gen_st 	gen;
     stat_man_st 	man;
     stat_geo_st		geo;
     stat_gtz_st		gtz;
@@ -128,19 +128,19 @@ typedef struct
 
 typedef struct 
 {
-	uint16_t 	id;
-	uint32_t*	reg_ptr;
-	int32_t	    min;
-	uint32_t	max;
-	uint32_t	dft;
+    uint16_t 	id;
+    uint32_t*	reg_ptr;
+    int32_t	    min;
+    uint32_t	max;
+    uint32_t	dft;
     uint8_t	    type;                     //0:RW, 1:WO
-	uint16_t    (*chk_ptr)(uint32_t pram);
+    uint16_t    (*chk_ptr)(uint32_t pram);
 }conf_reg_map_st;
 
 typedef struct 
 {
-	uint16_t 	id;
-	uint32_t*	reg_ptr;
+    uint16_t 	id;
+    uint32_t*	reg_ptr;
     uint32_t  	dft;
 }sts_reg_map_st;
 

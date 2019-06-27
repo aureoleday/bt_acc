@@ -12,7 +12,7 @@
    Unless required by applicable law or agreed to in writing, this
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
    CONDITIONS OF ANY KIND, either express or implied.
-*/
+ */
 
 #include <esp_log.h>
 #include <esp_system.h>
@@ -36,7 +36,7 @@
  * If you'd rather not, just change the below entries to strings
  * with the config you want -
  * ie. #define EXAMPLE_WIFI_SSID "mywifissid"
-*/
+ */
 
 static const char 	*TAG="HTTP";
 static char 		cjson_buf[8192];
@@ -45,8 +45,8 @@ float 		rt_buf[DEV_GEO_FIFO_SIZE];
 
 static void js_err(char * err_info, char* cj_dst)
 {
-	cJSON * root =  cJSON_CreateObject();
-	char *cj_src = NULL;
+    cJSON * root =  cJSON_CreateObject();
+    char *cj_src = NULL;
 
     cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));//
     cJSON_AddItemToObject(root, "info", cJSON_CreateString(err_info));//
@@ -60,10 +60,10 @@ static void js_err(char * err_info, char* cj_dst)
 
 static int cj_rd_reg(uint16_t reg_addr,uint16_t reg_cnt, char* cj_dst)
 {
-	cJSON * root =  cJSON_CreateObject();
-	char *cj_src = NULL;
-	uint32_t rd_buf[64];
-	uint16_t ret;
+    cJSON * root =  cJSON_CreateObject();
+    char *cj_src = NULL;
+    uint32_t rd_buf[64];
+    uint16_t ret;
 
     cJSON_AddItemToObject(root, "reg_addr", cJSON_CreateNumber(reg_addr));//根节点下添加
     cJSON_AddItemToObject(root, "reg_cnt", cJSON_CreateNumber(reg_cnt));
@@ -72,13 +72,13 @@ static int cj_rd_reg(uint16_t reg_addr,uint16_t reg_cnt, char* cj_dst)
 
     if(ret == 0)
     {
-    	cJSON_AddItemToObject(root, "reg_data", cJSON_CreateIntArray((int*)rd_buf,reg_cnt));
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
+        cJSON_AddItemToObject(root, "reg_data", cJSON_CreateIntArray((int*)rd_buf,reg_cnt));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
     }
     else
     {
-    	cJSON_AddItemToObject(root, "reg_data", cJSON_CreateNumber(0));
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
+        cJSON_AddItemToObject(root, "reg_data", cJSON_CreateNumber(0));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
     }
 
     cj_src = cJSON_PrintUnformatted(root);
@@ -90,18 +90,18 @@ static int cj_rd_reg(uint16_t reg_addr,uint16_t reg_cnt, char* cj_dst)
 
 static int cj_wr_reg(uint16_t reg_addr,uint32_t reg_data, char* cj_dst)
 {
-	cJSON * root =  cJSON_CreateObject();
-	char *cj_src = NULL;
-	uint16_t ret;
+    cJSON * root =  cJSON_CreateObject();
+    char *cj_src = NULL;
+    uint16_t ret;
 
     cJSON_AddItemToObject(root, "reg_addr", cJSON_CreateNumber(reg_addr));//根节点下添加
     cJSON_AddItemToObject(root, "reg_data", cJSON_CreateNumber(reg_data));
 
     ret = reg_map_write(reg_addr,&reg_data,1);
     if(ret == 0)
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
     else
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
 
     cj_src = cJSON_PrintUnformatted(root);
     strcpy(cj_dst,cj_src);
@@ -112,9 +112,9 @@ static int cj_wr_reg(uint16_t reg_addr,uint32_t reg_data, char* cj_dst)
 
 static int cj_get_fft(uint16_t fft_points,char* cj_dst)
 {
-	extern sys_reg_st  g_sys;
-	cJSON * root =  cJSON_CreateObject();
-	char *cj_src = NULL;
+    extern sys_reg_st  g_sys;
+    cJSON * root =  cJSON_CreateObject();
+    char *cj_src = NULL;
     float * fft_data_p = NULL;
     uint16_t sample_cnt = 0;
 
@@ -127,16 +127,16 @@ static int cj_get_fft(uint16_t fft_points,char* cj_dst)
     cJSON_AddItemToObject(root, "axis", cJSON_CreateNumber(g_sys.conf.gen.sample_channel));//根节点下添加
     if(fft_data_p != NULL)
     {
-    	cJSON_AddItemToObject(root, "fft_data", cJSON_CreateFloatArray(fft_data_p,sample_cnt/2));
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
+        cJSON_AddItemToObject(root, "fft_data", cJSON_CreateFloatArray(fft_data_p,sample_cnt/2));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
     }
     else
     {
-    	cJSON_AddItemToObject(root, "fft_data", cJSON_CreateNumber(0));
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
+        cJSON_AddItemToObject(root, "fft_data", cJSON_CreateNumber(0));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
     }
     cj_src = cJSON_PrintUnformatted(root);
-//    printf("[len:%d]\n",strlen(cj_src));
+    //    printf("[len:%d]\n",strlen(cj_src));
     strcpy(cj_dst,cj_src);
     free(cj_src);
     cJSON_Delete(root);
@@ -145,23 +145,23 @@ static int cj_get_fft(uint16_t fft_points,char* cj_dst)
 
 static int cj_get_times(uint16_t time_points,char* cj_dst)
 {
-	extern sys_reg_st  g_sys;
-	cJSON * root =  cJSON_CreateObject();
-	char *cj_src = NULL;
-	uint16_t out_len,get_points,offset;
+    extern sys_reg_st  g_sys;
+    cJSON * root =  cJSON_CreateObject();
+    char *cj_src = NULL;
+    uint16_t out_len,get_points,offset;
 
-	out_len = geo_get_time(rt_buf,DEV_GEO_FIFO_SIZE);
+    out_len = geo_get_time(rt_buf,DEV_GEO_FIFO_SIZE);
 
-	if(out_len > time_points)
-	{
-		offset = out_len - time_points;
-		get_points = time_points;
-	}
-	else
-	{
-		offset = 0;
-		get_points = out_len;
-	}
+    if(out_len > time_points)
+    {
+        offset = out_len - time_points;
+        get_points = time_points;
+    }
+    else
+    {
+        offset = 0;
+        get_points = out_len;
+    }
 
     cJSON_AddItemToObject(root, "sample_cnts", cJSON_CreateNumber(out_len));//根节点下添加
     cJSON_AddItemToObject(root, "sample_rate", cJSON_CreateNumber(4000>>(g_sys.conf.geo.filter&0x0f)));//根节点下添加
@@ -170,11 +170,11 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
 
     if(out_len != 0)
     {
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
     }
     else
     {
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
     }
 
     cj_src = cJSON_PrintUnformatted(root);
@@ -186,11 +186,11 @@ static int cj_get_times(uint16_t time_points,char* cj_dst)
 
 static int cj_get_freq_bar(char* cj_dst)
 {
-	extern sys_reg_st  g_sys;
-	float	freq_bins[65];
-	uint16_t bin_cnt;
-	cJSON * root =  cJSON_CreateObject();
-	char *cj_src = NULL;
+    extern sys_reg_st  g_sys;
+    float	freq_bins[65];
+    uint16_t bin_cnt;
+    cJSON * root =  cJSON_CreateObject();
+    char *cj_src = NULL;
 
     cJSON_AddItemToObject(root, "center_freq", cJSON_CreateNumber(g_sys.conf.gtz.target_freq));
     cJSON_AddItemToObject(root, "freq_span", cJSON_CreateNumber(g_sys.conf.gtz.target_span));
@@ -199,11 +199,11 @@ static int cj_get_freq_bar(char* cj_dst)
 
     if(bin_cnt != 0)
     {
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("ok"));
     }
     else
     {
-    	cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
+        cJSON_AddItemToObject(root, "status", cJSON_CreateString("fail"));
     }
 
     cj_src = cJSON_PrintUnformatted(root);
@@ -215,26 +215,26 @@ static int cj_get_freq_bar(char* cj_dst)
 
 static int cj_get_gtz(char* cj_dst)
 {
-	extern sys_reg_st  g_sys;
-	cJSON * root =  cJSON_CreateObject();
-	char *cj_src = NULL;
+    extern sys_reg_st  g_sys;
+    cJSON * root =  cJSON_CreateObject();
+    char *cj_src = NULL;
 
-	cJSON_AddItemToObject(root, "center_freq", cJSON_CreateNumber(g_sys.conf.gtz.target_freq));
-	cJSON_AddItemToObject(root, "freq_span", cJSON_CreateNumber(g_sys.conf.gtz.target_span));
-	cJSON_AddItemToObject(root, "acc_q", cJSON_CreateNumber(g_sys.conf.gtz.acc_q));
+    cJSON_AddItemToObject(root, "center_freq", cJSON_CreateNumber(g_sys.conf.gtz.target_freq));
+    cJSON_AddItemToObject(root, "freq_span", cJSON_CreateNumber(g_sys.conf.gtz.target_span));
+    cJSON_AddItemToObject(root, "acc_q", cJSON_CreateNumber(g_sys.conf.gtz.acc_q));
 
-	cJSON_AddNumberToObject(root, "acc_snr",(float)g_sys.stat.gtz.acc_snr);
-	cJSON_AddNumberToObject(root, "cur_snr", (float)g_sys.stat.gtz.ins_snr);
-	cJSON_AddNumberToObject(root, "signal_level", (float)g_sys.stat.gtz.signal_level);
-	cJSON_AddNumberToObject(root, "noise_level", (float)g_sys.stat.gtz.noise_level);
-	cJSON_AddNumberToObject(root, "acc_signal_level", (float)g_sys.stat.gtz.acc_signal_level);
-	cJSON_AddNumberToObject(root, "acc_noise_level", (float)g_sys.stat.gtz.acc_noise_level);
-	cJSON_AddNumberToObject(root, "rank", g_sys.stat.gtz.rank);
-	cJSON_AddNumberToObject(root, "acc_rank", g_sys.stat.gtz.acc_rank);
-	cJSON_AddNumberToObject(root, "offset", g_sys.stat.gtz.offset);
-	cJSON_AddNumberToObject(root, "acc_offset", g_sys.stat.gtz.acc_offset);
+    cJSON_AddNumberToObject(root, "acc_snr",(float)g_sys.stat.gtz.acc_snr);
+    cJSON_AddNumberToObject(root, "cur_snr", (float)g_sys.stat.gtz.ins_snr);
+    cJSON_AddNumberToObject(root, "signal_level", (float)g_sys.stat.gtz.signal_level);
+    cJSON_AddNumberToObject(root, "noise_level", (float)g_sys.stat.gtz.noise_level);
+    cJSON_AddNumberToObject(root, "acc_signal_level", (float)g_sys.stat.gtz.acc_signal_level);
+    cJSON_AddNumberToObject(root, "acc_noise_level", (float)g_sys.stat.gtz.acc_noise_level);
+    cJSON_AddNumberToObject(root, "rank", g_sys.stat.gtz.rank);
+    cJSON_AddNumberToObject(root, "acc_rank", g_sys.stat.gtz.acc_rank);
+    cJSON_AddNumberToObject(root, "offset", g_sys.stat.gtz.offset);
+    cJSON_AddNumberToObject(root, "acc_offset", g_sys.stat.gtz.acc_offset);
 
-	cJSON_AddStringToObject(root, "status", "ok");
+    cJSON_AddStringToObject(root, "status", "ok");
 
     cj_src = cJSON_PrintUnformatted(root);
     strcpy(cj_dst,cj_src);
@@ -282,7 +282,7 @@ esp_err_t rd_reg_get_handler(httpd_req_t *req)
             }
             else
             {
-            	reg_addr = atoi(param);
+                reg_addr = atoi(param);
             }
 
             if (httpd_query_key_value(buf, "reg_cnt", param, sizeof(param)) != ESP_OK)
@@ -292,7 +292,7 @@ esp_err_t rd_reg_get_handler(httpd_req_t *req)
             }
             else
             {
-            	reg_cnt = atoi(param);
+                reg_cnt = atoi(param);
             }
         }
         free(buf);
@@ -301,11 +301,11 @@ esp_err_t rd_reg_get_handler(httpd_req_t *req)
 
     if(ret == 0)
     {
-    	cj_rd_reg(reg_addr,reg_cnt,cj_buf);
+        cj_rd_reg(reg_addr,reg_cnt,cj_buf);
     }
     else
     {
-    	js_err("URL query mismatch!",cj_buf);
+        js_err("URL query mismatch!",cj_buf);
     }
 
     httpd_resp_send(req, cj_buf, strlen(cj_buf));
@@ -314,10 +314,10 @@ esp_err_t rd_reg_get_handler(httpd_req_t *req)
 }
 
 httpd_uri_t rd_reg = {
-    .uri       = "/rd_reg",
-    .method    = HTTP_GET,
-    .handler   = rd_reg_get_handler,
-    .user_ctx  = NULL
+        .uri       = "/rd_reg",
+        .method    = HTTP_GET,
+        .handler   = rd_reg_get_handler,
+        .user_ctx  = NULL
 };
 
 esp_err_t wr_reg_get_handler(httpd_req_t *req)
@@ -359,22 +359,22 @@ esp_err_t wr_reg_get_handler(httpd_req_t *req)
                 ret = -1;
             }
             else
-            	reg_addr = atoi(param);
+                reg_addr = atoi(param);
 
             if (httpd_query_key_value(buf, "reg_data", param, sizeof(param)) != ESP_OK) {
                 ESP_LOGI(TAG, "Found URL query parameter => reg_data=%d", atoi(param));
                 ret = -1;
             }
             else
-            	reg_data = atoi(param);
+                reg_data = atoi(param);
         }
         free(buf);
     }
 
     if(ret == 0)
-    	cj_wr_reg(reg_addr,reg_data,cj_buf);
+        cj_wr_reg(reg_addr,reg_data,cj_buf);
     else
-    	js_err("URL query mismatch!",cj_buf);
+        js_err("URL query mismatch!",cj_buf);
 
     httpd_resp_send(req, cj_buf, strlen(cj_buf));
 
@@ -382,10 +382,10 @@ esp_err_t wr_reg_get_handler(httpd_req_t *req)
 }
 
 httpd_uri_t wr_reg = {
-    .uri       = "/wr_reg",
-    .method    = HTTP_GET,
-    .handler   = wr_reg_get_handler,
-    .user_ctx  = NULL
+        .uri       = "/wr_reg",
+        .method    = HTTP_GET,
+        .handler   = wr_reg_get_handler,
+        .user_ctx  = NULL
 };
 
 esp_err_t fft_get_handler(httpd_req_t *req)
@@ -398,15 +398,15 @@ esp_err_t fft_get_handler(httpd_req_t *req)
 
     /* Get header value string length and allocate memory for length + 1,
      * extra byte for null termination */
-//    buf_len = httpd_req_get_hdr_value_len(req, "Host") + 1;
-//    if (buf_len > 1) {
-//        buf = heap_caps_malloc(buf_len,MALLOC_CAP_SPIRAM);
-//        /* Copy null terminated value string into buffer */
-//        if (httpd_req_get_hdr_value_str(req, "Host", buf, buf_len) == ESP_OK) {
-//            ESP_LOGI(TAG, "Found header => Host: %s", buf);
-//        }
-//        free(buf);
-//    }
+    //    buf_len = httpd_req_get_hdr_value_len(req, "Host") + 1;
+    //    if (buf_len > 1) {
+    //        buf = heap_caps_malloc(buf_len,MALLOC_CAP_SPIRAM);
+    //        /* Copy null terminated value string into buffer */
+    //        if (httpd_req_get_hdr_value_str(req, "Host", buf, buf_len) == ESP_OK) {
+    //            ESP_LOGI(TAG, "Found header => Host: %s", buf);
+    //        }
+    //        free(buf);
+    //    }
 
     /* Read URL query string length and allocate memory for length + 1,
      * extra byte for null termination */
@@ -414,14 +414,14 @@ esp_err_t fft_get_handler(httpd_req_t *req)
     if (buf_len > 1) {
         buf = malloc(buf_len);
         if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
-//            ESP_LOGI(TAG, "Found URL query => %s", buf);
+            //            ESP_LOGI(TAG, "Found URL query => %s", buf);
             /* Get value of expected key from query string */
             if (httpd_query_key_value(buf, "sample_cnts", param, sizeof(param)) != ESP_OK) {
                 ESP_LOGI(TAG, "Found URL query parameter => sample_cnts=%d", atoi(param));
-//                ret = -1;
+                //                ret = -1;
             }
             else
-            	sample_cnts = atoi(param);
+                sample_cnts = atoi(param);
         }
         free(buf);
     }
@@ -434,10 +434,10 @@ esp_err_t fft_get_handler(httpd_req_t *req)
 }
 
 httpd_uri_t fft = {
-    .uri       = "/fft",
-    .method    = HTTP_GET,
-    .handler   = fft_get_handler,
-    .user_ctx  = NULL
+        .uri       = "/fft",
+        .method    = HTTP_GET,
+        .handler   = fft_get_handler,
+        .user_ctx  = NULL
 };
 
 esp_err_t time_get_handler(httpd_req_t *req)
@@ -454,13 +454,13 @@ esp_err_t time_get_handler(httpd_req_t *req)
     if (buf_len > 1) {
         buf = malloc(buf_len);
         if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
-//            ESP_LOGI(TAG, "Found URL query => %s", buf);
+            //            ESP_LOGI(TAG, "Found URL query => %s", buf);
             /* Get value of expected key from query string */
             if (httpd_query_key_value(buf, "sample_cnts", param, sizeof(param)) != ESP_OK) {
                 ESP_LOGI(TAG, "Found URL query parameter => sample_cnts=%d", atoi(param));
             }
             else
-            	times = atoi(param);
+                times = atoi(param);
         }
         free(buf);
     }
@@ -473,10 +473,10 @@ esp_err_t time_get_handler(httpd_req_t *req)
 }
 
 httpd_uri_t time = {
-    .uri       = "/time",
-    .method    = HTTP_GET,
-    .handler   = time_get_handler,
-    .user_ctx  = NULL
+        .uri       = "/time",
+        .method    = HTTP_GET,
+        .handler   = time_get_handler,
+        .user_ctx  = NULL
 };
 
 esp_err_t freq_bar_get_handler(httpd_req_t *req)
@@ -488,18 +488,18 @@ esp_err_t freq_bar_get_handler(httpd_req_t *req)
      * extra byte for null termination */
     buf_len = httpd_req_get_url_query_len(req) + 1;
     if (buf_len > 1) {
-//        buf = heap_caps_malloc(buf_len,MALLOC_CAP_SPIRAM);
-//        if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
-////            ESP_LOGI(TAG, "Found URL query => %s", buf);
-//            /* Get value of expected key from query string */
-//            if (httpd_query_key_value(buf, "sample_cnts", param, sizeof(param)) != ESP_OK) {
-//                ESP_LOGI(TAG, "Found URL query parameter => sample_cnts=%d", atoi(param));
-//            }
-//            else
-//            	times = atoi(param);
-//        }
-//        free(buf);
-    	ESP_LOGI(TAG, "FREQ BAR REQ");
+        //        buf = heap_caps_malloc(buf_len,MALLOC_CAP_SPIRAM);
+        //        if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
+        ////            ESP_LOGI(TAG, "Found URL query => %s", buf);
+        //            /* Get value of expected key from query string */
+        //            if (httpd_query_key_value(buf, "sample_cnts", param, sizeof(param)) != ESP_OK) {
+        //                ESP_LOGI(TAG, "Found URL query parameter => sample_cnts=%d", atoi(param));
+        //            }
+        //            else
+        //            	times = atoi(param);
+        //        }
+        //        free(buf);
+        ESP_LOGI(TAG, "FREQ BAR REQ");
     }
 
     cj_get_freq_bar(cj_buf);
@@ -510,10 +510,10 @@ esp_err_t freq_bar_get_handler(httpd_req_t *req)
 }
 
 httpd_uri_t freq_bin = {
-    .uri       = "/freq_bin",
-    .method    = HTTP_GET,
-    .handler   = freq_bar_get_handler,
-    .user_ctx  = NULL
+        .uri       = "/freq_bin",
+        .method    = HTTP_GET,
+        .handler   = freq_bar_get_handler,
+        .user_ctx  = NULL
 };
 
 esp_err_t gtz_status_get_handler(httpd_req_t *req)
@@ -526,7 +526,7 @@ esp_err_t gtz_status_get_handler(httpd_req_t *req)
     buf_len = httpd_req_get_url_query_len(req) + 1;
     if (buf_len > 1)
     {
-    	ESP_LOGI(TAG, "FREQ BAR REQ");
+        ESP_LOGI(TAG, "FREQ BAR REQ");
     }
 
     cj_get_gtz(cj_buf);
@@ -538,10 +538,10 @@ esp_err_t gtz_status_get_handler(httpd_req_t *req)
 
 
 httpd_uri_t gtz_status = {
-    .uri       = "/gtz_status",
-    .method    = HTTP_GET,
-    .handler   = gtz_status_get_handler,
-    .user_ctx  = NULL
+        .uri       = "/gtz_status",
+        .method    = HTTP_GET,
+        .handler   = gtz_status_get_handler,
+        .user_ctx  = NULL
 };
 
 /* An HTTP POST handler */
@@ -624,7 +624,7 @@ httpd_uri_t gtz_status = {
 
 httpd_handle_t start_webserver(void)
 {
-	extern sys_reg_st  g_sys;
+    extern sys_reg_st  g_sys;
     httpd_handle_t server = NULL;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
 
@@ -634,7 +634,7 @@ httpd_handle_t start_webserver(void)
     // Start the httpd server
     ESP_LOGI(TAG, "Starting server on port: '%d'", config.server_port);
     if (httpd_start(&server, &config) == ESP_OK) {
-    	bit_op_set(&g_sys.stat.gen.status_bm,GBM_HTTP,1);
+        bit_op_set(&g_sys.stat.gen.status_bm,GBM_HTTP,1);
         // Set URI handlers
         ESP_LOGI(TAG, "Registering URI handlers");
         httpd_register_uri_handler(server, &rd_reg);
@@ -651,8 +651,8 @@ httpd_handle_t start_webserver(void)
 
 void stop_webserver(httpd_handle_t server)
 {
-	extern sys_reg_st  g_sys;
-	bit_op_set(&g_sys.stat.gen.status_bm,GBM_HTTP,0);
+    extern sys_reg_st  g_sys;
+    bit_op_set(&g_sys.stat.gen.status_bm,GBM_HTTP,0);
     // Stop the httpd server
     httpd_stop(server);
 }

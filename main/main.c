@@ -5,7 +5,7 @@
    Unless required by applicable law or agreed to in writing, this
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
    CONDITIONS OF ANY KIND, either express or implied.
-*/
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -18,13 +18,13 @@
 
 enum
 {
-	TEST_THREAD_PRIO=3,
-	CLI_THREAD_PRIO,
-	CMD_THREAD_PRIO,
-	TCP_THREAD_PRIO,
-	SPP_THREAD_PRIO,
-	GEO_THREAD_PRIO,
-	USR_MAX_PRIO
+    TEST_THREAD_PRIO=3,
+    CLI_THREAD_PRIO,
+    CMD_THREAD_PRIO,
+    TCP_THREAD_PRIO,
+    SPP_THREAD_PRIO,
+    GEO_THREAD_PRIO,
+    USR_MAX_PRIO
 };
 
 #define TEST_THREAD_STACK_SIZE 	3072
@@ -37,50 +37,50 @@ enum
 static void tasks_create(void)
 {
     xTaskCreate(&test_thread,
-                "Task_test",
-				TEST_THREAD_STACK_SIZE,
-                NULL,
-				TEST_THREAD_PRIO,
-				NULL);
+            "Task_test",
+            TEST_THREAD_STACK_SIZE,
+            NULL,
+            TEST_THREAD_PRIO,
+            NULL);
 
     xTaskCreate(&cli_thread,
-                "Task_cli",
-				CLI_THREAD_STACK_SIZE,
-                NULL,
-				CLI_THREAD_PRIO,
-				NULL);
+            "Task_cli",
+            CLI_THREAD_STACK_SIZE,
+            NULL,
+            CLI_THREAD_PRIO,
+            NULL);
 
     xTaskCreate(&cmd_thread,
-                "Task_CMD",
-				CMD_THREAD_STACK_SIZE,
-                NULL,
-				CMD_THREAD_PRIO,
-				NULL);
+            "Task_CMD",
+            CMD_THREAD_STACK_SIZE,
+            NULL,
+            CMD_THREAD_PRIO,
+            NULL);
 
-//    xTaskCreate(&spp_thread,
-//                "Task_spp",
-//    			SPP_THREAD_STACK_SIZE,
-//                NULL,
-//    			SPP_THREAD_PRIO,
-//    			NULL);
+    //    xTaskCreate(&spp_thread,
+    //                "Task_spp",
+    //    			SPP_THREAD_STACK_SIZE,
+    //                NULL,
+    //    			SPP_THREAD_PRIO,
+    //    			NULL);
 
-//	xTaskCreate(&tcp_thread,
-//				"Task_tcp",
-//				TCP_THREAD_STACK_SIZE,
-//				NULL,
-//				TCP_THREAD_PRIO,
-//				NULL);
+    //	xTaskCreate(&tcp_thread,
+    //				"Task_tcp",
+    //				TCP_THREAD_STACK_SIZE,
+    //				NULL,
+    //				TCP_THREAD_PRIO,
+    //				NULL);
 
     xTaskCreate(&geo_thread,
-                "Task_geo",
-				GEO_THREAD_STACK_SIZE,
-                NULL,
-				GEO_THREAD_PRIO,
-				NULL);
+            "Task_geo",
+            GEO_THREAD_STACK_SIZE,
+            NULL,
+            GEO_THREAD_PRIO,
+            NULL);
 }
 
 void app_main()
 {
-	usr_sys_init();
-	tasks_create();
+    usr_sys_init();
+    tasks_create();
 }

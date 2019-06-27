@@ -5,7 +5,7 @@
    Unless required by applicable law or agreed to in writing, this
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
    CONDITIONS OF ANY KIND, either express or implied.
-*/
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -42,24 +42,24 @@ const int STARTED_BIT = BIT1;
 
 static void connected_ops(void)
 {
-	xTaskCreate(&tcp_thread,
-	    	     "Task_TCP",
-	    	     8192,
-	    	     NULL,
-	    	     5,
-	    	     NULL);
+    xTaskCreate(&tcp_thread,
+            "Task_TCP",
+            8192,
+            NULL,
+            5,
+            NULL);
 }
 
 
 static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
-	httpd_handle_t *server = (httpd_handle_t *) ctx;
+    httpd_handle_t *server = (httpd_handle_t *) ctx;
 
     switch(event->event_id) {
     case SYSTEM_EVENT_AP_START:
-    	ESP_LOGI(TAG, "AP started!\n");
-    	connected_ops();
-    	break;
+        ESP_LOGI(TAG, "AP started!\n");
+        connected_ops();
+        break;
     case SYSTEM_EVENT_STA_GOT_IP:
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
@@ -74,15 +74,15 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
         xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,0);
         /* Stop the web server */
-//        if (*server) {
-//            stop_webserver(*server);
-//            *server = NULL;
-//        }
+        //        if (*server) {
+        //            stop_webserver(*server);
+        //            *server = NULL;
+        //        }
         break;
     case SYSTEM_EVENT_AP_STACONNECTED:
         ESP_LOGI(TAG, "station:"MACSTR" join, AID=%d",
-                 MAC2STR(event->event_info.sta_connected.mac),
-                 event->event_info.sta_connected.aid);
+                MAC2STR(event->event_info.sta_connected.mac),
+                event->event_info.sta_connected.aid);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,1);
         /* stop the web server */
         if ((*server == NULL)&&(g_sys.conf.eth.http_en)) {
@@ -91,14 +91,14 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
         break;
     case SYSTEM_EVENT_AP_STADISCONNECTED:
         ESP_LOGI(TAG, "station:"MACSTR"leave, AID=%d",
-                 MAC2STR(event->event_info.sta_disconnected.mac),
-                 event->event_info.sta_disconnected.aid);
+                MAC2STR(event->event_info.sta_disconnected.mac),
+                event->event_info.sta_disconnected.aid);
         bit_op_set(&g_sys.stat.gen.status_bm,GBM_LINK,0);
         /* Stop the web server */
-//        if (*server) {
-//            stop_webserver(*server);
-//            *server = NULL;
-//        }
+        //        if (*server) {
+        //            stop_webserver(*server);
+        //            *server = NULL;
+        //        }
         break;
     default:
         break;
@@ -108,11 +108,11 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 
 static void initialise_wifi(void* arg)
 {
-	esp_err_t err;
-	char ssid[24];
-	char lcssid[24];
-	char pwd[24];
-	char lcpwd[24];
+    esp_err_t err;
+    char ssid[24];
+    char lcssid[24];
+    char pwd[24];
+    char lcpwd[24];
     size_t slen,lslen,plen,lplen;
     wifi_config_t wifi_config = { 0 };
 
@@ -120,9 +120,9 @@ static void initialise_wifi(void* arg)
 
     if(ESP_OK != err)
     {
-    	printf("get wifi err!\n");
-    	bit_op_set(&g_sys.stat.gen.status_bm,GBM_WIFI,0);
-    	return;
+        printf("get wifi err!\n");
+        bit_op_set(&g_sys.stat.gen.status_bm,GBM_WIFI,0);
+        return;
     }
     bit_op_set(&g_sys.stat.gen.status_bm,GBM_WIFI,1);
     printf("ap ssid:%s,pwd:%s\n",lcssid,lcpwd);
@@ -133,15 +133,15 @@ static void initialise_wifi(void* arg)
     wifi_config.ap.max_connection = 4;
     wifi_config.ap.authmode = WIFI_AUTH_WPA_WPA2_PSK;
 
-//	wifi_config_t wifi_config = {
-//		.ap = {
-//			.ssid = "geo_acc",
-//			.ssid_len = 7,
-//			.max_connection = 4,
-//			.password = "12345678",
-//			.authmode = WIFI_AUTH_WPA_WPA2_PSK
-//		},
-//	};
+    //	wifi_config_t wifi_config = {
+    //		.ap = {
+    //			.ssid = "geo_acc",
+    //			.ssid_len = 7,
+    //			.max_connection = 4,
+    //			.password = "12345678",
+    //			.authmode = WIFI_AUTH_WPA_WPA2_PSK
+    //		},
+    //	};
 
     esp_log_level_set("wifi", ESP_LOG_WARN);
     static bool initialized = false;
@@ -158,7 +158,7 @@ static void initialise_wifi(void* arg)
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_APSTA));
     ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_AP, &wifi_config));
 
-//    ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_NULL) );
+    //    ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_NULL) );
     ESP_ERROR_CHECK( esp_wifi_start() );
     initialized = true;
 }
@@ -174,9 +174,9 @@ static bool wifi_join(const char* ssid, const char* pass, int timeout_ms)
     ESP_ERROR_CHECK( esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );
     ESP_ERROR_CHECK( esp_wifi_connect() );
 
-//    xTaskCreate(&task_process_ws, "ws_process_rx", 2048, NULL, 5, NULL);
-//    //Create Websocket Server Task
-//    xTaskCreate(&ws_server, "ws_server", 2048, NULL, 5, NULL);
+    //    xTaskCreate(&task_process_ws, "ws_process_rx", 2048, NULL, 5, NULL);
+    //    //Create Websocket Server Task
+    //    xTaskCreate(&ws_server, "ws_server", 2048, NULL, 5, NULL);
 
     int bits = xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT,
             1, 1, timeout_ms / portTICK_PERIOD_MS);
@@ -201,11 +201,11 @@ static int connect(int argc, char** argv)
         return 1;
     }
     ESP_LOGI(__func__, "Connecting to '%s'",
-    		wifi_args.ssid->sval[0]);
+            wifi_args.ssid->sval[0]);
 
     bool connected = wifi_join(wifi_args.ssid->sval[0],
-    							wifi_args.password->sval[0],
-								wifi_args.timeout->ival[0]);
+            wifi_args.password->sval[0],
+            wifi_args.timeout->ival[0]);
     if (!connected) {
         ESP_LOGW(__func__, "Connection timed out");
         return 1;
@@ -224,11 +224,11 @@ void register_wifi()
     wifi_args.end = arg_end(2);
 
     const esp_console_cmd_t join_cmd = {
-        .command = "join",
-        .help = "Join WiFi AP as a station",
-        .hint = NULL,
-        .func = &connect,
-        .argtable = &wifi_args
+            .command = "join",
+            .help = "Join WiFi AP as a station",
+            .hint = NULL,
+            .func = &connect,
+            .argtable = &wifi_args
     };
 
     ESP_ERROR_CHECK( esp_console_cmd_register(&join_cmd) );
@@ -236,6 +236,6 @@ void register_wifi()
 
 void usr_wifi_init(void)
 {
-	static httpd_handle_t server = NULL;
-	initialise_wifi(&server);
+    static httpd_handle_t server = NULL;
+    initialise_wifi(&server);
 }
