@@ -42,6 +42,7 @@ typedef struct
     uint32_t    target_span;
     uint32_t    signal_th;
     uint32_t    acc_q;
+    uint32_t    reset;
 }conf_gtz_st;
 
 typedef struct

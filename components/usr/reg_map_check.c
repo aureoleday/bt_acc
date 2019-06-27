@@ -6,7 +6,7 @@
 #include "esp_timer.h"
 #include "esp_log.h"
 #include "adxl_drv.h"
-
+#include "goertzel.h"
 
 
 //extern sys_reg_st g_sys;
@@ -116,13 +116,20 @@ uint16_t geo_filter_opt(uint32_t pram)
 
 uint16_t geo_pwr_opt(uint32_t pram)
 {
-	uint8_t data = pram&0x0ff;
-	if(pram == 1)
-		adxl_wr_reg(ADXL_POWER_CTL,0);
-	else if(pram == 0)
-		adxl_wr_reg(ADXL_POWER_CTL,1);
-	else
-		adxl_wr_reg(ADXL_POWER_CTL,data);
+    uint8_t data = pram&0x0ff;
+    if(pram == 1)
+        adxl_wr_reg(ADXL_POWER_CTL,0);
+    else if(pram == 0)
+        adxl_wr_reg(ADXL_POWER_CTL,1);
+    else
+        adxl_wr_reg(ADXL_POWER_CTL,data);
+
+    return 1;
+}
+
+uint16_t gtz_rst_opt(uint32_t pram)
+{
+    gtz_reset();
 
     return 1;
 }

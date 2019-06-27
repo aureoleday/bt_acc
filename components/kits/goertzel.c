@@ -34,8 +34,6 @@ typedef struct
 
 typedef struct
 {
-	uint32_t 	snr_queue_idx;
-	float		snr_queue[FREQ_SPAN_MAX];
 	float		freq_bins[FREQ_SPAN_MAX];
 }snr_buf_st;
 
@@ -242,6 +240,15 @@ void goertzel_init(void)
 	for(i=0;i<FREQ_SPAN_MAX;i++)
 	{
 		snr_buf_inst.freq_bins[i] = 0.0;
-		snr_buf_inst.snr_queue[i] = 0.0;
 	}
+}
+
+void gtz_reset(void)
+{
+    extern sys_reg_st  g_sys;
+    int16_t i;
+    for(i=0;i<FREQ_SPAN_MAX;i++)
+    {
+        snr_buf_inst.freq_bins[i] = g_sys.stat.gtz.noise_level;
+    }
 }
