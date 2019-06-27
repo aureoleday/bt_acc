@@ -499,7 +499,7 @@ void recv_frame_fsm(void)
 	while ((fifo32_pop(&cmd_rx_fifo, &rx_data) == 1)
 			&& (cmd_reg_inst.rx_tag == 0))
 	{
-//        printf("tcp: %x\n ",rx_data);
+        //printf("tcp: %x\n ",rx_data);
 		switch (cmd_reg_inst.cmd_fsm_cstate)
 		{
 			case (CMD_FRAME_FSM_SYNC): {
@@ -531,7 +531,7 @@ void recv_frame_fsm(void)
 					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
 				}
 				cmd_reg_inst.rtx_timeout = 0;
-	//                printf("fsm_len\n ");
+	                //printf("fsm_len\n ");
 				break;
 			}
 			case (CMD_FRAME_FSM_DATA): {
@@ -541,7 +541,7 @@ void recv_frame_fsm(void)
 					cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
 					cmd_reg_inst.rtx_timeout = 0;
 					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
-	//                    printf("cmd timeout\n");
+	                    //printf("cmd timeout\n");
 				} else if (((cmd_reg_inst.rx_buf[FRAME_C_ATL_POS] & 0x0000ffff)
 						+ CMD_FRAME_OVSIZE - 1) > cmd_reg_inst.rx_cnt) {
 					cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = rx_data;
@@ -553,19 +553,19 @@ void recv_frame_fsm(void)
 					cmd_reg_inst.rx_cnt++;
 					if (frame_checksum() == 1) {
 						cmd_reg_inst.rx_tag = 1;
-	//												cmd_reg_inst.rx_cnt = cmd_reg_inst.rx_cnt;
+													cmd_reg_inst.rx_cnt = cmd_reg_inst.rx_cnt;
 						cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
-	//												printf("chk ok\n");
+													//printf("chk ok\n");
 					} else {
 						cmd_reg_inst.rx_tag = 0;
 						cmd_reg_inst.rx_cnt = 0;
 						cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
-	//												printf("chk error\n");
+													//printf("chk error\n");
 					}
 					cmd_reg_inst.rtx_timeout = 0;
 					cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
 				}
-	//                printf("fsm_data\n ");
+	                //printf("fsm_data\n ");
 				break;
 			}
 			default: {
@@ -574,7 +574,7 @@ void recv_frame_fsm(void)
 				cmd_reg_inst.rx_buf[cmd_reg_inst.rx_cnt] = 0;
 				cmd_reg_inst.cmd_fsm_cstate = CMD_FRAME_FSM_SYNC;
 				cmd_reg_inst.rtx_timeout = 0;
-	//                printf("fsm_default\n ");
+	                //printf("fsm_default\n ");
 				break;
 			}
 		}

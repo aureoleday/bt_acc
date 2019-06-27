@@ -20,7 +20,7 @@
 sys_reg_st  g_sys; 															//global parameter declairation
 
 //configuration register map declairation
-const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=  
+const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
     {//id		mapped registers		                     min	    max				default			type    chk_prt
     {	0,		&g_sys.conf.gen.wifi_mode,                 	 0,		    1,				0,				0,      NULL   	          },
     {	1,		&g_sys.conf.gen.sample_channel,            	 0,     	2,	    		2,				0,      NULL   	          },
@@ -54,6 +54,7 @@ const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
     {	29,		NULL,                                        0,		    1,				0,				1,      save_conf_opt     },
     {	30,		NULL,                                        0,		    1,				0,				1,      load_conf_opt     },
     {	31,		&g_sys.conf.gen.restart,                     0,		    0xffffffff,		0,				1,      NULL     		  }
+
 };      
  
 

@@ -59,7 +59,8 @@ void test_thread(void* param)
 			printf("SNR:\t%0.3f\t\t%0.3f\n",g_sys.stat.gtz.acc_snr,g_sys.stat.gtz.ins_snr);
 			printf("offset:\t%d\t\t%d\n",g_sys.stat.gtz.acc_offset,g_sys.stat.gtz.offset);
 			printf("s_psd:\t%f\t%f\n",g_sys.stat.gtz.acc_signal_level,g_sys.stat.gtz.signal_level);
-			printf("n_psd:\t%f\t%f\n\n",g_sys.stat.gtz.acc_noise_level,g_sys.stat.gtz.noise_level);
+			printf("n_psd:\t%f\t%f\n",g_sys.stat.gtz.acc_noise_level,g_sys.stat.gtz.noise_level);
+			printf("rank:\t%d\t\t%d\n\n",g_sys.stat.gtz.acc_rank,g_sys.stat.gtz.rank);
 		}
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 		if(g_sys.conf.gen.restart == 9527)
