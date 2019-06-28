@@ -72,7 +72,7 @@ static float calc_snr(float* dbuf, uint16_t cnt, snr_sts_st* snr_sts_ptr)
     float snr = 0.0;
 
     uint16_t i;
-    uint16_t ind=0;
+    int16_t ind = 0;
     uint16_t mid = cnt/2;
 
     for(i=0;i<cnt;i++)
@@ -95,7 +95,7 @@ static float calc_snr(float* dbuf, uint16_t cnt, snr_sts_st* snr_sts_ptr)
 
     for(i=0;i<4;i++)
     {
-        if(buf_2nd[i]==buf[2])
+        if(buf_2nd[i]<=buf[3])
         {
             ind = i;
             break;
@@ -105,7 +105,7 @@ static float calc_snr(float* dbuf, uint16_t cnt, snr_sts_st* snr_sts_ptr)
     if(ind != 0)
     {
         for(i=0;i<ind;i++)
-            signal_psd += buf[i]*buf[i];
+            signal_psd += buf_2nd[i]*buf_2nd[i];
         signal_psd = sqrtf(signal_psd);
     }
     else
