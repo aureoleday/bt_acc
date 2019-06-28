@@ -227,6 +227,8 @@ static int cj_get_gtz(char* cj_dst)
 	cJSON_AddNumberToObject(root, "cur_snr", (float)g_sys.stat.gtz.ins_snr);
 	cJSON_AddNumberToObject(root, "signal_level", (float)g_sys.stat.gtz.signal_level);
 	cJSON_AddNumberToObject(root, "noise_level", (float)g_sys.stat.gtz.noise_level);
+	cJSON_AddNumberToObject(root, "acc_signal_level", (float)g_sys.stat.gtz.acc_signal_level);
+	cJSON_AddNumberToObject(root, "acc_noise_level", (float)g_sys.stat.gtz.acc_noise_level);
 	cJSON_AddNumberToObject(root, "rank", g_sys.stat.gtz.rank);
 	cJSON_AddNumberToObject(root, "acc_rank", g_sys.stat.gtz.acc_rank);
 	cJSON_AddNumberToObject(root, "offset", g_sys.stat.gtz.offset);
