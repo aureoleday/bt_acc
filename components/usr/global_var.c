@@ -73,7 +73,7 @@ const sts_reg_map_st status_reg_map_inst[STAT_REG_MAP_NUM]=
         {	10,	    (void*)&g_sys.stat.gtz.ins_snr,         0},
         {	11,	    (void*)&g_sys.stat.gtz.acc_snr,         0},
         {	12,	    (void*)&g_sys.stat.gtz.signal_level,    0},
-        {	13,	    (void*)&g_sys.stat.gtz.noise_level, 0},
+        {	13,	    (void*)&g_sys.stat.gtz.noise_level,     0},
         {	14,	    &g_sys.stat.gtz.rank,                   0},
         {	15,	    &g_sys.stat.gtz.acc_rank,               0},
         {	16,	    (void*)&g_sys.stat.gtz.offset,          0},
