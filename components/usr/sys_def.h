@@ -29,12 +29,12 @@ typedef long				int32;
 
 //#define SYS_DEBUG
 #define STAT_REG_MAP_NUM        32
-#define CONF_REG_MAP_NUM		32
-#define SOFTWARE_VER			0x00000001
-#define HARDWARE_VER			0x00010000
-#define SERIAL_NO				0
-#define MAN_DATE				0
-#define DEVICE_TYPE				0x00000001
+#define CONF_REG_MAP_NUM        32
+#define SOFTWARE_VER            0x00010000
+#define HARDWARE_VER            0x00010000
+#define SERIAL_NO               0
+#define MAN_DATE                0
+#define DEVICE_TYPE             0x00000001
 
 #define MBM_TOTAL_SLAVE_NUM     32
 #define MBM_HOLDING_REGS_NUM    32
