@@ -12,7 +12,7 @@
 #include "led_drv.h"
 #include "global_var.h"
 #include "bit_op.h"
-
+#include "dac_drv.h"
 
 void join_wifi(void)
 {
@@ -41,10 +41,13 @@ void join_wifi(void)
     ESP_ERROR_CHECK( esp_wifi_connect() );
 }
 
+
+
 void test_thread(void* param)
 {
 	extern sys_reg_st  g_sys;
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
+	dac_init(1);
 	if((g_sys.conf.gen.wifi_mode == 1)&&bit_op_get(g_sys.stat.gen.status_bm,GBM_WIFI) == 1)
 	{
 		join_wifi();
