@@ -1,0 +1,122 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ADXL355_register_t	adxl_drv.h	/^} ADXL355_register_t;$/;"	t	typeref:enum:__anon2
+ADXL_ACT_COUNT	adxl_drv.h	/^   ADXL_ACT_COUNT = 0x27,$/;"	e	enum:__anon2
+ADXL_ACT_EN	adxl_drv.h	/^   ADXL_ACT_EN = 0x24,$/;"	e	enum:__anon2
+ADXL_ACT_THRESH_H	adxl_drv.h	/^   ADXL_ACT_THRESH_H = 0x25,$/;"	e	enum:__anon2
+ADXL_ACT_THRESH_L	adxl_drv.h	/^   ADXL_ACT_THRESH_L = 0x26,$/;"	e	enum:__anon2
+ADXL_DEVID_AD	adxl_drv.h	/^   ADXL_DEVID_AD = 0x00,$/;"	e	enum:__anon2
+ADXL_DEVID_MST	adxl_drv.h	/^   ADXL_DEVID_MST = 0x01,$/;"	e	enum:__anon2
+ADXL_FIFO_DATA	adxl_drv.h	/^   ADXL_FIFO_DATA = 0x11,$/;"	e	enum:__anon2
+ADXL_FIFO_ENTRIES	adxl_drv.h	/^   ADXL_FIFO_ENTRIES = 0x05,$/;"	e	enum:__anon2
+ADXL_FIFO_SAMPLES	adxl_drv.h	/^   ADXL_FIFO_SAMPLES = 0x29,$/;"	e	enum:__anon2
+ADXL_FILTER	adxl_drv.h	/^   ADXL_FILTER = 0x28,$/;"	e	enum:__anon2
+ADXL_INT_MAP	adxl_drv.h	/^   ADXL_INT_MAP = 0x2A,$/;"	e	enum:__anon2
+ADXL_OFFSET_X_H	adxl_drv.h	/^   ADXL_OFFSET_X_H = 0x1E,$/;"	e	enum:__anon2
+ADXL_OFFSET_X_L	adxl_drv.h	/^   ADXL_OFFSET_X_L = 0x1F,$/;"	e	enum:__anon2
+ADXL_OFFSET_Y_H	adxl_drv.h	/^   ADXL_OFFSET_Y_H = 0x20,$/;"	e	enum:__anon2
+ADXL_OFFSET_Y_L	adxl_drv.h	/^   ADXL_OFFSET_Y_L = 0x21,$/;"	e	enum:__anon2
+ADXL_OFFSET_Z_H	adxl_drv.h	/^   ADXL_OFFSET_Z_H = 0x22,$/;"	e	enum:__anon2
+ADXL_OFFSET_Z_L	adxl_drv.h	/^   ADXL_OFFSET_Z_L = 0x23,$/;"	e	enum:__anon2
+ADXL_PARTID	adxl_drv.h	/^   ADXL_PARTID = 0x02,$/;"	e	enum:__anon2
+ADXL_POWER_CTL	adxl_drv.h	/^   ADXL_POWER_CTL = 0x2D,$/;"	e	enum:__anon2
+ADXL_RANGE	adxl_drv.h	/^   ADXL_RANGE = 0x2C,$/;"	e	enum:__anon2
+ADXL_RESET	adxl_drv.h	/^   ADXL_RESET = 0x2F$/;"	e	enum:__anon2
+ADXL_REVID	adxl_drv.h	/^   ADXL_REVID = 0x03,$/;"	e	enum:__anon2
+ADXL_SELF_TEST	adxl_drv.h	/^   ADXL_SELF_TEST = 0x2E,$/;"	e	enum:__anon2
+ADXL_STATUS	adxl_drv.h	/^   ADXL_STATUS = 0x04,$/;"	e	enum:__anon2
+ADXL_SYNC	adxl_drv.h	/^   ADXL_SYNC = 0x2B,$/;"	e	enum:__anon2
+ADXL_TEMP1	adxl_drv.h	/^   ADXL_TEMP1 = 0x07,$/;"	e	enum:__anon2
+ADXL_TEMP2	adxl_drv.h	/^   ADXL_TEMP2 = 0x06,$/;"	e	enum:__anon2
+ADXL_XDATA1	adxl_drv.h	/^   ADXL_XDATA1 = 0x0A,$/;"	e	enum:__anon2
+ADXL_XDATA2	adxl_drv.h	/^   ADXL_XDATA2 = 0x09,$/;"	e	enum:__anon2
+ADXL_XDATA3	adxl_drv.h	/^   ADXL_XDATA3 = 0x08,$/;"	e	enum:__anon2
+ADXL_YDATA1	adxl_drv.h	/^   ADXL_YDATA1 = 0x0D,$/;"	e	enum:__anon2
+ADXL_YDATA2	adxl_drv.h	/^   ADXL_YDATA2 = 0x0C,$/;"	e	enum:__anon2
+ADXL_YDATA3	adxl_drv.h	/^   ADXL_YDATA3 = 0x0B,$/;"	e	enum:__anon2
+ADXL_ZDATA1	adxl_drv.h	/^   ADXL_ZDATA1 = 0x10,$/;"	e	enum:__anon2
+ADXL_ZDATA2	adxl_drv.h	/^   ADXL_ZDATA2 = 0x0F,$/;"	e	enum:__anon2
+ADXL_ZDATA3	adxl_drv.h	/^   ADXL_ZDATA3 = 0x0E,$/;"	e	enum:__anon2
+COMPONENTS_DRV_ADXL_DRV_H_	adxl_drv.h	9;"	d
+COMPONENTS_DRV_DAC_DRV_H_	dac_drv.h	9;"	d
+COMPONENTS_DRV_LED_DRV_H_	led_drv.h	9;"	d
+COMPONENT_ADD_INCLUDEDIRS	component.mk	/^COMPONENT_ADD_INCLUDEDIRS := .$/;"	m
+DEV_GEO_FIFO_SIZE	adxl_drv.h	15;"	d
+DEV_GEO_RTX_SIZE	adxl_drv.h	14;"	d
+GPIO_OUTPUT_PIN_SEL	led_drv.c	12;"	d	file:
+PIN_LED_EXT	led_drv.c	10;"	d	file:
+PIN_LED_INT	led_drv.c	9;"	d	file:
+PIN_NUM_CLK	adxl_drv.c	30;"	d	file:
+PIN_NUM_CS	adxl_drv.c	31;"	d	file:
+PIN_NUM_MISO	adxl_drv.c	28;"	d	file:
+PIN_NUM_MOSI	adxl_drv.c	29;"	d	file:
+TEST_WITHOUT_RELOAD	infared_drv.c	21;"	d	file:
+TEST_WITH_RELOAD	infared_drv.c	22;"	d	file:
+TIMER_DIVIDER	infared_drv.c	17;"	d	file:
+TIMER_INTERVAL0_SEC	infared_drv.c	19;"	d	file:
+TIMER_INTERVAL1_SEC	infared_drv.c	20;"	d	file:
+TIMER_SCALE	infared_drv.c	18;"	d	file:
+addr	adxl_drv.c	/^    struct arg_int *addr;$/;"	m	struct:__anon4	typeref:struct:__anon4::arg_int	file:
+adxl355_reset	adxl_drv.c	/^void adxl355_reset(void)$/;"	f
+adxl355_scanfifo	adxl_drv.c	/^int16_t adxl355_scanfifo(void)$/;"	f
+adxl_args	adxl_drv.c	/^} adxl_args;$/;"	v	typeref:struct:__anon4	file:
+adxl_info	adxl_drv.c	/^static int adxl_info(int argc, char **argv)$/;"	f	file:
+adxl_init	adxl_drv.c	/^void adxl_init(void)$/;"	f
+adxl_rd_reg	adxl_drv.c	/^uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt)$/;"	f
+adxl_register	adxl_drv.c	/^void adxl_register(void)$/;"	f
+adxl_wr_reg	adxl_drv.c	/^uint8_t adxl_wr_reg(uint8_t addr, uint8_t data)$/;"	f
+ampl_arr	adxl_drv.h	/^    float		ampl_arr[16];$/;"	m	struct:__anon1
+app_main	infared_drv.c	/^void app_main()$/;"	f
+ard_reg	adxl_drv.c	/^static int ard_reg(int argc, char **argv)$/;"	f	file:
+arr_cnt	adxl_drv.h	/^    uint16_t	arr_cnt;$/;"	m	struct:__anon1
+awr_reg	adxl_drv.c	/^static int awr_reg(int argc, char **argv)$/;"	f	file:
+dac_init	dac_drv.c	/^void dac_init(uint8_t channel)$/;"	f
+dac_volt	dac_drv.c	/^void dac_volt(uint8_t volt)$/;"	f
+data	adxl_drv.c	/^    struct arg_int *data;$/;"	m	struct:__anon4	typeref:struct:__anon4::arg_int	file:
+decode	adxl_drv.c	/^static int32_t decode(uint32_t din)$/;"	f	file:
+end	adxl_drv.c	/^    struct arg_end *end;$/;"	m	struct:__anon4	typeref:struct:__anon4::arg_end	file:
+example_tg0_timer_init	infared_drv.c	/^static void example_tg0_timer_init(int timer_idx, $/;"	f	file:
+fft_info	adxl_drv.c	/^static int fft_info(int argc, char **argv)$/;"	f	file:
+fft_inst	adxl_drv.c	/^fft_st fft_inst;$/;"	v
+fft_max_ind	adxl_drv.c	/^static void fft_max_ind(void)$/;"	f	file:
+fft_st	adxl_drv.h	/^}fft_st;$/;"	t	typeref:struct:__anon1
+freq_arr	adxl_drv.h	/^    float		freq_arr[16];$/;"	m	struct:__anon1
+geo_ds_init	adxl_drv.c	/^void geo_ds_init(void)$/;"	f
+geo_get_fft	adxl_drv.c	/^float* geo_get_fft(uint16_t* fft_len)$/;"	f
+geo_get_time	adxl_drv.c	/^int16_t geo_get_time(float* dst_ptr,uint16_t len)$/;"	f
+geospi_mutex	adxl_drv.c	/^static SemaphoreHandle_t geospi_mutex = NULL;$/;"	v	file:
+ibuf	adxl_drv.h	/^    float		ibuf[DEV_GEO_FIFO_SIZE];$/;"	m	struct:__anon1
+ibuf_cnt	adxl_drv.h	/^	uint16_t	ibuf_cnt;$/;"	m	struct:__anon1
+kf_buf_s	adxl_drv.c	/^static uint8_t 	kf_buf_s[DEV_GEO_FIFO_SIZE*4];$/;"	v	file:
+kf_init	adxl_drv.c	/^static void kf_init(void)$/;"	f	file:
+kf_s	adxl_drv.c	/^kfifo_t 		kf_s;$/;"	v
+min	adxl_drv.c	26;"	d	file:
+obuf	adxl_drv.h	/^    float		obuf[DEV_GEO_FIFO_SIZE];$/;"	m	struct:__anon1
+print_timer_counter	infared_drv.c	/^static void inline print_timer_counter(uint64_t counter_value)$/;"	f	file:
+raw_data_buf	adxl_drv.c	/^static int16_t raw_data_buf(uint32_t din, uint8_t axis)$/;"	f	file:
+register_adxl_info	adxl_drv.c	/^static void register_adxl_info()$/;"	f	file:
+register_adxl_rd	adxl_drv.c	/^static void register_adxl_rd()$/;"	f	file:
+register_adxl_wr	adxl_drv.c	/^static void register_adxl_wr()$/;"	f	file:
+register_fft_info	adxl_drv.c	/^static void register_fft_info()$/;"	f	file:
+rxd	adxl_drv.c	/^    uint8_t                         rxd[DEV_GEO_RTX_SIZE];$/;"	m	struct:__anon3	file:
+rxd_temp	adxl_drv.c	/^static uint8_t 	rxd_temp[DEV_GEO_RTX_SIZE];$/;"	v	file:
+set_led	led_drv.c	/^void set_led(uint8_t pin_num, uint8_t value)$/;"	f
+spi_device_h	adxl_drv.c	/^    spi_device_handle_t     		spi_device_h;$/;"	m	struct:__anon3	file:
+spi_geo_dev_inst	adxl_drv.c	/^spi_geo_device_st spi_geo_dev_inst;$/;"	v
+spi_geo_device_st	adxl_drv.c	/^}spi_geo_device_st;$/;"	t	typeref:struct:__anon3	file:
+state	adxl_drv.h	/^	uint8_t		state;$/;"	m	struct:__anon1
+timer_counter_value	infared_drv.c	/^    uint64_t timer_counter_value;$/;"	m	struct:__anon5	file:
+timer_event_t	infared_drv.c	/^} timer_event_t;$/;"	t	typeref:struct:__anon5	file:
+timer_example_evt_task	infared_drv.c	/^static void timer_example_evt_task(void *arg)$/;"	f	file:
+timer_group	infared_drv.c	/^    int timer_group;$/;"	m	struct:__anon5	file:
+timer_group0_isr	infared_drv.c	/^void IRAM_ATTR timer_group0_isr(void *para)$/;"	f
+timer_idx	infared_drv.c	/^    int timer_idx;$/;"	m	struct:__anon5	file:
+timer_queue	infared_drv.c	/^xQueueHandle timer_queue;$/;"	v
+toggle_led	led_drv.c	/^void toggle_led(uint8_t pin_num)$/;"	f
+txd	adxl_drv.c	/^    uint8_t                         txd[DEV_GEO_RTX_SIZE];$/;"	m	struct:__anon3	file:
+type	infared_drv.c	/^    int type;  \/\/ the type of timer's event$/;"	m	struct:__anon5	file:
+usr_led_init	led_drv.c	/^void usr_led_init(void)$/;"	f

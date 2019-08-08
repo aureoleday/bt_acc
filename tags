@@ -1,0 +1,1780 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ADXL355_register_t	components/drv/adxl_drv.h	/^} ADXL355_register_t;$/;"	t	typeref:enum:__anon2
+ADXL_ACT_COUNT	components/drv/adxl_drv.h	/^   ADXL_ACT_COUNT = 0x27,$/;"	e	enum:__anon2
+ADXL_ACT_EN	components/drv/adxl_drv.h	/^   ADXL_ACT_EN = 0x24,$/;"	e	enum:__anon2
+ADXL_ACT_THRESH_H	components/drv/adxl_drv.h	/^   ADXL_ACT_THRESH_H = 0x25,$/;"	e	enum:__anon2
+ADXL_ACT_THRESH_L	components/drv/adxl_drv.h	/^   ADXL_ACT_THRESH_L = 0x26,$/;"	e	enum:__anon2
+ADXL_DEVID_AD	components/drv/adxl_drv.h	/^   ADXL_DEVID_AD = 0x00,$/;"	e	enum:__anon2
+ADXL_DEVID_MST	components/drv/adxl_drv.h	/^   ADXL_DEVID_MST = 0x01,$/;"	e	enum:__anon2
+ADXL_FIFO_DATA	components/drv/adxl_drv.h	/^   ADXL_FIFO_DATA = 0x11,$/;"	e	enum:__anon2
+ADXL_FIFO_ENTRIES	components/drv/adxl_drv.h	/^   ADXL_FIFO_ENTRIES = 0x05,$/;"	e	enum:__anon2
+ADXL_FIFO_SAMPLES	components/drv/adxl_drv.h	/^   ADXL_FIFO_SAMPLES = 0x29,$/;"	e	enum:__anon2
+ADXL_FILTER	components/drv/adxl_drv.h	/^   ADXL_FILTER = 0x28,$/;"	e	enum:__anon2
+ADXL_INT_MAP	components/drv/adxl_drv.h	/^   ADXL_INT_MAP = 0x2A,$/;"	e	enum:__anon2
+ADXL_OFFSET_X_H	components/drv/adxl_drv.h	/^   ADXL_OFFSET_X_H = 0x1E,$/;"	e	enum:__anon2
+ADXL_OFFSET_X_L	components/drv/adxl_drv.h	/^   ADXL_OFFSET_X_L = 0x1F,$/;"	e	enum:__anon2
+ADXL_OFFSET_Y_H	components/drv/adxl_drv.h	/^   ADXL_OFFSET_Y_H = 0x20,$/;"	e	enum:__anon2
+ADXL_OFFSET_Y_L	components/drv/adxl_drv.h	/^   ADXL_OFFSET_Y_L = 0x21,$/;"	e	enum:__anon2
+ADXL_OFFSET_Z_H	components/drv/adxl_drv.h	/^   ADXL_OFFSET_Z_H = 0x22,$/;"	e	enum:__anon2
+ADXL_OFFSET_Z_L	components/drv/adxl_drv.h	/^   ADXL_OFFSET_Z_L = 0x23,$/;"	e	enum:__anon2
+ADXL_PARTID	components/drv/adxl_drv.h	/^   ADXL_PARTID = 0x02,$/;"	e	enum:__anon2
+ADXL_POWER_CTL	components/drv/adxl_drv.h	/^   ADXL_POWER_CTL = 0x2D,$/;"	e	enum:__anon2
+ADXL_RANGE	components/drv/adxl_drv.h	/^   ADXL_RANGE = 0x2C,$/;"	e	enum:__anon2
+ADXL_RESET	components/drv/adxl_drv.h	/^   ADXL_RESET = 0x2F$/;"	e	enum:__anon2
+ADXL_REVID	components/drv/adxl_drv.h	/^   ADXL_REVID = 0x03,$/;"	e	enum:__anon2
+ADXL_SELF_TEST	components/drv/adxl_drv.h	/^   ADXL_SELF_TEST = 0x2E,$/;"	e	enum:__anon2
+ADXL_STATUS	components/drv/adxl_drv.h	/^   ADXL_STATUS = 0x04,$/;"	e	enum:__anon2
+ADXL_SYNC	components/drv/adxl_drv.h	/^   ADXL_SYNC = 0x2B,$/;"	e	enum:__anon2
+ADXL_TEMP1	components/drv/adxl_drv.h	/^   ADXL_TEMP1 = 0x07,$/;"	e	enum:__anon2
+ADXL_TEMP2	components/drv/adxl_drv.h	/^   ADXL_TEMP2 = 0x06,$/;"	e	enum:__anon2
+ADXL_XDATA1	components/drv/adxl_drv.h	/^   ADXL_XDATA1 = 0x0A,$/;"	e	enum:__anon2
+ADXL_XDATA2	components/drv/adxl_drv.h	/^   ADXL_XDATA2 = 0x09,$/;"	e	enum:__anon2
+ADXL_XDATA3	components/drv/adxl_drv.h	/^   ADXL_XDATA3 = 0x08,$/;"	e	enum:__anon2
+ADXL_YDATA1	components/drv/adxl_drv.h	/^   ADXL_YDATA1 = 0x0D,$/;"	e	enum:__anon2
+ADXL_YDATA2	components/drv/adxl_drv.h	/^   ADXL_YDATA2 = 0x0C,$/;"	e	enum:__anon2
+ADXL_YDATA3	components/drv/adxl_drv.h	/^   ADXL_YDATA3 = 0x0B,$/;"	e	enum:__anon2
+ADXL_ZDATA1	components/drv/adxl_drv.h	/^   ADXL_ZDATA1 = 0x10,$/;"	e	enum:__anon2
+ADXL_ZDATA2	components/drv/adxl_drv.h	/^   ADXL_ZDATA2 = 0x0F,$/;"	e	enum:__anon2
+ADXL_ZDATA3	components/drv/adxl_drv.h	/^   ADXL_ZDATA3 = 0x0E,$/;"	e	enum:__anon2
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	416;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	419;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	422;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	425;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	429;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	431;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	433;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	437;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	440;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	443;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	448;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	451;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	454;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	459;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	462;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	465;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	468;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	401;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	404;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	407;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	410;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	414;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	416;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	418;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	422;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	425;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	428;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	433;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	436;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	439;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	444;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	447;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	450;"	d	file:
+ARCHITECTURE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	453;"	d	file:
+BKG_THREAD_DELAY	components/usr/sys_conf.h	8;"	d
+BUFSZ	components/threads/tcp_thread.c	24;"	d	file:
+CLI_THREAD_PRIO	main/main.c	/^    CLI_THREAD_PRIO,$/;"	e	enum:__anon39	file:
+CLI_THREAD_STACK_SIZE	main/main.c	32;"	d	file:
+CMD_ERR_ADDR_OR	components/usr/cmd_resolve.c	/^    CMD_ERR_ADDR_OR,$/;"	e	enum:__anon17	file:
+CMD_ERR_CONFLICT_OR	components/usr/cmd_resolve.c	/^    CMD_ERR_CONFLICT_OR,$/;"	e	enum:__anon17	file:
+CMD_ERR_DATA_OR	components/usr/cmd_resolve.c	/^    CMD_ERR_DATA_OR,$/;"	e	enum:__anon17	file:
+CMD_ERR_NOERR	components/usr/cmd_resolve.c	/^    CMD_ERR_NOERR = 0,$/;"	e	enum:__anon17	file:
+CMD_ERR_UNKNOWN	components/usr/cmd_resolve.c	/^    CMD_ERR_UNKNOWN$/;"	e	enum:__anon17	file:
+CMD_ERR_WR_OR	components/usr/cmd_resolve.c	/^    CMD_ERR_WR_OR,$/;"	e	enum:__anon17	file:
+CMD_FRAME_FSM_DATA	components/usr/cmd_resolve.c	44;"	d	file:
+CMD_FRAME_FSM_SYNC	components/usr/cmd_resolve.c	42;"	d	file:
+CMD_FRAME_FSM_TL	components/usr/cmd_resolve.c	43;"	d	file:
+CMD_FRAME_OVSIZE	components/usr/cmd_resolve.c	34;"	d	file:
+CMD_FRAME_TAG_M_SYNC	components/usr/cmd_resolve.c	39;"	d	file:
+CMD_FRAME_TAG_S_SYNC	components/usr/cmd_resolve.c	40;"	d	file:
+CMD_FSM_TIMEOUT	components/usr/cmd_resolve.c	37;"	d	file:
+CMD_NOT_READY	components/usr/cmd_resolve.c	/^    CMD_NOT_READY,$/;"	e	enum:__anon17	file:
+CMD_RDFIFO_EMPTY	components/usr/cmd_resolve.c	/^    CMD_RDFIFO_EMPTY,$/;"	e	enum:__anon17	file:
+CMD_RD_REG	components/usr/cmd_resolve.c	47;"	d	file:
+CMD_RD_SER	components/usr/cmd_resolve.c	49;"	d	file:
+CMD_RP_GEO	components/usr/cmd_resolve.c	52;"	d	file:
+CMD_RP_PKG	components/usr/cmd_resolve.c	51;"	d	file:
+CMD_RTX_BUF_DEPTH	components/usr/cmd_resolve.c	36;"	d	file:
+CMD_THREAD_DELAY	components/usr/sys_conf.h	6;"	d
+CMD_THREAD_PRIO	main/main.c	/^    CMD_THREAD_PRIO,$/;"	e	enum:__anon39	file:
+CMD_THREAD_STACK_SIZE	main/main.c	33;"	d	file:
+CMD_WRFIFO_FULL	components/usr/cmd_resolve.c	/^    CMD_WRFIFO_FULL,$/;"	e	enum:__anon17	file:
+CMD_WR_REG	components/usr/cmd_resolve.c	48;"	d	file:
+CMD_WR_SER	components/usr/cmd_resolve.c	50;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	101;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	108;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	115;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	122;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	129;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	137;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	142;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	149;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	152;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	155;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	158;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	161;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	176;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	190;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	19;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	200;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	218;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	227;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	236;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	251;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	264;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	282;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	285;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	288;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	42;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	50;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	56;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	62;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	71;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	80;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	94;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	101;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	108;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	115;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	122;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	129;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	137;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	13;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	142;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	149;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	152;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	155;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	170;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	184;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	198;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	19;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	216;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	225;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	234;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	249;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	267;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	270;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	273;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	42;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	50;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	56;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	62;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	71;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	80;"	d	file:
+COMPILER_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	94;"	d	file:
+COMPILER_VERSION_INTERNAL	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	232;"	d	file:
+COMPILER_VERSION_INTERNAL	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	230;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	103;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	110;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	117;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	124;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	130;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	138;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	144;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	165;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	180;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	191;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	202;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	221;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	229;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	239;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	244;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	24;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	253;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	258;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	267;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	272;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	43;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	51;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	58;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	64;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	73;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	83;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	88;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	96;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	103;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	110;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	117;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	124;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	130;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	138;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	144;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	159;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	15;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	174;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	186;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	188;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	200;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	219;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	227;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	237;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	242;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	24;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	252;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	257;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	43;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	51;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	58;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	64;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	73;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	83;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	88;"	d	file:
+COMPILER_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	96;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	104;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	111;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	118;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	125;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	131;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	139;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	145;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	166;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	181;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	193;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	203;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	222;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	230;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	240;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	245;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	254;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	259;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	25;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	268;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	273;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	44;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	52;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	59;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	65;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	74;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	84;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	89;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	97;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	104;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	111;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	118;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	125;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	131;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	139;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	145;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	160;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	16;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	175;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	191;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	201;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	220;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	228;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	238;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	243;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	253;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	258;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	25;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	44;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	52;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	59;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	65;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	74;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	84;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	89;"	d	file:
+COMPILER_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	97;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	105;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	112;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	119;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	126;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	133;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	146;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	167;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	182;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	196;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	207;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	210;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	223;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	231;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	241;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	246;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	255;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	260;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	269;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	274;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	27;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	29;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	46;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	53;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	67;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	76;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	85;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	90;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	98;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	105;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	112;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	119;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	126;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	133;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	146;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	161;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	176;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	194;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	205;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	208;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	221;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	229;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	239;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	244;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	254;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	259;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	27;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	29;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	46;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	53;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	67;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	76;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	85;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	90;"	d	file:
+COMPILER_VERSION_PATCH	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	98;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	173;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	214;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	33;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	167;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	212;"	d	file:
+COMPILER_VERSION_TWEAK	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	33;"	d	file:
+COMPONENTS_CLI_CLI_SHELL_H_	components/cli/cli_shell.h	9;"	d
+COMPONENTS_DRV_ADXL_DRV_H_	components/drv/adxl_drv.h	9;"	d
+COMPONENTS_DRV_DAC_DRV_H_	components/drv/dac_drv.h	9;"	d
+COMPONENTS_DRV_LED_DRV_H_	components/drv/led_drv.h	9;"	d
+COMPONENTS_KITS_GOERTZEL_H_	components/kits/goertzel.h	9;"	d
+COMPONENTS_KITS_MY_FFT_H_	components/kits/my_fft.h	10;"	d
+COMPONENTS_USR_USR_SYS_INIT_H_	components/usr/usr_sys_init.h	9;"	d
+COMPONENTS_WEB_SERVER_WEB_SRV_H_	components/web_server/web_srv.h	9;"	d
+COMPONENT_ADD_INCLUDEDIRS	components/cli/component.mk	/^COMPONENT_ADD_INCLUDEDIRS := .$/;"	m
+COMPONENT_ADD_INCLUDEDIRS	components/cmd_system/component.mk	/^COMPONENT_ADD_INCLUDEDIRS := .$/;"	m
+COMPONENT_ADD_INCLUDEDIRS	components/drv/component.mk	/^COMPONENT_ADD_INCLUDEDIRS := .$/;"	m
+COMPONENT_ADD_INCLUDEDIRS	components/kits/component.mk	/^COMPONENT_ADD_INCLUDEDIRS := .$/;"	m
+COMPONENT_ADD_INCLUDEDIRS	components/threads/component.mk	/^COMPONENT_ADD_INCLUDEDIRS := .$/;"	m
+COMPONENT_ADD_INCLUDEDIRS	components/usr/component.mk	/^COMPONENT_ADD_INCLUDEDIRS := .$/;"	m
+COMPONENT_ADD_INCLUDEDIRS	components/web_server/component.mk	/^COMPONENT_ADD_INCLUDEDIRS := .$/;"	m
+CONFIG_A2D_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	276;"	d
+CONFIG_A2D_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	162;"	d
+CONFIG_A2D_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	275;"	d
+CONFIG_A2D_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	205;"	d
+CONFIG_ADC2_DISABLE_DAC	build/config/sdkconfig.h	67;"	d
+CONFIG_ADC2_DISABLE_DAC	build/include/sdkconfig.h	145;"	d
+CONFIG_ADC_CAL_EFUSE_TP_ENABLE	build/config/sdkconfig.h	305;"	d
+CONFIG_ADC_CAL_EFUSE_TP_ENABLE	build/include/sdkconfig.h	226;"	d
+CONFIG_ADC_CAL_EFUSE_VREF_ENABLE	build/config/sdkconfig.h	306;"	d
+CONFIG_ADC_CAL_EFUSE_VREF_ENABLE	build/include/sdkconfig.h	287;"	d
+CONFIG_ADC_CAL_LUT_ENABLE	build/config/sdkconfig.h	307;"	d
+CONFIG_ADC_CAL_LUT_ENABLE	build/include/sdkconfig.h	93;"	d
+CONFIG_APPL_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	288;"	d
+CONFIG_APPL_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	306;"	d
+CONFIG_APPL_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	287;"	d
+CONFIG_APPL_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	85;"	d
+CONFIG_AVCT_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	280;"	d
+CONFIG_AVCT_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	26;"	d
+CONFIG_AVCT_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	279;"	d
+CONFIG_AVCT_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	216;"	d
+CONFIG_AVDT_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	278;"	d
+CONFIG_AVDT_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	121;"	d
+CONFIG_AVDT_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	277;"	d
+CONFIG_AVDT_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	20;"	d
+CONFIG_AVRC_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	282;"	d
+CONFIG_AVRC_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	92;"	d
+CONFIG_AVRC_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	281;"	d
+CONFIG_AVRC_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	238;"	d
+CONFIG_BLE_ADV_REPORT_DISCARD_THRSHOLD	build/config/sdkconfig.h	247;"	d
+CONFIG_BLE_ADV_REPORT_DISCARD_THRSHOLD	build/include/sdkconfig.h	335;"	d
+CONFIG_BLE_ADV_REPORT_FLOW_CONTROL_NUM	build/config/sdkconfig.h	246;"	d
+CONFIG_BLE_ADV_REPORT_FLOW_CONTROL_NUM	build/include/sdkconfig.h	146;"	d
+CONFIG_BLE_ADV_REPORT_FLOW_CONTROL_SUPPORTED	build/config/sdkconfig.h	245;"	d
+CONFIG_BLE_ADV_REPORT_FLOW_CONTROL_SUPPORTED	build/include/sdkconfig.h	291;"	d
+CONFIG_BLE_ESTABLISH_LINK_CONNECTION_TIMEOUT	build/config/sdkconfig.h	303;"	d
+CONFIG_BLE_ESTABLISH_LINK_CONNECTION_TIMEOUT	build/include/sdkconfig.h	276;"	d
+CONFIG_BLE_SCAN_DUPLICATE	build/config/sdkconfig.h	241;"	d
+CONFIG_BLE_SCAN_DUPLICATE	build/include/sdkconfig.h	19;"	d
+CONFIG_BLE_SMP_ENABLE	build/config/sdkconfig.h	258;"	d
+CONFIG_BLE_SMP_ENABLE	build/include/sdkconfig.h	12;"	d
+CONFIG_BLINK_GPIO	build/config/sdkconfig.h	34;"	d
+CONFIG_BLINK_GPIO	build/include/sdkconfig.h	30;"	d
+CONFIG_BLUEDROID_ENABLED	build/config/sdkconfig.h	248;"	d
+CONFIG_BLUEDROID_ENABLED	build/include/sdkconfig.h	141;"	d
+CONFIG_BLUEDROID_PINNED_TO_CORE	build/config/sdkconfig.h	250;"	d
+CONFIG_BLUEDROID_PINNED_TO_CORE	build/include/sdkconfig.h	336;"	d
+CONFIG_BLUEDROID_PINNED_TO_CORE_0	build/config/sdkconfig.h	249;"	d
+CONFIG_BLUEDROID_PINNED_TO_CORE_0	build/include/sdkconfig.h	130;"	d
+CONFIG_BLUFI_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	300;"	d
+CONFIG_BLUFI_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	339;"	d
+CONFIG_BLUFI_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	299;"	d
+CONFIG_BLUFI_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	129;"	d
+CONFIG_BNEP_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	272;"	d
+CONFIG_BNEP_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	185;"	d
+CONFIG_BNEP_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	271;"	d
+CONFIG_BNEP_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	227;"	d
+CONFIG_BOOTLOADER_VDDSDIO_BOOST_1_9V	build/config/sdkconfig.h	16;"	d
+CONFIG_BOOTLOADER_VDDSDIO_BOOST_1_9V	build/include/sdkconfig.h	204;"	d
+CONFIG_BOOTLOADER_WDT_ENABLE	build/config/sdkconfig.h	17;"	d
+CONFIG_BOOTLOADER_WDT_ENABLE	build/include/sdkconfig.h	317;"	d
+CONFIG_BOOTLOADER_WDT_TIME_MS	build/config/sdkconfig.h	18;"	d
+CONFIG_BOOTLOADER_WDT_TIME_MS	build/include/sdkconfig.h	279;"	d
+CONFIG_BROWNOUT_DET	build/config/sdkconfig.h	198;"	d
+CONFIG_BROWNOUT_DET	build/include/sdkconfig.h	229;"	d
+CONFIG_BROWNOUT_DET_LVL	build/config/sdkconfig.h	200;"	d
+CONFIG_BROWNOUT_DET_LVL	build/include/sdkconfig.h	207;"	d
+CONFIG_BROWNOUT_DET_LVL_SEL_0	build/config/sdkconfig.h	199;"	d
+CONFIG_BROWNOUT_DET_LVL_SEL_0	build/include/sdkconfig.h	41;"	d
+CONFIG_BTC_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	296;"	d
+CONFIG_BTC_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	86;"	d
+CONFIG_BTC_TASK_STACK_SIZE	build/config/sdkconfig.h	251;"	d
+CONFIG_BTC_TASK_STACK_SIZE	build/include/sdkconfig.h	140;"	d
+CONFIG_BTC_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	295;"	d
+CONFIG_BTC_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	195;"	d
+CONFIG_BTDM_CONTROLLER_BLE_MAX_CONN	build/config/sdkconfig.h	231;"	d
+CONFIG_BTDM_CONTROLLER_BLE_MAX_CONN	build/include/sdkconfig.h	46;"	d
+CONFIG_BTDM_CONTROLLER_BLE_MAX_CONN_EFF	build/config/sdkconfig.h	232;"	d
+CONFIG_BTDM_CONTROLLER_BLE_MAX_CONN_EFF	build/include/sdkconfig.h	83;"	d
+CONFIG_BTDM_CONTROLLER_BR_EDR_MAX_ACL_CONN_EFF	build/config/sdkconfig.h	233;"	d
+CONFIG_BTDM_CONTROLLER_BR_EDR_MAX_ACL_CONN_EFF	build/include/sdkconfig.h	250;"	d
+CONFIG_BTDM_CONTROLLER_BR_EDR_MAX_SYNC_CONN_EFF	build/config/sdkconfig.h	234;"	d
+CONFIG_BTDM_CONTROLLER_BR_EDR_MAX_SYNC_CONN_EFF	build/include/sdkconfig.h	175;"	d
+CONFIG_BTDM_CONTROLLER_HCI_MODE_VHCI	build/config/sdkconfig.h	237;"	d
+CONFIG_BTDM_CONTROLLER_HCI_MODE_VHCI	build/include/sdkconfig.h	268;"	d
+CONFIG_BTDM_CONTROLLER_MODEM_SLEEP	build/config/sdkconfig.h	238;"	d
+CONFIG_BTDM_CONTROLLER_MODEM_SLEEP	build/include/sdkconfig.h	43;"	d
+CONFIG_BTDM_CONTROLLER_MODE_BLE_ONLY	build/config/sdkconfig.h	230;"	d
+CONFIG_BTDM_CONTROLLER_MODE_BLE_ONLY	build/include/sdkconfig.h	259;"	d
+CONFIG_BTDM_CONTROLLER_PINNED_TO_CORE	build/config/sdkconfig.h	236;"	d
+CONFIG_BTDM_CONTROLLER_PINNED_TO_CORE	build/include/sdkconfig.h	53;"	d
+CONFIG_BTDM_CONTROLLER_PINNED_TO_CORE_0	build/config/sdkconfig.h	235;"	d
+CONFIG_BTDM_CONTROLLER_PINNED_TO_CORE_0	build/include/sdkconfig.h	242;"	d
+CONFIG_BTDM_LPCLK_SEL_MAIN_XTAL	build/config/sdkconfig.h	240;"	d
+CONFIG_BTDM_LPCLK_SEL_MAIN_XTAL	build/include/sdkconfig.h	168;"	d
+CONFIG_BTDM_MODEM_SLEEP_MODE_ORIG	build/config/sdkconfig.h	239;"	d
+CONFIG_BTDM_MODEM_SLEEP_MODE_ORIG	build/include/sdkconfig.h	337;"	d
+CONFIG_BTIF_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	294;"	d
+CONFIG_BTIF_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	82;"	d
+CONFIG_BTIF_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	293;"	d
+CONFIG_BTIF_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	118;"	d
+CONFIG_BTM_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	262;"	d
+CONFIG_BTM_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	254;"	d
+CONFIG_BTM_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	261;"	d
+CONFIG_BTM_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	59;"	d
+CONFIG_BT_ACL_CONNECTIONS	build/config/sdkconfig.h	301;"	d
+CONFIG_BT_ACL_CONNECTIONS	build/include/sdkconfig.h	314;"	d
+CONFIG_BT_ENABLED	build/config/sdkconfig.h	229;"	d
+CONFIG_BT_ENABLED	build/include/sdkconfig.h	269;"	d
+CONFIG_BT_RESERVE_DRAM	build/config/sdkconfig.h	304;"	d
+CONFIG_BT_RESERVE_DRAM	build/include/sdkconfig.h	64;"	d
+CONFIG_BT_SPP_ENABLED	build/config/sdkconfig.h	253;"	d
+CONFIG_BT_SPP_ENABLED	build/include/sdkconfig.h	61;"	d
+CONFIG_CLASSIC_BT_ENABLED	build/config/sdkconfig.h	252;"	d
+CONFIG_CLASSIC_BT_ENABLED	build/include/sdkconfig.h	295;"	d
+CONFIG_CONSOLE_UART_BAUDRATE	build/config/sdkconfig.h	186;"	d
+CONFIG_CONSOLE_UART_BAUDRATE	build/include/sdkconfig.h	73;"	d
+CONFIG_CONSOLE_UART_DEFAULT	build/config/sdkconfig.h	184;"	d
+CONFIG_CONSOLE_UART_DEFAULT	build/include/sdkconfig.h	111;"	d
+CONFIG_CONSOLE_UART_NUM	build/config/sdkconfig.h	185;"	d
+CONFIG_CONSOLE_UART_NUM	build/include/sdkconfig.h	104;"	d
+CONFIG_DMA_RX_BUF_NUM	build/config/sdkconfig.h	70;"	d
+CONFIG_DMA_RX_BUF_NUM	build/include/sdkconfig.h	171;"	d
+CONFIG_DMA_TX_BUF_NUM	build/config/sdkconfig.h	71;"	d
+CONFIG_DMA_TX_BUF_NUM	build/include/sdkconfig.h	260;"	d
+CONFIG_DUPLICATE_SCAN_CACHE_SIZE	build/config/sdkconfig.h	244;"	d
+CONFIG_DUPLICATE_SCAN_CACHE_SIZE	build/include/sdkconfig.h	330;"	d
+CONFIG_EMAC_CHECK_LINK_PERIOD_MS	build/config/sdkconfig.h	73;"	d
+CONFIG_EMAC_CHECK_LINK_PERIOD_MS	build/include/sdkconfig.h	167;"	d
+CONFIG_EMAC_L2_TO_L3_RX_BUF_MODE	build/config/sdkconfig.h	72;"	d
+CONFIG_EMAC_L2_TO_L3_RX_BUF_MODE	build/include/sdkconfig.h	42;"	d
+CONFIG_EMAC_TASK_PRIORITY	build/config/sdkconfig.h	74;"	d
+CONFIG_EMAC_TASK_PRIORITY	build/include/sdkconfig.h	77;"	d
+CONFIG_EMAC_TASK_STACK_SIZE	build/config/sdkconfig.h	75;"	d
+CONFIG_EMAC_TASK_STACK_SIZE	build/include/sdkconfig.h	196;"	d
+CONFIG_ESP32_APPTRACE_DEST_NONE	build/config/sdkconfig.h	42;"	d
+CONFIG_ESP32_APPTRACE_DEST_NONE	build/include/sdkconfig.h	210;"	d
+CONFIG_ESP32_APPTRACE_LOCK_ENABLE	build/config/sdkconfig.h	43;"	d
+CONFIG_ESP32_APPTRACE_LOCK_ENABLE	build/include/sdkconfig.h	105;"	d
+CONFIG_ESP32_DEBUG_OCDAWARE	build/config/sdkconfig.h	189;"	d
+CONFIG_ESP32_DEBUG_OCDAWARE	build/include/sdkconfig.h	264;"	d
+CONFIG_ESP32_DEBUG_STUBS_ENABLE	build/config/sdkconfig.h	190;"	d
+CONFIG_ESP32_DEBUG_STUBS_ENABLE	build/include/sdkconfig.h	275;"	d
+CONFIG_ESP32_DEEP_SLEEP_WAKEUP_DELAY	build/config/sdkconfig.h	205;"	d
+CONFIG_ESP32_DEEP_SLEEP_WAKEUP_DELAY	build/include/sdkconfig.h	206;"	d
+CONFIG_ESP32_DEFAULT_CPU_FREQ_160	build/config/sdkconfig.h	158;"	d
+CONFIG_ESP32_DEFAULT_CPU_FREQ_160	build/include/sdkconfig.h	87;"	d
+CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ	build/config/sdkconfig.h	159;"	d
+CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ	build/include/sdkconfig.h	219;"	d
+CONFIG_ESP32_ENABLE_COREDUMP_TO_NONE	build/config/sdkconfig.h	174;"	d
+CONFIG_ESP32_ENABLE_COREDUMP_TO_NONE	build/include/sdkconfig.h	119;"	d
+CONFIG_ESP32_PANIC_PRINT_REBOOT	build/config/sdkconfig.h	188;"	d
+CONFIG_ESP32_PANIC_PRINT_REBOOT	build/include/sdkconfig.h	68;"	d
+CONFIG_ESP32_PHY_CALIBRATION_AND_DATA_STORAGE	build/config/sdkconfig.h	226;"	d
+CONFIG_ESP32_PHY_CALIBRATION_AND_DATA_STORAGE	build/include/sdkconfig.h	224;"	d
+CONFIG_ESP32_PHY_MAX_TX_POWER	build/config/sdkconfig.h	228;"	d
+CONFIG_ESP32_PHY_MAX_TX_POWER	build/include/sdkconfig.h	8;"	d
+CONFIG_ESP32_PHY_MAX_WIFI_TX_POWER	build/config/sdkconfig.h	227;"	d
+CONFIG_ESP32_PHY_MAX_WIFI_TX_POWER	build/include/sdkconfig.h	161;"	d
+CONFIG_ESP32_PTHREAD_TASK_PRIO_DEFAULT	build/config/sdkconfig.h	155;"	d
+CONFIG_ESP32_PTHREAD_TASK_PRIO_DEFAULT	build/include/sdkconfig.h	249;"	d
+CONFIG_ESP32_PTHREAD_TASK_STACK_SIZE_DEFAULT	build/config/sdkconfig.h	156;"	d
+CONFIG_ESP32_PTHREAD_TASK_STACK_SIZE_DEFAULT	build/include/sdkconfig.h	327;"	d
+CONFIG_ESP32_RTC_CLK_CAL_CYCLES	build/config/sdkconfig.h	204;"	d
+CONFIG_ESP32_RTC_CLK_CAL_CYCLES	build/include/sdkconfig.h	163;"	d
+CONFIG_ESP32_RTC_CLOCK_SOURCE_INTERNAL_RC	build/config/sdkconfig.h	203;"	d
+CONFIG_ESP32_RTC_CLOCK_SOURCE_INTERNAL_RC	build/include/sdkconfig.h	107;"	d
+CONFIG_ESP32_TIME_SYSCALL_USE_RTC_FRC1	build/config/sdkconfig.h	202;"	d
+CONFIG_ESP32_TIME_SYSCALL_USE_RTC_FRC1	build/include/sdkconfig.h	178;"	d
+CONFIG_ESP32_WIFI_AMPDU_RX_ENABLED	build/config/sdkconfig.h	219;"	d
+CONFIG_ESP32_WIFI_AMPDU_RX_ENABLED	build/include/sdkconfig.h	319;"	d
+CONFIG_ESP32_WIFI_AMPDU_TX_ENABLED	build/config/sdkconfig.h	217;"	d
+CONFIG_ESP32_WIFI_AMPDU_TX_ENABLED	build/include/sdkconfig.h	302;"	d
+CONFIG_ESP32_WIFI_DYNAMIC_RX_BUFFER_NUM	build/config/sdkconfig.h	213;"	d
+CONFIG_ESP32_WIFI_DYNAMIC_RX_BUFFER_NUM	build/include/sdkconfig.h	155;"	d
+CONFIG_ESP32_WIFI_IRAM_OPT	build/config/sdkconfig.h	224;"	d
+CONFIG_ESP32_WIFI_IRAM_OPT	build/include/sdkconfig.h	338;"	d
+CONFIG_ESP32_WIFI_MGMT_SBUF_NUM	build/config/sdkconfig.h	225;"	d
+CONFIG_ESP32_WIFI_MGMT_SBUF_NUM	build/include/sdkconfig.h	191;"	d
+CONFIG_ESP32_WIFI_NVS_ENABLED	build/config/sdkconfig.h	221;"	d
+CONFIG_ESP32_WIFI_NVS_ENABLED	build/include/sdkconfig.h	165;"	d
+CONFIG_ESP32_WIFI_RX_BA_WIN	build/config/sdkconfig.h	220;"	d
+CONFIG_ESP32_WIFI_RX_BA_WIN	build/include/sdkconfig.h	192;"	d
+CONFIG_ESP32_WIFI_SOFTAP_BEACON_MAX_LEN	build/config/sdkconfig.h	223;"	d
+CONFIG_ESP32_WIFI_SOFTAP_BEACON_MAX_LEN	build/include/sdkconfig.h	36;"	d
+CONFIG_ESP32_WIFI_STATIC_RX_BUFFER_NUM	build/config/sdkconfig.h	212;"	d
+CONFIG_ESP32_WIFI_STATIC_RX_BUFFER_NUM	build/include/sdkconfig.h	57;"	d
+CONFIG_ESP32_WIFI_STATIC_TX_BUFFER	build/config/sdkconfig.h	214;"	d
+CONFIG_ESP32_WIFI_STATIC_TX_BUFFER	build/include/sdkconfig.h	271;"	d
+CONFIG_ESP32_WIFI_STATIC_TX_BUFFER_NUM	build/config/sdkconfig.h	216;"	d
+CONFIG_ESP32_WIFI_STATIC_TX_BUFFER_NUM	build/include/sdkconfig.h	311;"	d
+CONFIG_ESP32_WIFI_TASK_PINNED_TO_CORE_0	build/config/sdkconfig.h	222;"	d
+CONFIG_ESP32_WIFI_TASK_PINNED_TO_CORE_0	build/include/sdkconfig.h	135;"	d
+CONFIG_ESP32_WIFI_TX_BA_WIN	build/config/sdkconfig.h	218;"	d
+CONFIG_ESP32_WIFI_TX_BA_WIN	build/include/sdkconfig.h	164;"	d
+CONFIG_ESP32_WIFI_TX_BUFFER_TYPE	build/config/sdkconfig.h	215;"	d
+CONFIG_ESP32_WIFI_TX_BUFFER_TYPE	build/include/sdkconfig.h	315;"	d
+CONFIG_ESP32_XTAL_FREQ	build/config/sdkconfig.h	207;"	d
+CONFIG_ESP32_XTAL_FREQ	build/include/sdkconfig.h	230;"	d
+CONFIG_ESP32_XTAL_FREQ_40	build/config/sdkconfig.h	206;"	d
+CONFIG_ESP32_XTAL_FREQ_40	build/include/sdkconfig.h	258;"	d
+CONFIG_ESPTOOLPY_AFTER	build/config/sdkconfig.h	30;"	d
+CONFIG_ESPTOOLPY_AFTER	build/include/sdkconfig.h	255;"	d
+CONFIG_ESPTOOLPY_AFTER_RESET	build/config/sdkconfig.h	29;"	d
+CONFIG_ESPTOOLPY_AFTER_RESET	build/include/sdkconfig.h	95;"	d
+CONFIG_ESPTOOLPY_BAUD	build/include/sdkconfig.h	90;"	d
+CONFIG_ESPTOOLPY_BAUD_115200B	build/include/sdkconfig.h	108;"	d
+CONFIG_ESPTOOLPY_BAUD_OTHER_VAL	build/config/sdkconfig.h	19;"	d
+CONFIG_ESPTOOLPY_BAUD_OTHER_VAL	build/include/sdkconfig.h	247;"	d
+CONFIG_ESPTOOLPY_BEFORE	build/config/sdkconfig.h	28;"	d
+CONFIG_ESPTOOLPY_BEFORE	build/include/sdkconfig.h	144;"	d
+CONFIG_ESPTOOLPY_BEFORE_RESET	build/config/sdkconfig.h	27;"	d
+CONFIG_ESPTOOLPY_BEFORE_RESET	build/include/sdkconfig.h	245;"	d
+CONFIG_ESPTOOLPY_COMPRESSED	build/include/sdkconfig.h	179;"	d
+CONFIG_ESPTOOLPY_FLASHFREQ	build/config/sdkconfig.h	23;"	d
+CONFIG_ESPTOOLPY_FLASHFREQ	build/include/sdkconfig.h	29;"	d
+CONFIG_ESPTOOLPY_FLASHFREQ_40M	build/config/sdkconfig.h	22;"	d
+CONFIG_ESPTOOLPY_FLASHFREQ_40M	build/include/sdkconfig.h	50;"	d
+CONFIG_ESPTOOLPY_FLASHMODE	build/config/sdkconfig.h	21;"	d
+CONFIG_ESPTOOLPY_FLASHMODE	build/include/sdkconfig.h	139;"	d
+CONFIG_ESPTOOLPY_FLASHSIZE	build/config/sdkconfig.h	25;"	d
+CONFIG_ESPTOOLPY_FLASHSIZE	build/include/sdkconfig.h	38;"	d
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB	build/config/sdkconfig.h	24;"	d
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB	build/include/sdkconfig.h	25;"	d
+CONFIG_ESPTOOLPY_FLASHSIZE_DETECT	build/config/sdkconfig.h	26;"	d
+CONFIG_ESPTOOLPY_FLASHSIZE_DETECT	build/include/sdkconfig.h	115;"	d
+CONFIG_ESPTOOLPY_PORT	build/include/sdkconfig.h	333;"	d
+CONFIG_ESP_ERR_TO_NAME_LOOKUP	build/config/sdkconfig.h	208;"	d
+CONFIG_ESP_ERR_TO_NAME_LOOKUP	build/include/sdkconfig.h	241;"	d
+CONFIG_ESP_GRATUITOUS_ARP	build/config/sdkconfig.h	81;"	d
+CONFIG_ESP_GRATUITOUS_ARP	build/include/sdkconfig.h	48;"	d
+CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS	build/config/sdkconfig.h	308;"	d
+CONFIG_ESP_HTTP_CLIENT_ENABLE_HTTPS	build/include/sdkconfig.h	156;"	d
+CONFIG_FATFS_CODEPAGE	build/config/sdkconfig.h	314;"	d
+CONFIG_FATFS_CODEPAGE	build/include/sdkconfig.h	84;"	d
+CONFIG_FATFS_CODEPAGE_437	build/config/sdkconfig.h	313;"	d
+CONFIG_FATFS_CODEPAGE_437	build/include/sdkconfig.h	18;"	d
+CONFIG_FATFS_FS_LOCK	build/config/sdkconfig.h	316;"	d
+CONFIG_FATFS_FS_LOCK	build/include/sdkconfig.h	65;"	d
+CONFIG_FATFS_LFN_NONE	build/config/sdkconfig.h	315;"	d
+CONFIG_FATFS_LFN_NONE	build/include/sdkconfig.h	13;"	d
+CONFIG_FATFS_PER_FILE_CACHE	build/config/sdkconfig.h	318;"	d
+CONFIG_FATFS_PER_FILE_CACHE	build/include/sdkconfig.h	28;"	d
+CONFIG_FATFS_TIMEOUT_MS	build/config/sdkconfig.h	317;"	d
+CONFIG_FATFS_TIMEOUT_MS	build/include/sdkconfig.h	154;"	d
+CONFIG_FLASHMODE_DIO	build/config/sdkconfig.h	20;"	d
+CONFIG_FLASHMODE_DIO	build/include/sdkconfig.h	94;"	d
+CONFIG_FOUR_UNIVERSAL_MAC_ADDRESS	build/config/sdkconfig.h	175;"	d
+CONFIG_FOUR_UNIVERSAL_MAC_ADDRESS	build/include/sdkconfig.h	110;"	d
+CONFIG_FREERTOS_ASSERT_FAIL_ABORT	build/config/sdkconfig.h	51;"	d
+CONFIG_FREERTOS_ASSERT_FAIL_ABORT	build/include/sdkconfig.h	228;"	d
+CONFIG_FREERTOS_ASSERT_ON_UNTESTED_FUNCTION	build/config/sdkconfig.h	47;"	d
+CONFIG_FREERTOS_ASSERT_ON_UNTESTED_FUNCTION	build/include/sdkconfig.h	148;"	d
+CONFIG_FREERTOS_CHECK_STACKOVERFLOW_CANARY	build/config/sdkconfig.h	48;"	d
+CONFIG_FREERTOS_CHECK_STACKOVERFLOW_CANARY	build/include/sdkconfig.h	284;"	d
+CONFIG_FREERTOS_CORETIMER_0	build/config/sdkconfig.h	45;"	d
+CONFIG_FREERTOS_CORETIMER_0	build/include/sdkconfig.h	281;"	d
+CONFIG_FREERTOS_GENERATE_RUN_TIME_STATS	build/config/sdkconfig.h	62;"	d
+CONFIG_FREERTOS_GENERATE_RUN_TIME_STATS	build/include/sdkconfig.h	294;"	d
+CONFIG_FREERTOS_HZ	build/config/sdkconfig.h	46;"	d
+CONFIG_FREERTOS_HZ	build/include/sdkconfig.h	221;"	d
+CONFIG_FREERTOS_IDLE_TASK_STACKSIZE	build/config/sdkconfig.h	52;"	d
+CONFIG_FREERTOS_IDLE_TASK_STACKSIZE	build/include/sdkconfig.h	100;"	d
+CONFIG_FREERTOS_INTERRUPT_BACKTRACE	build/config/sdkconfig.h	49;"	d
+CONFIG_FREERTOS_INTERRUPT_BACKTRACE	build/include/sdkconfig.h	262;"	d
+CONFIG_FREERTOS_ISR_STACKSIZE	build/config/sdkconfig.h	53;"	d
+CONFIG_FREERTOS_ISR_STACKSIZE	build/include/sdkconfig.h	292;"	d
+CONFIG_FREERTOS_MAX_TASK_NAME_LEN	build/config/sdkconfig.h	54;"	d
+CONFIG_FREERTOS_MAX_TASK_NAME_LEN	build/include/sdkconfig.h	10;"	d
+CONFIG_FREERTOS_NO_AFFINITY	build/config/sdkconfig.h	44;"	d
+CONFIG_FREERTOS_NO_AFFINITY	build/include/sdkconfig.h	300;"	d
+CONFIG_FREERTOS_QUEUE_REGISTRY_SIZE	build/config/sdkconfig.h	59;"	d
+CONFIG_FREERTOS_QUEUE_REGISTRY_SIZE	build/include/sdkconfig.h	33;"	d
+CONFIG_FREERTOS_RUN_TIME_STATS_USING_ESP_TIMER	build/config/sdkconfig.h	63;"	d
+CONFIG_FREERTOS_RUN_TIME_STATS_USING_ESP_TIMER	build/include/sdkconfig.h	288;"	d
+CONFIG_FREERTOS_TASK_FUNCTION_WRAPPER	build/config/sdkconfig.h	64;"	d
+CONFIG_FREERTOS_TASK_FUNCTION_WRAPPER	build/include/sdkconfig.h	202;"	d
+CONFIG_FREERTOS_THREAD_LOCAL_STORAGE_POINTERS	build/config/sdkconfig.h	50;"	d
+CONFIG_FREERTOS_THREAD_LOCAL_STORAGE_POINTERS	build/include/sdkconfig.h	54;"	d
+CONFIG_FREERTOS_USE_STATS_FORMATTING_FUNCTIONS	build/config/sdkconfig.h	61;"	d
+CONFIG_FREERTOS_USE_STATS_FORMATTING_FUNCTIONS	build/include/sdkconfig.h	103;"	d
+CONFIG_FREERTOS_USE_TRACE_FACILITY	build/config/sdkconfig.h	60;"	d
+CONFIG_FREERTOS_USE_TRACE_FACILITY	build/include/sdkconfig.h	78;"	d
+CONFIG_GAP_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	270;"	d
+CONFIG_GAP_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	318;"	d
+CONFIG_GAP_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	269;"	d
+CONFIG_GAP_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	102;"	d
+CONFIG_GARP_TMR_INTERVAL	build/config/sdkconfig.h	82;"	d
+CONFIG_GARP_TMR_INTERVAL	build/include/sdkconfig.h	183;"	d
+CONFIG_GATTC_ENABLE	build/config/sdkconfig.h	257;"	d
+CONFIG_GATTC_ENABLE	build/include/sdkconfig.h	7;"	d
+CONFIG_GATTS_ENABLE	build/config/sdkconfig.h	254;"	d
+CONFIG_GATTS_ENABLE	build/include/sdkconfig.h	286;"	d
+CONFIG_GATTS_SEND_SERVICE_CHANGE_AUTO	build/config/sdkconfig.h	255;"	d
+CONFIG_GATTS_SEND_SERVICE_CHANGE_AUTO	build/include/sdkconfig.h	125;"	d
+CONFIG_GATTS_SEND_SERVICE_CHANGE_MODE	build/config/sdkconfig.h	256;"	d
+CONFIG_GATTS_SEND_SERVICE_CHANGE_MODE	build/include/sdkconfig.h	151;"	d
+CONFIG_GATT_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	290;"	d
+CONFIG_GATT_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	299;"	d
+CONFIG_GATT_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	289;"	d
+CONFIG_GATT_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	114;"	d
+CONFIG_HCI_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	260;"	d
+CONFIG_HCI_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	120;"	d
+CONFIG_HCI_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	259;"	d
+CONFIG_HCI_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	186;"	d
+CONFIG_HEAP_POISONING_DISABLED	build/config/sdkconfig.h	41;"	d
+CONFIG_HEAP_POISONING_DISABLED	build/include/sdkconfig.h	39;"	d
+CONFIG_HID_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	286;"	d
+CONFIG_HID_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	244;"	d
+CONFIG_HID_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	285;"	d
+CONFIG_HID_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	237;"	d
+CONFIG_HTTPD_MAX_REQ_HDR_LEN	build/config/sdkconfig.h	309;"	d
+CONFIG_HTTPD_MAX_REQ_HDR_LEN	build/include/sdkconfig.h	52;"	d
+CONFIG_HTTPD_MAX_URI_LEN	build/config/sdkconfig.h	310;"	d
+CONFIG_HTTPD_MAX_URI_LEN	build/include/sdkconfig.h	214;"	d
+CONFIG_IDF_CMAKE	build/config/sdkconfig.h	6;"	d
+CONFIG_INT_WDT	build/config/sdkconfig.h	191;"	d
+CONFIG_INT_WDT	build/include/sdkconfig.h	45;"	d
+CONFIG_INT_WDT_CHECK_CPU1	build/config/sdkconfig.h	193;"	d
+CONFIG_INT_WDT_CHECK_CPU1	build/include/sdkconfig.h	91;"	d
+CONFIG_INT_WDT_TIMEOUT_MS	build/config/sdkconfig.h	192;"	d
+CONFIG_INT_WDT_TIMEOUT_MS	build/include/sdkconfig.h	138;"	d
+CONFIG_IPC_TASK_STACK_SIZE	build/config/sdkconfig.h	180;"	d
+CONFIG_IPC_TASK_STACK_SIZE	build/include/sdkconfig.h	27;"	d
+CONFIG_IP_LOST_TIMER_INTERVAL	build/config/sdkconfig.h	106;"	d
+CONFIG_IP_LOST_TIMER_INTERVAL	build/include/sdkconfig.h	66;"	d
+CONFIG_L2CAP_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	264;"	d
+CONFIG_L2CAP_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	312;"	d
+CONFIG_L2CAP_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	263;"	d
+CONFIG_L2CAP_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	301;"	d
+CONFIG_LIBSODIUM_USE_MBEDTLS_SHA	build/config/sdkconfig.h	330;"	d
+CONFIG_LIBSODIUM_USE_MBEDTLS_SHA	build/include/sdkconfig.h	170;"	d
+CONFIG_LOG_BOOTLOADER_LEVEL	build/config/sdkconfig.h	15;"	d
+CONFIG_LOG_BOOTLOADER_LEVEL	build/include/sdkconfig.h	233;"	d
+CONFIG_LOG_BOOTLOADER_LEVEL_INFO	build/config/sdkconfig.h	14;"	d
+CONFIG_LOG_BOOTLOADER_LEVEL_INFO	build/include/sdkconfig.h	51;"	d
+CONFIG_LOG_COLORS	build/config/sdkconfig.h	40;"	d
+CONFIG_LOG_COLORS	build/include/sdkconfig.h	222;"	d
+CONFIG_LOG_DEFAULT_LEVEL	build/config/sdkconfig.h	39;"	d
+CONFIG_LOG_DEFAULT_LEVEL	build/include/sdkconfig.h	147;"	d
+CONFIG_LOG_DEFAULT_LEVEL_INFO	build/config/sdkconfig.h	38;"	d
+CONFIG_LOG_DEFAULT_LEVEL_INFO	build/include/sdkconfig.h	63;"	d
+CONFIG_LWIP_DHCPS_LEASE_UNIT	build/config/sdkconfig.h	85;"	d
+CONFIG_LWIP_DHCPS_LEASE_UNIT	build/include/sdkconfig.h	126;"	d
+CONFIG_LWIP_DHCPS_MAX_STATION_NUM	build/config/sdkconfig.h	86;"	d
+CONFIG_LWIP_DHCPS_MAX_STATION_NUM	build/include/sdkconfig.h	97;"	d
+CONFIG_LWIP_DHCP_DOES_ARP_CHECK	build/config/sdkconfig.h	84;"	d
+CONFIG_LWIP_DHCP_DOES_ARP_CHECK	build/include/sdkconfig.h	201;"	d
+CONFIG_LWIP_DHCP_MAX_NTP_SERVERS	build/config/sdkconfig.h	80;"	d
+CONFIG_LWIP_DHCP_MAX_NTP_SERVERS	build/include/sdkconfig.h	184;"	d
+CONFIG_LWIP_LOOPBACK_MAX_PBUFS	build/config/sdkconfig.h	88;"	d
+CONFIG_LWIP_LOOPBACK_MAX_PBUFS	build/include/sdkconfig.h	320;"	d
+CONFIG_LWIP_MAX_ACTIVE_TCP	build/config/sdkconfig.h	89;"	d
+CONFIG_LWIP_MAX_ACTIVE_TCP	build/include/sdkconfig.h	136;"	d
+CONFIG_LWIP_MAX_LISTENING_TCP	build/config/sdkconfig.h	90;"	d
+CONFIG_LWIP_MAX_LISTENING_TCP	build/include/sdkconfig.h	261;"	d
+CONFIG_LWIP_MAX_RAW_PCBS	build/config/sdkconfig.h	105;"	d
+CONFIG_LWIP_MAX_RAW_PCBS	build/include/sdkconfig.h	235;"	d
+CONFIG_LWIP_MAX_SOCKETS	build/config/sdkconfig.h	76;"	d
+CONFIG_LWIP_MAX_SOCKETS	build/include/sdkconfig.h	74;"	d
+CONFIG_LWIP_MAX_UDP_PCBS	build/config/sdkconfig.h	100;"	d
+CONFIG_LWIP_MAX_UDP_PCBS	build/include/sdkconfig.h	89;"	d
+CONFIG_LWIP_NETIF_LOOPBACK	build/config/sdkconfig.h	87;"	d
+CONFIG_LWIP_NETIF_LOOPBACK	build/include/sdkconfig.h	75;"	d
+CONFIG_LWIP_SO_RCVBUF	build/config/sdkconfig.h	79;"	d
+CONFIG_LWIP_SO_RCVBUF	build/include/sdkconfig.h	328;"	d
+CONFIG_LWIP_SO_REUSE	build/config/sdkconfig.h	77;"	d
+CONFIG_LWIP_SO_REUSE	build/include/sdkconfig.h	257;"	d
+CONFIG_LWIP_SO_REUSE_RXTOALL	build/config/sdkconfig.h	78;"	d
+CONFIG_LWIP_SO_REUSE_RXTOALL	build/include/sdkconfig.h	189;"	d
+CONFIG_MAIN_TASK_STACK_SIZE	build/config/sdkconfig.h	179;"	d
+CONFIG_MAIN_TASK_STACK_SIZE	build/include/sdkconfig.h	133;"	d
+CONFIG_MAKE_WARN_UNDEFINED_VARIABLES	build/config/sdkconfig.h	8;"	d
+CONFIG_MAKE_WARN_UNDEFINED_VARIABLES	build/include/sdkconfig.h	153;"	d
+CONFIG_MBEDTLS_AES_C	build/config/sdkconfig.h	131;"	d
+CONFIG_MBEDTLS_AES_C	build/include/sdkconfig.h	34;"	d
+CONFIG_MBEDTLS_CCM_C	build/config/sdkconfig.h	133;"	d
+CONFIG_MBEDTLS_CCM_C	build/include/sdkconfig.h	158;"	d
+CONFIG_MBEDTLS_ECDH_C	build/config/sdkconfig.h	140;"	d
+CONFIG_MBEDTLS_ECDH_C	build/include/sdkconfig.h	55;"	d
+CONFIG_MBEDTLS_ECDSA_C	build/config/sdkconfig.h	141;"	d
+CONFIG_MBEDTLS_ECDSA_C	build/include/sdkconfig.h	49;"	d
+CONFIG_MBEDTLS_ECP_C	build/config/sdkconfig.h	139;"	d
+CONFIG_MBEDTLS_ECP_C	build/include/sdkconfig.h	99;"	d
+CONFIG_MBEDTLS_ECP_DP_BP256R1_ENABLED	build/config/sdkconfig.h	150;"	d
+CONFIG_MBEDTLS_ECP_DP_BP256R1_ENABLED	build/include/sdkconfig.h	215;"	d
+CONFIG_MBEDTLS_ECP_DP_BP384R1_ENABLED	build/config/sdkconfig.h	151;"	d
+CONFIG_MBEDTLS_ECP_DP_BP384R1_ENABLED	build/include/sdkconfig.h	70;"	d
+CONFIG_MBEDTLS_ECP_DP_BP512R1_ENABLED	build/config/sdkconfig.h	152;"	d
+CONFIG_MBEDTLS_ECP_DP_BP512R1_ENABLED	build/include/sdkconfig.h	307;"	d
+CONFIG_MBEDTLS_ECP_DP_CURVE25519_ENABLED	build/config/sdkconfig.h	153;"	d
+CONFIG_MBEDTLS_ECP_DP_CURVE25519_ENABLED	build/include/sdkconfig.h	81;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP192K1_ENABLED	build/config/sdkconfig.h	147;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP192K1_ENABLED	build/include/sdkconfig.h	325;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP192R1_ENABLED	build/config/sdkconfig.h	142;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP192R1_ENABLED	build/include/sdkconfig.h	305;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP224K1_ENABLED	build/config/sdkconfig.h	148;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP224K1_ENABLED	build/include/sdkconfig.h	217;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP224R1_ENABLED	build/config/sdkconfig.h	143;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP224R1_ENABLED	build/include/sdkconfig.h	169;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP256K1_ENABLED	build/config/sdkconfig.h	149;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP256K1_ENABLED	build/include/sdkconfig.h	71;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP256R1_ENABLED	build/config/sdkconfig.h	144;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP256R1_ENABLED	build/include/sdkconfig.h	273;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP384R1_ENABLED	build/config/sdkconfig.h	145;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP384R1_ENABLED	build/include/sdkconfig.h	172;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP521R1_ENABLED	build/config/sdkconfig.h	146;"	d
+CONFIG_MBEDTLS_ECP_DP_SECP521R1_ENABLED	build/include/sdkconfig.h	35;"	d
+CONFIG_MBEDTLS_ECP_NIST_OPTIM	build/config/sdkconfig.h	154;"	d
+CONFIG_MBEDTLS_ECP_NIST_OPTIM	build/include/sdkconfig.h	177;"	d
+CONFIG_MBEDTLS_GCM_C	build/config/sdkconfig.h	134;"	d
+CONFIG_MBEDTLS_GCM_C	build/include/sdkconfig.h	37;"	d
+CONFIG_MBEDTLS_HARDWARE_AES	build/config/sdkconfig.h	112;"	d
+CONFIG_MBEDTLS_HARDWARE_AES	build/include/sdkconfig.h	220;"	d
+CONFIG_MBEDTLS_HAVE_TIME	build/config/sdkconfig.h	113;"	d
+CONFIG_MBEDTLS_HAVE_TIME	build/include/sdkconfig.h	283;"	d
+CONFIG_MBEDTLS_INTERNAL_MEM_ALLOC	build/config/sdkconfig.h	110;"	d
+CONFIG_MBEDTLS_INTERNAL_MEM_ALLOC	build/include/sdkconfig.h	211;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_DHE_RSA	build/config/sdkconfig.h	119;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_DHE_RSA	build/include/sdkconfig.h	213;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDHE_ECDSA	build/config/sdkconfig.h	122;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDHE_ECDSA	build/include/sdkconfig.h	174;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDHE_RSA	build/config/sdkconfig.h	121;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDHE_RSA	build/include/sdkconfig.h	200;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDH_ECDSA	build/config/sdkconfig.h	123;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDH_ECDSA	build/include/sdkconfig.h	309;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDH_RSA	build/config/sdkconfig.h	124;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ECDH_RSA	build/include/sdkconfig.h	143;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ELLIPTIC_CURVE	build/config/sdkconfig.h	120;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_ELLIPTIC_CURVE	build/include/sdkconfig.h	56;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_RSA	build/config/sdkconfig.h	118;"	d
+CONFIG_MBEDTLS_KEY_EXCHANGE_RSA	build/include/sdkconfig.h	31;"	d
+CONFIG_MBEDTLS_PEM_PARSE_C	build/config/sdkconfig.h	135;"	d
+CONFIG_MBEDTLS_PEM_PARSE_C	build/include/sdkconfig.h	208;"	d
+CONFIG_MBEDTLS_PEM_WRITE_C	build/config/sdkconfig.h	136;"	d
+CONFIG_MBEDTLS_PEM_WRITE_C	build/include/sdkconfig.h	60;"	d
+CONFIG_MBEDTLS_RC4_DISABLED	build/config/sdkconfig.h	132;"	d
+CONFIG_MBEDTLS_RC4_DISABLED	build/include/sdkconfig.h	101;"	d
+CONFIG_MBEDTLS_SSL_ALPN	build/config/sdkconfig.h	129;"	d
+CONFIG_MBEDTLS_SSL_ALPN	build/include/sdkconfig.h	58;"	d
+CONFIG_MBEDTLS_SSL_MAX_CONTENT_LEN	build/config/sdkconfig.h	111;"	d
+CONFIG_MBEDTLS_SSL_MAX_CONTENT_LEN	build/include/sdkconfig.h	112;"	d
+CONFIG_MBEDTLS_SSL_PROTO_TLS1	build/config/sdkconfig.h	126;"	d
+CONFIG_MBEDTLS_SSL_PROTO_TLS1	build/include/sdkconfig.h	47;"	d
+CONFIG_MBEDTLS_SSL_PROTO_TLS1_1	build/config/sdkconfig.h	127;"	d
+CONFIG_MBEDTLS_SSL_PROTO_TLS1_1	build/include/sdkconfig.h	188;"	d
+CONFIG_MBEDTLS_SSL_PROTO_TLS1_2	build/config/sdkconfig.h	128;"	d
+CONFIG_MBEDTLS_SSL_PROTO_TLS1_2	build/include/sdkconfig.h	212;"	d
+CONFIG_MBEDTLS_SSL_RENEGOTIATION	build/config/sdkconfig.h	125;"	d
+CONFIG_MBEDTLS_SSL_RENEGOTIATION	build/include/sdkconfig.h	243;"	d
+CONFIG_MBEDTLS_SSL_SESSION_TICKETS	build/config/sdkconfig.h	130;"	d
+CONFIG_MBEDTLS_SSL_SESSION_TICKETS	build/include/sdkconfig.h	239;"	d
+CONFIG_MBEDTLS_TLS_CLIENT	build/config/sdkconfig.h	116;"	d
+CONFIG_MBEDTLS_TLS_CLIENT	build/include/sdkconfig.h	267;"	d
+CONFIG_MBEDTLS_TLS_ENABLED	build/config/sdkconfig.h	117;"	d
+CONFIG_MBEDTLS_TLS_ENABLED	build/include/sdkconfig.h	234;"	d
+CONFIG_MBEDTLS_TLS_SERVER	build/config/sdkconfig.h	115;"	d
+CONFIG_MBEDTLS_TLS_SERVER	build/include/sdkconfig.h	289;"	d
+CONFIG_MBEDTLS_TLS_SERVER_AND_CLIENT	build/config/sdkconfig.h	114;"	d
+CONFIG_MBEDTLS_TLS_SERVER_AND_CLIENT	build/include/sdkconfig.h	290;"	d
+CONFIG_MBEDTLS_X509_CRL_PARSE_C	build/config/sdkconfig.h	137;"	d
+CONFIG_MBEDTLS_X509_CRL_PARSE_C	build/include/sdkconfig.h	122;"	d
+CONFIG_MBEDTLS_X509_CSR_PARSE_C	build/config/sdkconfig.h	138;"	d
+CONFIG_MBEDTLS_X509_CSR_PARSE_C	build/include/sdkconfig.h	193;"	d
+CONFIG_MB_CONTROLLER_NOTIFY_QUEUE_SIZE	build/config/sdkconfig.h	324;"	d
+CONFIG_MB_CONTROLLER_NOTIFY_QUEUE_SIZE	build/include/sdkconfig.h	69;"	d
+CONFIG_MB_CONTROLLER_NOTIFY_TIMEOUT	build/config/sdkconfig.h	323;"	d
+CONFIG_MB_CONTROLLER_NOTIFY_TIMEOUT	build/include/sdkconfig.h	190;"	d
+CONFIG_MB_CONTROLLER_STACK_SIZE	build/config/sdkconfig.h	325;"	d
+CONFIG_MB_CONTROLLER_STACK_SIZE	build/include/sdkconfig.h	181;"	d
+CONFIG_MB_EVENT_QUEUE_TIMEOUT	build/config/sdkconfig.h	326;"	d
+CONFIG_MB_EVENT_QUEUE_TIMEOUT	build/include/sdkconfig.h	246;"	d
+CONFIG_MB_QUEUE_LENGTH	build/config/sdkconfig.h	319;"	d
+CONFIG_MB_QUEUE_LENGTH	build/include/sdkconfig.h	198;"	d
+CONFIG_MB_SERIAL_BUF_SIZE	build/config/sdkconfig.h	321;"	d
+CONFIG_MB_SERIAL_BUF_SIZE	build/include/sdkconfig.h	72;"	d
+CONFIG_MB_SERIAL_TASK_PRIO	build/config/sdkconfig.h	322;"	d
+CONFIG_MB_SERIAL_TASK_PRIO	build/include/sdkconfig.h	15;"	d
+CONFIG_MB_SERIAL_TASK_STACK_SIZE	build/config/sdkconfig.h	320;"	d
+CONFIG_MB_SERIAL_TASK_STACK_SIZE	build/include/sdkconfig.h	124;"	d
+CONFIG_MB_TIMER_GROUP	build/config/sdkconfig.h	328;"	d
+CONFIG_MB_TIMER_GROUP	build/include/sdkconfig.h	321;"	d
+CONFIG_MB_TIMER_INDEX	build/config/sdkconfig.h	329;"	d
+CONFIG_MB_TIMER_INDEX	build/include/sdkconfig.h	303;"	d
+CONFIG_MB_TIMER_PORT_ENABLED	build/config/sdkconfig.h	327;"	d
+CONFIG_MB_TIMER_PORT_ENABLED	build/include/sdkconfig.h	329;"	d
+CONFIG_MCA_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	284;"	d
+CONFIG_MCA_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	160;"	d
+CONFIG_MCA_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	283;"	d
+CONFIG_MCA_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	76;"	d
+CONFIG_MDNS_MAX_SERVICES	build/config/sdkconfig.h	331;"	d
+CONFIG_MDNS_MAX_SERVICES	build/include/sdkconfig.h	166;"	d
+CONFIG_MONITOR_BAUD	build/config/sdkconfig.h	33;"	d
+CONFIG_MONITOR_BAUD	build/include/sdkconfig.h	274;"	d
+CONFIG_MONITOR_BAUD_115200B	build/config/sdkconfig.h	31;"	d
+CONFIG_MONITOR_BAUD_115200B	build/include/sdkconfig.h	232;"	d
+CONFIG_MONITOR_BAUD_OTHER_VAL	build/config/sdkconfig.h	32;"	d
+CONFIG_MONITOR_BAUD_OTHER_VAL	build/include/sdkconfig.h	331;"	d
+CONFIG_MQTT_PROTOCOL_311	build/config/sdkconfig.h	332;"	d
+CONFIG_MQTT_PROTOCOL_311	build/include/sdkconfig.h	16;"	d
+CONFIG_MQTT_TRANSPORT_SSL	build/config/sdkconfig.h	333;"	d
+CONFIG_MQTT_TRANSPORT_SSL	build/include/sdkconfig.h	11;"	d
+CONFIG_MQTT_TRANSPORT_WEBSOCKET	build/config/sdkconfig.h	334;"	d
+CONFIG_MQTT_TRANSPORT_WEBSOCKET	build/include/sdkconfig.h	265;"	d
+CONFIG_MQTT_TRANSPORT_WEBSOCKET_SECURE	build/config/sdkconfig.h	335;"	d
+CONFIG_MQTT_TRANSPORT_WEBSOCKET_SECURE	build/include/sdkconfig.h	323;"	d
+CONFIG_NAMESPACE	components/usr/global_var.c	15;"	d	file:
+CONFIG_NEWLIB_STDIN_LINE_ENDING_CR	build/config/sdkconfig.h	183;"	d
+CONFIG_NEWLIB_STDIN_LINE_ENDING_CR	build/include/sdkconfig.h	142;"	d
+CONFIG_NEWLIB_STDOUT_LINE_ENDING_CRLF	build/config/sdkconfig.h	182;"	d
+CONFIG_NEWLIB_STDOUT_LINE_ENDING_CRLF	build/include/sdkconfig.h	332;"	d
+CONFIG_NUMBER_OF_UNIVERSAL_MAC_ADDRESS	build/config/sdkconfig.h	176;"	d
+CONFIG_NUMBER_OF_UNIVERSAL_MAC_ADDRESS	build/include/sdkconfig.h	113;"	d
+CONFIG_OPENSSL_ASSERT_DO_NOTHING	build/config/sdkconfig.h	336;"	d
+CONFIG_OPENSSL_ASSERT_DO_NOTHING	build/include/sdkconfig.h	296;"	d
+CONFIG_OPTIMIZATION_ASSERTIONS_ENABLED	build/config/sdkconfig.h	36;"	d
+CONFIG_OPTIMIZATION_ASSERTIONS_ENABLED	build/include/sdkconfig.h	96;"	d
+CONFIG_OPTIMIZATION_LEVEL_DEBUG	build/config/sdkconfig.h	35;"	d
+CONFIG_OPTIMIZATION_LEVEL_DEBUG	build/include/sdkconfig.h	298;"	d
+CONFIG_OSI_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	298;"	d
+CONFIG_OSI_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	231;"	d
+CONFIG_OSI_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	297;"	d
+CONFIG_OSI_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	223;"	d
+CONFIG_PAN_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	274;"	d
+CONFIG_PAN_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	157;"	d
+CONFIG_PAN_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	273;"	d
+CONFIG_PAN_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	280;"	d
+CONFIG_PARTITION_TABLE_CUSTOM	build/config/sdkconfig.h	9;"	d
+CONFIG_PARTITION_TABLE_CUSTOM	build/include/sdkconfig.h	116;"	d
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME	build/config/sdkconfig.h	10;"	d
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME	build/include/sdkconfig.h	282;"	d
+CONFIG_PARTITION_TABLE_FILENAME	build/config/sdkconfig.h	11;"	d
+CONFIG_PARTITION_TABLE_FILENAME	build/include/sdkconfig.h	180;"	d
+CONFIG_PARTITION_TABLE_MD5	build/config/sdkconfig.h	13;"	d
+CONFIG_PARTITION_TABLE_MD5	build/include/sdkconfig.h	251;"	d
+CONFIG_PARTITION_TABLE_OFFSET	build/config/sdkconfig.h	12;"	d
+CONFIG_PARTITION_TABLE_OFFSET	build/include/sdkconfig.h	22;"	d
+CONFIG_PICO_PSRAM_CS_IO	build/config/sdkconfig.h	172;"	d
+CONFIG_PTHREAD_STACK_MIN	build/config/sdkconfig.h	157;"	d
+CONFIG_PTHREAD_STACK_MIN	build/include/sdkconfig.h	106;"	d
+CONFIG_PYTHON	build/include/sdkconfig.h	176;"	d
+CONFIG_REDUCE_PHY_TX_POWER	build/config/sdkconfig.h	201;"	d
+CONFIG_REDUCE_PHY_TX_POWER	build/include/sdkconfig.h	278;"	d
+CONFIG_RFCOMM_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	266;"	d
+CONFIG_RFCOMM_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	132;"	d
+CONFIG_RFCOMM_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	265;"	d
+CONFIG_RFCOMM_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	62;"	d
+CONFIG_SCAN_DUPLICATE_BY_DEVICE_ADDR	build/config/sdkconfig.h	242;"	d
+CONFIG_SCAN_DUPLICATE_BY_DEVICE_ADDR	build/include/sdkconfig.h	123;"	d
+CONFIG_SCAN_DUPLICATE_TYPE	build/config/sdkconfig.h	243;"	d
+CONFIG_SCAN_DUPLICATE_TYPE	build/include/sdkconfig.h	304;"	d
+CONFIG_SDP_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	268;"	d
+CONFIG_SDP_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	14;"	d
+CONFIG_SDP_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	267;"	d
+CONFIG_SDP_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	270;"	d
+CONFIG_SMP_ENABLE	build/config/sdkconfig.h	302;"	d
+CONFIG_SMP_ENABLE	build/include/sdkconfig.h	236;"	d
+CONFIG_SMP_INITIAL_TRACE_LEVEL	build/config/sdkconfig.h	292;"	d
+CONFIG_SMP_INITIAL_TRACE_LEVEL	build/include/sdkconfig.h	308;"	d
+CONFIG_SMP_TRACE_LEVEL_WARNING	build/config/sdkconfig.h	291;"	d
+CONFIG_SMP_TRACE_LEVEL_WARNING	build/include/sdkconfig.h	197;"	d
+CONFIG_SPIFFS_CACHE	build/config/sdkconfig.h	338;"	d
+CONFIG_SPIFFS_CACHE	build/include/sdkconfig.h	44;"	d
+CONFIG_SPIFFS_CACHE_WR	build/config/sdkconfig.h	339;"	d
+CONFIG_SPIFFS_CACHE_WR	build/include/sdkconfig.h	40;"	d
+CONFIG_SPIFFS_GC_MAX_RUNS	build/config/sdkconfig.h	341;"	d
+CONFIG_SPIFFS_GC_MAX_RUNS	build/include/sdkconfig.h	209;"	d
+CONFIG_SPIFFS_MAX_PARTITIONS	build/config/sdkconfig.h	337;"	d
+CONFIG_SPIFFS_MAX_PARTITIONS	build/include/sdkconfig.h	240;"	d
+CONFIG_SPIFFS_META_LENGTH	build/config/sdkconfig.h	346;"	d
+CONFIG_SPIFFS_META_LENGTH	build/include/sdkconfig.h	67;"	d
+CONFIG_SPIFFS_OBJ_NAME_LEN	build/config/sdkconfig.h	343;"	d
+CONFIG_SPIFFS_OBJ_NAME_LEN	build/include/sdkconfig.h	248;"	d
+CONFIG_SPIFFS_PAGE_CHECK	build/config/sdkconfig.h	340;"	d
+CONFIG_SPIFFS_PAGE_CHECK	build/include/sdkconfig.h	134;"	d
+CONFIG_SPIFFS_PAGE_SIZE	build/config/sdkconfig.h	342;"	d
+CONFIG_SPIFFS_PAGE_SIZE	build/include/sdkconfig.h	324;"	d
+CONFIG_SPIFFS_USE_MAGIC	build/config/sdkconfig.h	344;"	d
+CONFIG_SPIFFS_USE_MAGIC	build/include/sdkconfig.h	127;"	d
+CONFIG_SPIFFS_USE_MAGIC_LENGTH	build/config/sdkconfig.h	345;"	d
+CONFIG_SPIFFS_USE_MAGIC_LENGTH	build/include/sdkconfig.h	24;"	d
+CONFIG_SPIFFS_USE_MTIME	build/config/sdkconfig.h	347;"	d
+CONFIG_SPIFFS_USE_MTIME	build/include/sdkconfig.h	194;"	d
+CONFIG_SPIRAM_BANKSWITCH_ENABLE	build/config/sdkconfig.h	168;"	d
+CONFIG_SPIRAM_BANKSWITCH_RESERVE	build/config/sdkconfig.h	169;"	d
+CONFIG_SPIRAM_BOOT_INIT	build/config/sdkconfig.h	161;"	d
+CONFIG_SPIRAM_CACHE_WORKAROUND	build/config/sdkconfig.h	167;"	d
+CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL	build/config/sdkconfig.h	170;"	d
+CONFIG_SPIRAM_MALLOC_RESERVE_INTERNAL	build/config/sdkconfig.h	171;"	d
+CONFIG_SPIRAM_MEMTEST	build/config/sdkconfig.h	166;"	d
+CONFIG_SPIRAM_SIZE	build/config/sdkconfig.h	164;"	d
+CONFIG_SPIRAM_SPEED_40M	build/config/sdkconfig.h	165;"	d
+CONFIG_SPIRAM_SUPPORT	build/config/sdkconfig.h	160;"	d
+CONFIG_SPIRAM_TYPE_AUTO	build/config/sdkconfig.h	163;"	d
+CONFIG_SPIRAM_USE_MALLOC	build/config/sdkconfig.h	162;"	d
+CONFIG_SPI_FLASH_ROM_DRIVER_PATCH	build/config/sdkconfig.h	108;"	d
+CONFIG_SPI_FLASH_ROM_DRIVER_PATCH	build/include/sdkconfig.h	322;"	d
+CONFIG_SPI_FLASH_WRITING_DANGEROUS_REGIONS_ABORTS	build/config/sdkconfig.h	109;"	d
+CONFIG_SPI_FLASH_WRITING_DANGEROUS_REGIONS_ABORTS	build/include/sdkconfig.h	334;"	d
+CONFIG_SPI_MASTER_ISR_IN_IRAM	build/config/sdkconfig.h	68;"	d
+CONFIG_SPI_MASTER_ISR_IN_IRAM	build/include/sdkconfig.h	159;"	d
+CONFIG_SPI_SLAVE_ISR_IN_IRAM	build/config/sdkconfig.h	69;"	d
+CONFIG_SPI_SLAVE_ISR_IN_IRAM	build/include/sdkconfig.h	310;"	d
+CONFIG_STACK_CHECK_NONE	build/config/sdkconfig.h	37;"	d
+CONFIG_STACK_CHECK_NONE	build/include/sdkconfig.h	225;"	d
+CONFIG_SUPPORT_STATIC_ALLOCATION	build/config/sdkconfig.h	55;"	d
+CONFIG_SUPPORT_STATIC_ALLOCATION	build/include/sdkconfig.h	316;"	d
+CONFIG_SUPPORT_TERMIOS	build/config/sdkconfig.h	66;"	d
+CONFIG_SUPPORT_TERMIOS	build/include/sdkconfig.h	293;"	d
+CONFIG_SUPPRESS_SELECT_DEBUG_OUTPUT	build/config/sdkconfig.h	65;"	d
+CONFIG_SUPPRESS_SELECT_DEBUG_OUTPUT	build/include/sdkconfig.h	150;"	d
+CONFIG_SW_COEXIST_ENABLE	build/config/sdkconfig.h	209;"	d
+CONFIG_SW_COEXIST_ENABLE	build/include/sdkconfig.h	23;"	d
+CONFIG_SW_COEXIST_PREFERENCE_BALANCE	build/config/sdkconfig.h	210;"	d
+CONFIG_SW_COEXIST_PREFERENCE_BALANCE	build/include/sdkconfig.h	272;"	d
+CONFIG_SW_COEXIST_PREFERENCE_VALUE	build/config/sdkconfig.h	211;"	d
+CONFIG_SW_COEXIST_PREFERENCE_VALUE	build/include/sdkconfig.h	199;"	d
+CONFIG_SYSTEM_EVENT_QUEUE_SIZE	build/config/sdkconfig.h	177;"	d
+CONFIG_SYSTEM_EVENT_QUEUE_SIZE	build/include/sdkconfig.h	313;"	d
+CONFIG_SYSTEM_EVENT_TASK_STACK_SIZE	build/config/sdkconfig.h	178;"	d
+CONFIG_SYSTEM_EVENT_TASK_STACK_SIZE	build/include/sdkconfig.h	203;"	d
+CONFIG_TASK_WDT	build/config/sdkconfig.h	194;"	d
+CONFIG_TASK_WDT	build/include/sdkconfig.h	131;"	d
+CONFIG_TASK_WDT_CHECK_IDLE_TASK_CPU0	build/config/sdkconfig.h	196;"	d
+CONFIG_TASK_WDT_CHECK_IDLE_TASK_CPU0	build/include/sdkconfig.h	326;"	d
+CONFIG_TASK_WDT_CHECK_IDLE_TASK_CPU1	build/config/sdkconfig.h	197;"	d
+CONFIG_TASK_WDT_CHECK_IDLE_TASK_CPU1	build/include/sdkconfig.h	218;"	d
+CONFIG_TASK_WDT_TIMEOUT_S	build/config/sdkconfig.h	195;"	d
+CONFIG_TASK_WDT_TIMEOUT_S	build/include/sdkconfig.h	137;"	d
+CONFIG_TCPIP_LWIP	build/config/sdkconfig.h	107;"	d
+CONFIG_TCPIP_LWIP	build/include/sdkconfig.h	277;"	d
+CONFIG_TCPIP_RECVMBOX_SIZE	build/config/sdkconfig.h	83;"	d
+CONFIG_TCPIP_RECVMBOX_SIZE	build/include/sdkconfig.h	252;"	d
+CONFIG_TCPIP_TASK_AFFINITY	build/config/sdkconfig.h	104;"	d
+CONFIG_TCPIP_TASK_AFFINITY	build/include/sdkconfig.h	256;"	d
+CONFIG_TCPIP_TASK_AFFINITY_NO_AFFINITY	build/config/sdkconfig.h	103;"	d
+CONFIG_TCPIP_TASK_AFFINITY_NO_AFFINITY	build/include/sdkconfig.h	152;"	d
+CONFIG_TCPIP_TASK_STACK_SIZE	build/config/sdkconfig.h	102;"	d
+CONFIG_TCPIP_TASK_STACK_SIZE	build/include/sdkconfig.h	128;"	d
+CONFIG_TCP_MAXRTX	build/config/sdkconfig.h	91;"	d
+CONFIG_TCP_MAXRTX	build/include/sdkconfig.h	253;"	d
+CONFIG_TCP_MSL	build/config/sdkconfig.h	94;"	d
+CONFIG_TCP_MSL	build/include/sdkconfig.h	187;"	d
+CONFIG_TCP_MSS	build/config/sdkconfig.h	93;"	d
+CONFIG_TCP_MSS	build/include/sdkconfig.h	80;"	d
+CONFIG_TCP_OVERSIZE_MSS	build/config/sdkconfig.h	99;"	d
+CONFIG_TCP_OVERSIZE_MSS	build/include/sdkconfig.h	109;"	d
+CONFIG_TCP_QUEUE_OOSEQ	build/config/sdkconfig.h	98;"	d
+CONFIG_TCP_QUEUE_OOSEQ	build/include/sdkconfig.h	285;"	d
+CONFIG_TCP_RECVMBOX_SIZE	build/config/sdkconfig.h	97;"	d
+CONFIG_TCP_RECVMBOX_SIZE	build/include/sdkconfig.h	17;"	d
+CONFIG_TCP_SND_BUF_DEFAULT	build/config/sdkconfig.h	95;"	d
+CONFIG_TCP_SND_BUF_DEFAULT	build/include/sdkconfig.h	182;"	d
+CONFIG_TCP_SYNMAXRTX	build/config/sdkconfig.h	92;"	d
+CONFIG_TCP_SYNMAXRTX	build/include/sdkconfig.h	173;"	d
+CONFIG_TCP_WND_DEFAULT	build/config/sdkconfig.h	96;"	d
+CONFIG_TCP_WND_DEFAULT	build/include/sdkconfig.h	21;"	d
+CONFIG_TIMER_QUEUE_LENGTH	build/config/sdkconfig.h	58;"	d
+CONFIG_TIMER_QUEUE_LENGTH	build/include/sdkconfig.h	149;"	d
+CONFIG_TIMER_TASK_PRIORITY	build/config/sdkconfig.h	56;"	d
+CONFIG_TIMER_TASK_PRIORITY	build/include/sdkconfig.h	266;"	d
+CONFIG_TIMER_TASK_STACK_DEPTH	build/config/sdkconfig.h	57;"	d
+CONFIG_TIMER_TASK_STACK_DEPTH	build/include/sdkconfig.h	79;"	d
+CONFIG_TIMER_TASK_STACK_SIZE	build/config/sdkconfig.h	181;"	d
+CONFIG_TIMER_TASK_STACK_SIZE	build/include/sdkconfig.h	117;"	d
+CONFIG_TOOLPREFIX	build/config/sdkconfig.h	7;"	d
+CONFIG_TOOLPREFIX	build/include/sdkconfig.h	98;"	d
+CONFIG_TRACEMEM_RESERVE_DRAM	build/config/sdkconfig.h	173;"	d
+CONFIG_TRACEMEM_RESERVE_DRAM	build/include/sdkconfig.h	9;"	d
+CONFIG_UDP_RECVMBOX_SIZE	build/config/sdkconfig.h	101;"	d
+CONFIG_UDP_RECVMBOX_SIZE	build/include/sdkconfig.h	32;"	d
+CONFIG_ULP_COPROC_RESERVE_MEM	build/config/sdkconfig.h	187;"	d
+CONFIG_ULP_COPROC_RESERVE_MEM	build/include/sdkconfig.h	88;"	d
+CONFIG_WL_SECTOR_SIZE	build/config/sdkconfig.h	312;"	d
+CONFIG_WL_SECTOR_SIZE	build/include/sdkconfig.h	263;"	d
+CONFIG_WL_SECTOR_SIZE_4096	build/config/sdkconfig.h	311;"	d
+CONFIG_WL_SECTOR_SIZE_4096	build/include/sdkconfig.h	297;"	d
+CONF_REG_MAP_NUM	components/usr/sys_def.h	32;"	d
+CONNECTED_BIT	components/cli/cmd_wifi.c	/^const int CONNECTED_BIT = BIT0;$/;"	v
+CXX_STD	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	534;"	d	file:
+CXX_STD	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	536;"	d	file:
+C_DIALECT	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	550;"	d	file:
+C_DIALECT	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	552;"	d	file:
+C_DIALECT	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	555;"	d	file:
+C_DIALECT	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	557;"	d	file:
+C_DIALECT	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	559;"	d	file:
+Complex	components/kits/meow_fft.h	/^typedef const Meow_FFT_Complex Complex;$/;"	t
+DEC	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	472;"	d	file:
+DEC	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	457;"	d	file:
+DEFAULT_SDN	components/usr/sys_def.h	28;"	d
+DEVICE_TYPE	components/usr/sys_def.h	37;"	d
+DEV_GEO_FIFO_SIZE	components/drv/adxl_drv.h	15;"	d
+DEV_GEO_RTX_SIZE	components/drv/adxl_drv.h	14;"	d
+EXCAMPLE_DEVICE_NAME	components/threads/spp_thread.c	44;"	d	file:
+FFT_MAX_ORD	components/kits/my_fft.h	14;"	d
+FRAME_C_ATL_POS	components/usr/cmd_resolve.c	/^    FRAME_C_ATL_POS,$/;"	e	enum:__anon18	file:
+FRAME_D_AL_POS	components/usr/cmd_resolve.c	/^    FRAME_D_AL_POS,$/;"	e	enum:__anon18	file:
+FRAME_D_PL_POS	components/usr/cmd_resolve.c	/^    FRAME_D_PL_POS$/;"	e	enum:__anon18	file:
+FRAME_SYNC_POS	components/usr/cmd_resolve.c	/^    FRAME_SYNC_POS = 0,$/;"	e	enum:__anon18	file:
+FREQ_SPAN_MAX	components/kits/goertzel.c	14;"	d	file:
+GBM_BT	components/usr/sys_def.h	/^    GBM_BT,$/;"	e	enum:__anon12
+GBM_DHCP	components/usr/sys_def.h	/^    GBM_DHCP,$/;"	e	enum:__anon12
+GBM_DNS	components/usr/sys_def.h	/^    GBM_DNS,$/;"	e	enum:__anon12
+GBM_FLASH	components/usr/sys_def.h	/^    GBM_FLASH = 0,    $/;"	e	enum:__anon12
+GBM_HTTP	components/usr/sys_def.h	/^    GBM_HTTP,$/;"	e	enum:__anon12
+GBM_LCD	components/usr/sys_def.h	/^    GBM_LCD,$/;"	e	enum:__anon12
+GBM_LINK	components/usr/sys_def.h	/^    GBM_LINK,$/;"	e	enum:__anon12
+GBM_MBM	components/usr/sys_def.h	/^    GBM_MBM,$/;"	e	enum:__anon12
+GBM_TCP	components/usr/sys_def.h	/^    GBM_TCP,$/;"	e	enum:__anon12
+GBM_WIFI	components/usr/sys_def.h	/^    GBM_WIFI,$/;"	e	enum:__anon12
+GEO_THREAD_DELAY	components/usr/sys_conf.h	9;"	d
+GEO_THREAD_PRIO	main/main.c	/^    GEO_THREAD_PRIO,$/;"	e	enum:__anon39	file:
+GEO_THREAD_STACK_SIZE	main/main.c	35;"	d	file:
+GPIO_OUTPUT_PIN_SEL	components/drv/led_drv.c	12;"	d	file:
+HARDWARE_VER	components/usr/sys_def.h	34;"	d
+HEX	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	483;"	d	file:
+HEX	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	468;"	d	file:
+HISTORY_PATH	components/cli/cli_shell.c	38;"	d	file:
+ID_VOID_MAIN	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	6;"	d	file:
+INIT_MODE_DEBUT	components/usr/sys_def.h	/^    INIT_MODE_DEBUT,$/;"	e	enum:__anon10
+INIT_MODE_DEFAULT	components/usr/sys_def.h	/^    INIT_MODE_DEFAULT$/;"	e	enum:__anon10
+INIT_MODE_FACTORY	components/usr/sys_def.h	/^    INIT_MODE_FACTORY,$/;"	e	enum:__anon10
+INIT_MODE_USR	components/usr/sys_def.h	/^    INIT_MODE_USR = 0,    $/;"	e	enum:__anon10
+KFIFO_EXT	components/kits/kfifo.h	11;"	d
+MAN_DATE	components/usr/sys_def.h	36;"	d
+MBM_HOLDING_REGS_NUM	components/usr/sys_def.h	40;"	d
+MBM_TOTAL_SLAVE_NUM	components/usr/sys_def.h	39;"	d
+MDNS_NAMESPACE	components/usr/global_var.c	17;"	d	file:
+MEOW_1_DIV_SQR_2	components/kits/meow_fft.h	913;"	d
+MEOW_FFT	components/kits/meow_fft.h	18;"	d
+MEOW_FFT_IMPLEMENTAION	components/kits/my_fft.c	8;"	d	file:
+MEOW_SIN_2PI_10	components/kits/meow_fft.h	777;"	d
+MEOW_SIN_2PI_5	components/kits/meow_fft.h	776;"	d
+MEOW_SIN_PI_3	components/kits/meow_fft.h	653;"	d
+MEOW_SQR_5_DIV_4	components/kits/meow_fft.h	775;"	d
+MEOW_TAU	components/kits/meow_fft.h	126;"	d
+MOUNT_PATH	components/cli/cli_shell.c	37;"	d	file:
+Meow_FFT_Complex	components/kits/meow_fft.h	/^Meow_FFT_Complex;$/;"	t	typeref:struct:Meow_FFT_Complex
+Meow_FFT_Complex	components/kits/meow_fft.h	/^typedef struct Meow_FFT_Complex$/;"	s
+Meow_FFT_Workset	components/kits/meow_fft.h	/^Meow_FFT_Workset;$/;"	t	typeref:struct:Meow_FFT_Workset
+Meow_FFT_Workset	components/kits/meow_fft.h	/^typedef struct Meow_FFT_Workset$/;"	s
+Meow_FFT_Workset_Real	components/kits/meow_fft.h	/^Meow_FFT_Workset_Real;$/;"	t	typeref:struct:Meow_FFT_Workset_Real
+Meow_FFT_Workset_Real	components/kits/meow_fft.h	/^typedef struct Meow_FFT_Workset_Real$/;"	s
+Meow_Fft_Stages	components/kits/meow_fft.h	/^Meow_Fft_Stages;$/;"	t	typeref:struct:Meow_Fft_Stages
+Meow_Fft_Stages	components/kits/meow_fft.h	/^typedef struct Meow_Fft_Stages$/;"	s
+Meow_Stage_Info	components/kits/meow_fft.h	/^Meow_Stage_Info;$/;"	t	typeref:struct:Meow_Stage_Info
+Meow_Stage_Info	components/kits/meow_fft.h	/^typedef struct Meow_Stage_Info$/;"	s
+N	components/kits/meow_fft.h	/^    int               N;$/;"	m	struct:Meow_FFT_Workset
+NULL	components/usr/sys_def.h	6;"	d
+NULL	components/usr/sys_def.h	8;"	d
+PIN_LED_EXT	components/drv/led_drv.c	10;"	d	file:
+PIN_LED_INT	components/drv/led_drv.c	9;"	d	file:
+PIN_NUM_CLK	components/drv/adxl_drv.c	30;"	d	file:
+PIN_NUM_CS	components/drv/adxl_drv.c	31;"	d	file:
+PIN_NUM_MISO	components/drv/adxl_drv.c	28;"	d	file:
+PIN_NUM_MOSI	components/drv/adxl_drv.c	29;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	313;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	316;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	319;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	322;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	325;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	328;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	331;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	334;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	337;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	340;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	343;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	346;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	349;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	352;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	355;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	358;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	361;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	364;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	367;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	370;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	373;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	376;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	379;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	382;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	385;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	389;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	392;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	395;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	398;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	401;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	405;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	298;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	301;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	304;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	307;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	310;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	313;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	316;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	319;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	322;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	325;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	328;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	331;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	334;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	337;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	340;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	343;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	346;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	349;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	352;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	355;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	358;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	361;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	364;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	367;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	370;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	374;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	377;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	380;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	383;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	386;"	d	file:
+PLATFORM_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	390;"	d	file:
+PORT	components/threads/tcp_thread.c	23;"	d	file:
+PROJECT_NAME	Makefile	/^PROJECT_NAME := blink$/;"	m
+REGMAP_ERR_ADDR_OR	components/usr/sys_def.h	/^    REGMAP_ERR_ADDR_OR,$/;"	e	enum:__anon9
+REGMAP_ERR_CONFLICT_OR	components/usr/sys_def.h	/^    REGMAP_ERR_CONFLICT_OR$/;"	e	enum:__anon9
+REGMAP_ERR_DATA_OR	components/usr/sys_def.h	/^    REGMAP_ERR_DATA_OR,$/;"	e	enum:__anon9
+REGMAP_ERR_NOERR	components/usr/sys_def.h	/^    REGMAP_ERR_NOERR = 0,$/;"	e	enum:__anon9
+REGMAP_ERR_PERM_OR	components/usr/sys_def.h	/^    REGMAP_ERR_PERM_OR,$/;"	e	enum:__anon9
+REGMAP_ERR_WR_OR	components/usr/sys_def.h	/^    REGMAP_ERR_WR_OR,$/;"	e	enum:__anon9
+SENSOR_ADDR2	components/usr/sys_def.h	/^    SENSOR_ADDR2,$/;"	e	enum:__anon11
+SENSOR_BT	components/usr/sys_def.h	/^    SENSOR_BT,$/;"	e	enum:__anon11
+SENSOR_DO2	components/usr/sys_def.h	/^    SENSOR_DO2$/;"	e	enum:__anon11
+SENSOR_MULTI	components/usr/sys_def.h	/^    SENSOR_MULTI,$/;"	e	enum:__anon11
+SENSOR_NONE	components/usr/sys_def.h	/^    SENSOR_NONE = 0,    $/;"	e	enum:__anon11
+SENSOR_PH	components/usr/sys_def.h	/^    SENSOR_PH,$/;"	e	enum:__anon11
+SERIAL_NO	components/usr/sys_def.h	35;"	d
+SIMULATE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	163;"	d	file:
+SIMULATE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	178;"	d	file:
+SIMULATE_ID	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	21;"	d	file:
+SIMULATE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	157;"	d	file:
+SIMULATE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	172;"	d	file:
+SIMULATE_ID	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	21;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	170;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	185;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	37;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	164;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	179;"	d	file:
+SIMULATE_VERSION_MAJOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	37;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	171;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	186;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	38;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	165;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	180;"	d	file:
+SIMULATE_VERSION_MINOR	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	38;"	d	file:
+SOFTWARE_VER	components/usr/sys_def.h	33;"	d
+SPP_SERVER_NAME	components/threads/spp_thread.c	43;"	d	file:
+SPP_SHOW_DATA	components/threads/spp_thread.c	45;"	d	file:
+SPP_SHOW_MODE	components/threads/spp_thread.c	47;"	d	file:
+SPP_SHOW_SPEED	components/threads/spp_thread.c	46;"	d	file:
+SPP_TAG	components/threads/spp_thread.c	42;"	d	file:
+SPP_THREAD_PRIO	main/main.c	/^    SPP_THREAD_PRIO,$/;"	e	enum:__anon39	file:
+SPP_THREAD_STACK_SIZE	main/main.c	34;"	d	file:
+STARTED_BIT	components/cli/cmd_wifi.c	/^const int STARTED_BIT = BIT1;$/;"	v
+STAT_REG_MAP_NUM	components/usr/sys_def.h	31;"	d
+STRINGIFY	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	309;"	d	file:
+STRINGIFY	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	294;"	d	file:
+STRINGIFY_HELPER	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	308;"	d	file:
+STRINGIFY_HELPER	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	293;"	d	file:
+TAG	components/cli/cmd_wifi.c	/^static const char *TAG = "WIFI";$/;"	v	file:
+TAG	components/cmd_system/cmd_system.c	/^static const char *TAG = "cmd_system";$/;"	v	file:
+TAG	components/threads/tcp_thread.c	/^static const char *TAG = "tTCP";$/;"	v	file:
+TAG	components/web_server/web_srv.c	/^static const char 	*TAG="HTTP";$/;"	v	file:
+TCPCLIENT_THREAD_DELAY	components/usr/sys_conf.h	10;"	d
+TCP_THREAD_PRIO	main/main.c	/^    TCP_THREAD_PRIO,$/;"	e	enum:__anon39	file:
+TCP_THREAD_STACK_SIZE	main/main.c	31;"	d	file:
+TEST_THREAD_PRIO	main/main.c	/^    TEST_THREAD_PRIO=3,$/;"	e	enum:__anon39	file:
+TEST_THREAD_STACK_SIZE	main/main.c	30;"	d	file:
+TEST_WITHOUT_RELOAD	components/drv/infared_drv.c	21;"	d	file:
+TEST_WITH_RELOAD	components/drv/infared_drv.c	22;"	d	file:
+THREAD_H_	components/threads/threads.h	9;"	d
+TIMER_DIVIDER	components/drv/infared_drv.c	17;"	d	file:
+TIMER_INTERVAL0_SEC	components/drv/infared_drv.c	19;"	d	file:
+TIMER_INTERVAL1_SEC	components/drv/infared_drv.c	20;"	d	file:
+TIMER_SCALE	components/drv/infared_drv.c	18;"	d	file:
+USR_EOK	components/usr/sys_def.h	25;"	d
+USR_ERR	components/usr/sys_def.h	26;"	d
+USR_MAX_PRIO	main/main.c	/^    USR_MAX_PRIO$/;"	e	enum:__anon39	file:
+WIFI_NAMESPACE	components/cli/cmd_wifi.c	34;"	d	file:
+WIFI_NAMESPACE	components/usr/global_var.c	16;"	d	file:
+WITH_TASKS_INFO	components/cmd_system/cmd_system.c	29;"	d	file:
+WS_THREAD_DELAY	components/usr/sys_conf.h	7;"	d
+_REG_MAP_CHECK_H	components/usr/reg_map_check.h	2;"	d
+_USE_MATH_DEFINES	components/kits/my_fft.c	9;"	d	file:
+__BIT_OP_H	components/kits/bit_op.h	2;"	d
+__CMD_H__	components/usr/cmd_resolve.h	2;"	d
+__FIFO_H	components/kits/fifo.h	2;"	d
+__GLOBAL_VAR	components/usr/global_var.h	2;"	d
+__KFIFO_H__	components/kits/kfifo.h	9;"	d
+__SYS_CONF	components/usr/sys_conf.h	2;"	d
+__SYS_DEF	components/usr/sys_def.h	2;"	d
+acc_noise_level	components/usr/sys_conf.h	/^    float		acc_noise_level;$/;"	m	struct:__anon30
+acc_offset	components/usr/sys_conf.h	/^    int32_t		acc_offset;$/;"	m	struct:__anon30
+acc_q	components/usr/sys_conf.h	/^    uint32_t    acc_q;$/;"	m	struct:__anon23
+acc_rank	components/usr/sys_conf.h	/^    uint32_t   	acc_rank;$/;"	m	struct:__anon30
+acc_signal_level	components/usr/sys_conf.h	/^    float		acc_signal_level;$/;"	m	struct:__anon30
+acc_snr	components/usr/sys_conf.h	/^    float	   	acc_snr;$/;"	m	struct:__anon30
+acc_times	components/usr/sys_conf.h	/^    uint32_t    acc_times;$/;"	m	struct:__anon22
+addr	components/drv/adxl_drv.c	/^    struct arg_int *addr;$/;"	m	struct:__anon4	typeref:struct:__anon4::arg_int	file:
+addr	components/usr/global_var.c	/^    struct arg_int *addr;$/;"	m	struct:__anon16	typeref:struct:__anon16::arg_int	file:
+adxl355_reset	components/drv/adxl_drv.c	/^void adxl355_reset(void)$/;"	f
+adxl355_scanfifo	components/drv/adxl_drv.c	/^int16_t adxl355_scanfifo(void)$/;"	f
+adxl_args	components/drv/adxl_drv.c	/^} adxl_args;$/;"	v	typeref:struct:__anon4	file:
+adxl_info	components/drv/adxl_drv.c	/^static int adxl_info(int argc, char **argv)$/;"	f	file:
+adxl_init	components/drv/adxl_drv.c	/^void adxl_init(void)$/;"	f
+adxl_rd_reg	components/drv/adxl_drv.c	/^uint8_t adxl_rd_reg(uint8_t addr, uint8_t * rx_buf, uint8_t cnt)$/;"	f
+adxl_register	components/drv/adxl_drv.c	/^void adxl_register(void)$/;"	f
+adxl_wr_reg	components/drv/adxl_drv.c	/^uint8_t adxl_wr_reg(uint8_t addr, uint8_t data)$/;"	f
+ampl_arr	components/drv/adxl_drv.h	/^    float		ampl_arr[16];$/;"	m	struct:__anon1
+app_main	components/drv/infared_drv.c	/^void app_main()$/;"	f
+app_main	main/main.c	/^void app_main()$/;"	f
+ard_reg	components/drv/adxl_drv.c	/^static int ard_reg(int argc, char **argv)$/;"	f	file:
+arr_cnt	components/drv/adxl_drv.h	/^    uint16_t	arr_cnt;$/;"	m	struct:__anon1
+awr_reg	components/drv/adxl_drv.c	/^static int awr_reg(int argc, char **argv)$/;"	f	file:
+bhead_ptr	components/kits/fifo.h	/^	uint16_t* bhead_ptr;$/;"	m	struct:fifo16_cb
+bhead_ptr	components/kits/fifo.h	/^	uint32_t* bhead_ptr;$/;"	m	struct:fifo32_cb
+bhead_ptr	components/kits/fifo.h	/^	uint8_t* bhead_ptr;$/;"	m	struct:fifo8_cb
+bit_op_get	components/kits/bit_op.c	/^int32_t bit_op_get(const uint32_t data, uint16_t offset) $/;"	f
+bit_op_set	components/kits/bit_op.c	/^void bit_op_set(uint32_t *data, uint16_t offset, uint8_t option) $/;"	f
+block_size	components/kits/fifo.h	/^	uint16_t	block_size;$/;"	m	struct:fifo16_cb
+block_size	components/kits/fifo.h	/^	uint16_t	block_size;$/;"	m	struct:fifo32_cb
+block_size	components/kits/fifo.h	/^	uint16_t	block_size;$/;"	m	struct:fifo8_cb
+btail_ptr	components/kits/fifo.h	/^	uint16_t* btail_ptr;$/;"	m	struct:fifo16_cb
+btail_ptr	components/kits/fifo.h	/^	uint32_t* btail_ptr;$/;"	m	struct:fifo32_cb
+btail_ptr	components/kits/fifo.h	/^	uint8_t* btail_ptr;$/;"	m	struct:fifo8_cb
+buffer	components/kits/kfifo.h	/^    unsigned char *buffer;\/* the buffer holding the data *\/$/;"	m	struct:kfifo
+buffer_ptr	components/kits/fifo.h	/^	uint16_t* buffer_ptr;$/;"	m	struct:fifo16_cb
+buffer_ptr	components/kits/fifo.h	/^	uint32_t* buffer_ptr;$/;"	m	struct:fifo32_cb
+buffer_ptr	components/kits/fifo.h	/^	uint8_t* buffer_ptr;$/;"	m	struct:fifo8_cb
+calc_snr	components/kits/goertzel.c	/^static float calc_snr(float* dbuf, uint16_t cnt, snr_sts_st* snr_sts_ptr)$/;"	f	file:
+chk_ptr	components/usr/sys_conf.h	/^    uint16_t    (*chk_ptr)(uint32_t pram);$/;"	m	struct:__anon33
+cj_get_fft	components/web_server/web_srv.c	/^static int cj_get_fft(uint16_t fft_points,char* cj_dst)$/;"	f	file:
+cj_get_freq_bar	components/web_server/web_srv.c	/^static int cj_get_freq_bar(char* cj_dst)$/;"	f	file:
+cj_get_gtz	components/web_server/web_srv.c	/^static int cj_get_gtz(char* cj_dst)$/;"	f	file:
+cj_get_times	components/web_server/web_srv.c	/^static int cj_get_times(uint16_t time_points,char* cj_dst)$/;"	f	file:
+cj_rd_reg	components/web_server/web_srv.c	/^static int cj_rd_reg(uint16_t reg_addr,uint16_t reg_cnt, char* cj_dst)$/;"	f	file:
+cj_wr_reg	components/web_server/web_srv.c	/^static int cj_wr_reg(uint16_t reg_addr,uint32_t reg_data, char* cj_dst)$/;"	f	file:
+cjson_buf	components/web_server/web_srv.c	/^static char 		cjson_buf[8192];$/;"	v	file:
+cli_thread	components/cli/cli_shell.c	/^void cli_thread(void* param)$/;"	f
+cmd_buf_init	components/usr/cmd_resolve.c	/^static void cmd_buf_init(void)$/;"	f	file:
+cmd_dev_init	components/usr/cmd_resolve.c	/^void cmd_dev_init(void)$/;"	f
+cmd_frame_recv	components/usr/cmd_resolve.c	/^uint16_t cmd_frame_recv(void)$/;"	f
+cmd_frame_resolve	components/usr/cmd_resolve.c	/^uint16_t cmd_frame_resolve(void)$/;"	f
+cmd_fsm_cstate	components/usr/cmd_resolve.c	/^    uint8_t cmd_fsm_cstate;$/;"	m	struct:__anon19	file:
+cmd_get_comm_sts	components/usr/cmd_resolve.c	/^uint16_t cmd_get_comm_sts(void)$/;"	f
+cmd_get_rx_fsm	components/usr/cmd_resolve.c	/^uint8_t cmd_get_rx_fsm(void)$/;"	f
+cmd_kbuf_tx	components/usr/cmd_resolve.c	/^static uint8_t 	cmd_kbuf_tx[CMD_RTX_BUF_DEPTH*16];$/;"	v	file:
+cmd_rd_reg	components/usr/cmd_resolve.c	/^static uint16_t cmd_rd_reg(void)$/;"	f	file:
+cmd_rd_ser	components/usr/cmd_resolve.c	/^static uint16_t cmd_rd_ser(void)$/;"	f	file:
+cmd_reg_inst	components/usr/cmd_resolve.c	/^static cmd_reg_st cmd_reg_inst;$/;"	v	file:
+cmd_reg_st	components/usr/cmd_resolve.c	/^}cmd_reg_st;$/;"	t	typeref:struct:__anon19	file:
+cmd_response	components/usr/cmd_resolve.c	/^static void cmd_response(void)$/;"	f	file:
+cmd_rx_fifo	components/usr/cmd_resolve.c	/^fifo32_cb_td cmd_rx_fifo;$/;"	v
+cmd_thread	components/threads/cmd_thread.c	/^void cmd_thread(void* param)$/;"	f
+cmd_uart_send_fifo	components/usr/cmd_resolve.c	/^void cmd_uart_send_fifo(void) {$/;"	f
+cmd_wr_reg	components/usr/cmd_resolve.c	/^static uint16_t cmd_wr_reg(void)$/;"	f	file:
+cmd_wr_ser	components/usr/cmd_resolve.c	/^static uint16_t cmd_wr_ser(void)$/;"	f	file:
+coef	components/kits/goertzel.c	/^    float 		coef[FREQ_SPAN_MAX];$/;"	m	struct:__anon36	file:
+compare	components/kits/goertzel.c	/^int compare(const void * a, const void * b)$/;"	f
+conf	components/usr/sys_conf.h	/^    config_st   conf;$/;"	m	struct:__anon32
+conf_eth_st	components/usr/sys_conf.h	/^}conf_eth_st;$/;"	t	typeref:struct:__anon21
+conf_fft_st	components/usr/sys_conf.h	/^}conf_fft_st;$/;"	t	typeref:struct:__anon22
+conf_gen_st	components/usr/sys_conf.h	/^}conf_gen_st;$/;"	t	typeref:struct:__anon20
+conf_geo_st	components/usr/sys_conf.h	/^}conf_geo_st;$/;"	t	typeref:struct:__anon24
+conf_gtz_st	components/usr/sys_conf.h	/^}conf_gtz_st;$/;"	t	typeref:struct:__anon23
+conf_mod_st	components/usr/sys_conf.h	/^}conf_mod_st;$/;"	t	typeref:struct:__anon25
+conf_reg_map_inst	components/usr/global_var.c	/^const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=$/;"	v
+conf_reg_map_st	components/usr/sys_conf.h	/^}conf_reg_map_st;$/;"	t	typeref:struct:__anon33
+config_reg_num	components/usr/sys_conf.h	/^    uint32_t    config_reg_num;$/;"	m	struct:__anon27
+config_st	components/usr/sys_conf.h	/^}config_st;$/;"	t	typeref:struct:__anon26
+conn_cnt	components/threads/spp_thread.c	/^       uint32_t conn_cnt;$/;"	m	struct:__anon7	file:
+connect	components/cli/cmd_wifi.c	/^static int connect(int argc, char** argv)$/;"	f	file:
+connected_ops	components/cli/cmd_wifi.c	/^static void connected_ops(void)$/;"	f	file:
+const	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	10;"	d	file:
+count	components/kits/meow_fft.h	/^    unsigned  count;$/;"	m	struct:Meow_Fft_Stages
+dac_init	components/drv/dac_drv.c	/^void dac_init(uint8_t channel)$/;"	f
+dac_volt	components/drv/dac_drv.c	/^void dac_volt(uint8_t volt)$/;"	f
+data	components/drv/adxl_drv.c	/^    struct arg_int *data;$/;"	m	struct:__anon4	typeref:struct:__anon4::arg_int	file:
+data	components/threads/spp_thread.c	/^    struct arg_str *data;$/;"	m	struct:__anon8	typeref:struct:__anon8::arg_str	file:
+data	components/usr/global_var.c	/^    struct arg_int *data;$/;"	m	struct:__anon16	typeref:struct:__anon16::arg_int	file:
+data	components/usr/global_var.c	/^    struct arg_str *data;$/;"	m	struct:__anon15	typeref:struct:__anon15::arg_str	file:
+data_num	components/threads/spp_thread.c	/^static long data_num = 0;$/;"	v	file:
+dbg	components/usr/sys_conf.h	/^    uint32_t 		dbg;$/;"	m	struct:__anon20
+decode	components/drv/adxl_drv.c	/^static int32_t decode(uint32_t din)$/;"	f	file:
+depth	components/kits/fifo.h	/^	uint16_t	depth;$/;"	m	struct:fifo16_cb
+depth	components/kits/fifo.h	/^	uint16_t	depth;$/;"	m	struct:fifo32_cb
+depth	components/kits/fifo.h	/^	uint16_t	depth;$/;"	m	struct:fifo8_cb
+dev_type	components/usr/sys_conf.h	/^    uint32_t    dev_type;$/;"	m	struct:__anon28
+dft	components/usr/sys_conf.h	/^    uint32_t	dft;$/;"	m	struct:__anon33
+dft	components/usr/sys_conf.h	/^    uint32_t  	dft;$/;"	m	struct:__anon34
+dhcp_trigger	components/usr/reg_map_check.c	/^uint16_t dhcp_trigger(uint32_t pram)$/;"	f
+enable	components/usr/sys_conf.h	/^    uint32_t    enable;$/;"	m	struct:__anon24
+enable	components/usr/sys_conf.h	/^    uint32_t    enable;$/;"	m	struct:__anon25
+end	components/cli/cmd_wifi.c	/^    struct arg_end *end;$/;"	m	struct:__anon6	typeref:struct:__anon6::arg_end	file:
+end	components/drv/adxl_drv.c	/^    struct arg_end *end;$/;"	m	struct:__anon4	typeref:struct:__anon4::arg_end	file:
+end	components/threads/spp_thread.c	/^    struct arg_end *end;$/;"	m	struct:__anon8	typeref:struct:__anon8::arg_end	file:
+end	components/usr/global_var.c	/^    struct arg_end *end;$/;"	m	struct:__anon13	typeref:struct:__anon13::arg_end	file:
+end	components/usr/global_var.c	/^    struct arg_end *end;$/;"	m	struct:__anon14	typeref:struct:__anon14::arg_end	file:
+end	components/usr/global_var.c	/^    struct arg_end *end;$/;"	m	struct:__anon15	typeref:struct:__anon15::arg_end	file:
+end	components/usr/global_var.c	/^    struct arg_end *end;$/;"	m	struct:__anon16	typeref:struct:__anon16::arg_end	file:
+esp_bt_gap_cb	components/threads/spp_thread.c	/^void esp_bt_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)$/;"	f
+esp_spp_cb	components/threads/spp_thread.c	/^static void esp_spp_cb(esp_spp_cb_event_t event, esp_spp_cb_param_t *param)$/;"	f	file:
+esp_spp_mode	components/threads/spp_thread.c	/^static const esp_spp_mode_t esp_spp_mode = ESP_SPP_MODE_CB;$/;"	v	file:
+eth	components/usr/sys_conf.h	/^    conf_eth_st eth;$/;"	m	struct:__anon26
+event_handler	components/cli/cmd_wifi.c	/^static esp_err_t event_handler(void *ctx, system_event_t *event)$/;"	f	file:
+example_tg0_timer_init	components/drv/infared_drv.c	/^static void example_tg0_timer_init(int timer_idx, $/;"	f	file:
+features	build/CMakeFiles/feature_tests.c	/^  const char features[] = {"\\n"$/;"	v
+features	build/CMakeFiles/feature_tests.cxx	/^  const char features[] = {"\\n"$/;"	v
+fft	components/usr/sys_conf.h	/^    conf_fft_st fft;$/;"	m	struct:__anon26
+fft	components/web_server/web_srv.c	/^httpd_uri_t fft = {$/;"	v
+fft_calc	components/kits/my_fft.c	/^void fft_calc(float* input_dbuf,float* output_dbuf)$/;"	f
+fft_get_handler	components/web_server/web_srv.c	/^esp_err_t fft_get_handler(httpd_req_t *req)$/;"	f
+fft_info	components/drv/adxl_drv.c	/^static int fft_info(int argc, char **argv)$/;"	f	file:
+fft_init	components/kits/my_fft.c	/^int16_t fft_init(void)$/;"	f
+fft_inst	components/drv/adxl_drv.c	/^fft_st fft_inst;$/;"	v
+fft_max_ind	components/drv/adxl_drv.c	/^static void fft_max_ind(void)$/;"	f	file:
+fft_new	components/kits/my_fft.c	/^void fft_new(uint16_t ord)$/;"	f
+fft_sbuf_ptr	components/kits/my_fft.c	/^	Meow_FFT_Workset_Real*	fft_sbuf_ptr;$/;"	m	struct:__anon35	file:
+fft_st	components/drv/adxl_drv.h	/^}fft_st;$/;"	t	typeref:struct:__anon1
+fifo16_cb	components/kits/fifo.h	/^typedef struct fifo16_cb{$/;"	s
+fifo16_cb_td	components/kits/fifo.h	/^}fifo16_cb_td;$/;"	t	typeref:struct:fifo16_cb
+fifo16_init	components/kits/fifo.c	/^uint8_t fifo16_init(fifo16_cb_td* fifo_cb, uint16_t block_size, uint16_t depth)$/;"	f
+fifo16_pop	components/kits/fifo.c	/^uint8_t	fifo16_pop(fifo16_cb_td* fifo_cb, uint16_t* dest_addr)$/;"	f
+fifo16_push	components/kits/fifo.c	/^uint8_t	fifo16_push(fifo16_cb_td* fifo_cb, uint16_t* src_addr)$/;"	f
+fifo16_reset	components/kits/fifo.c	/^void	fifo16_reset(fifo16_cb_td* fifo_cb)$/;"	f
+fifo32_cb	components/kits/fifo.h	/^typedef struct fifo32_cb{$/;"	s
+fifo32_cb_td	components/kits/fifo.h	/^}fifo32_cb_td;$/;"	t	typeref:struct:fifo32_cb
+fifo32_init	components/kits/fifo.c	/^uint32_t fifo32_init(fifo32_cb_td* fifo_cb, uint16_t block_size, uint16_t depth)$/;"	f
+fifo32_pop	components/kits/fifo.c	/^uint32_t	fifo32_pop(fifo32_cb_td* fifo_cb, uint32_t* dest_addr)$/;"	f
+fifo32_push	components/kits/fifo.c	/^uint32_t	fifo32_push(fifo32_cb_td* fifo_cb, uint32_t* src_addr)$/;"	f
+fifo32_reset	components/kits/fifo.c	/^void	fifo32_reset(fifo32_cb_td* fifo_cb)$/;"	f
+fifo8_cb	components/kits/fifo.h	/^typedef struct fifo8_cb{$/;"	s
+fifo8_cb_td	components/kits/fifo.h	/^}fifo8_cb_td;$/;"	t	typeref:struct:fifo8_cb
+fifo8_init	components/kits/fifo.c	/^uint8_t fifo8_init(fifo8_cb_td* fifo_cb, uint16_t block_size, uint16_t depth)$/;"	f
+fifo8_pop	components/kits/fifo.c	/^uint8_t	fifo8_pop(fifo8_cb_td* fifo_cb, uint8_t* dest_addr)$/;"	f
+fifo8_push	components/kits/fifo.c	/^uint8_t	fifo8_push(fifo8_cb_td* fifo_cb, uint8_t* src_addr)$/;"	f
+fifo8_reset	components/kits/fifo.c	/^void	fifo8_reset(fifo8_cb_td* fifo_cb)$/;"	f
+filter	components/usr/sys_conf.h	/^    uint32_t    filter;$/;"	m	struct:__anon24
+frame_checksum	components/usr/cmd_resolve.c	/^static uint32_t frame_checksum(void) {$/;"	f	file:
+frame_checksum_gen	components/usr/cmd_resolve.c	/^static uint32_t frame_checksum_gen(uint32_t* data_ptr, uint16_t data_num) {$/;"	f	file:
+free_mem	components/cmd_system/cmd_system.c	/^static int free_mem(int argc, char **argv)$/;"	f	file:
+freq	components/usr/sys_conf.h	/^    uint32_t    freq;$/;"	m	struct:__anon25
+freq_arr	components/drv/adxl_drv.h	/^    float		freq_arr[16];$/;"	m	struct:__anon1
+freq_bar	components/usr/sys_conf.h	/^    float	   	freq_bar[33];$/;"	m	struct:__anon30
+freq_bar_get_handler	components/web_server/web_srv.c	/^esp_err_t freq_bar_get_handler(httpd_req_t *req)$/;"	f
+freq_bin	components/web_server/web_srv.c	/^httpd_uri_t freq_bin = {$/;"	v
+freq_bins	components/kits/goertzel.c	/^    float		freq_bins[FREQ_SPAN_MAX];$/;"	m	struct:__anon38	file:
+g_sys	components/usr/global_var.c	/^sys_reg_st  g_sys; 															\/\/global parameter declairation$/;"	v
+gen	components/usr/sys_conf.h	/^    conf_gen_st gen;$/;"	m	struct:__anon26
+gen	components/usr/sys_conf.h	/^    stat_gen_st 	gen;$/;"	m	struct:__anon31
+geo	components/usr/sys_conf.h	/^    conf_geo_st geo;$/;"	m	struct:__anon26
+geo	components/usr/sys_conf.h	/^    stat_geo_st		geo;$/;"	m	struct:__anon31
+geo_ds_init	components/drv/adxl_drv.c	/^void geo_ds_init(void)$/;"	f
+geo_filter_opt	components/usr/reg_map_check.c	/^uint16_t geo_filter_opt(uint32_t pram)$/;"	f
+geo_get_fft	components/drv/adxl_drv.c	/^float* geo_get_fft(uint16_t* fft_len)$/;"	f
+geo_get_time	components/drv/adxl_drv.c	/^int16_t geo_get_time(float* dst_ptr,uint16_t len)$/;"	f
+geo_pwr_opt	components/usr/reg_map_check.c	/^uint16_t geo_pwr_opt(uint32_t pram)$/;"	f
+geo_thread	components/threads/geo_thread.c	/^void geo_thread(void* param)$/;"	f
+geo_timeout	components/usr/cmd_resolve.c	/^static void geo_timeout(void* arg)$/;"	f	file:
+geo_timer	components/usr/cmd_resolve.c	/^esp_timer_handle_t geo_timer;$/;"	v
+geo_timer_init	components/usr/cmd_resolve.c	/^static uint16_t	geo_timer_init(void)$/;"	f	file:
+geo_timer_opt	components/usr/reg_map_check.c	/^uint16_t geo_timer_opt(uint32_t pram)$/;"	f
+geospi_mutex	components/drv/adxl_drv.c	/^static SemaphoreHandle_t geospi_mutex = NULL;$/;"	v	file:
+get_fifo16_length	components/kits/fifo.c	/^uint16_t	get_fifo16_length(fifo16_cb_td* fifo_cb)$/;"	f
+get_fifo32_length	components/kits/fifo.c	/^uint32_t	get_fifo32_length(fifo32_cb_td* fifo_cb)$/;"	f
+get_fifo8_length	components/kits/fifo.c	/^uint16_t	get_fifo8_length(fifo8_cb_td* fifo_cb)$/;"	f
+get_fifo8_vacant	components/kits/fifo.c	/^uint16_t	get_fifo8_vacant(fifo8_cb_td* fifo_cb)$/;"	f
+get_geo_fdata	components/usr/cmd_resolve.c	/^static int16_t get_geo_fdata(float* buf_ptr)$/;"	f	file:
+get_mdns_info	components/usr/global_var.c	/^int get_mdns_info(char* hostname, size_t* h_len)$/;"	f
+get_version	components/cmd_system/cmd_system.c	/^static int get_version(int argc, char **argv)$/;"	f	file:
+get_wifi_info	components/usr/global_var.c	/^int get_wifi_info(char* ssid, char* lcssid, char* pwd, char* lcpwd, size_t* s_len, size_t* ls_len, size_t* p_len, size_t* lp_len)$/;"	f
+goertzel_calc	components/kits/goertzel.c	/^float goertzel_calc(float* din)$/;"	f
+goertzel_coef	components/kits/goertzel.c	/^static float goertzel_coef(uint32_t target_freq, uint32_t sample_freq, uint32_t N)$/;"	f	file:
+goertzel_init	components/kits/goertzel.c	/^void goertzel_init(void)$/;"	f
+goertzel_lfilt	components/kits/goertzel.c	/^int16_t goertzel_lfilt(float din)$/;"	f
+gtz	components/usr/sys_conf.h	/^    conf_gtz_st gtz;$/;"	m	struct:__anon26
+gtz	components/usr/sys_conf.h	/^    stat_gtz_st		gtz;$/;"	m	struct:__anon31
+gtz_freq_bins	components/kits/goertzel.c	/^int32_t gtz_freq_bins(float* dst_buf, uint16_t *num)$/;"	f
+gtz_info	components/usr/global_var.c	/^static int gtz_info(int argc, char **argv)$/;"	f	file:
+gtz_inst	components/kits/goertzel.c	/^gtz_st gtz_inst;$/;"	v
+gtz_reset	components/kits/goertzel.c	/^void gtz_reset(void)$/;"	f
+gtz_rst_opt	components/usr/reg_map_check.c	/^uint16_t gtz_rst_opt(uint32_t pram)$/;"	f
+gtz_snr	components/kits/goertzel.c	/^static int32_t gtz_snr(float* dbuf, uint16_t cnt)$/;"	f	file:
+gtz_st	components/kits/goertzel.c	/^}gtz_st;$/;"	t	typeref:struct:__anon36	file:
+gtz_status	components/web_server/web_srv.c	/^httpd_uri_t gtz_status = {$/;"	v
+gtz_status_get_handler	components/web_server/web_srv.c	/^esp_err_t gtz_status_get_handler(httpd_req_t *req)$/;"	f
+gvar_init	components/usr/global_var.c	/^int32_t gvar_init(void)$/;"	f
+gvar_register	components/usr/global_var.c	/^void gvar_register(void)$/;"	f
+h_conn	components/threads/spp_thread.c	/^       uint32_t h_conn[8];$/;"	m	struct:__anon7	file:
+half	components/kits/meow_fft.h	/^    Meow_FFT_Workset  half;$/;"	m	struct:Meow_FFT_Workset_Real
+hardware_ver	components/usr/sys_conf.h	/^    uint32_t    hardware_ver;$/;"	m	struct:__anon27
+heap_size	components/cmd_system/cmd_system.c	/^static int heap_size(int argc, char **argv)$/;"	f	file:
+hold_time	components/usr/sys_conf.h	/^    uint32_t    hold_time;$/;"	m	struct:__anon25
+hostname	components/usr/global_var.c	/^    struct arg_str *hostname;$/;"	m	struct:__anon13	typeref:struct:__anon13::arg_str	file:
+http_en	components/usr/sys_conf.h	/^    uint32_t    http_en;$/;"	m	struct:__anon21
+ibuf	components/drv/adxl_drv.h	/^    float		ibuf[DEV_GEO_FIFO_SIZE];$/;"	m	struct:__anon1
+ibuf_cnt	components/drv/adxl_drv.h	/^	uint16_t	ibuf_cnt;$/;"	m	struct:__anon1
+icnt	components/kits/goertzel.c	/^    uint32_t 	icnt;$/;"	m	struct:__anon36	file:
+id	components/usr/sys_conf.h	/^    uint16_t 	id;$/;"	m	struct:__anon33
+id	components/usr/sys_conf.h	/^    uint16_t 	id;$/;"	m	struct:__anon34
+in	components/kits/kfifo.h	/^    unsigned int in;\/* data is added at offset (in % size) *\/$/;"	m	struct:kfifo
+inbuf	components/kits/my_fft.c	/^	float*					inbuf;$/;"	m	struct:__anon35	file:
+info_arch	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
+info_arch	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
+info_compiler	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";$/;"	v
+info_compiler	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";$/;"	v
+info_cray	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const *info_cray = "INFO" ":" "compiler_wrapper[CrayPrgEnv]";$/;"	v
+info_cray	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const *info_cray = "INFO" ":" "compiler_wrapper[CrayPrgEnv]";$/;"	v
+info_language_dialect_default	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^const char* info_language_dialect_default =$/;"	v
+info_language_dialect_default	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^const char* info_language_dialect_default = "INFO" ":" "dialect_default["$/;"	v
+info_platform	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const* info_platform = "INFO" ":" "platform[" PLATFORM_ID "]";$/;"	v
+info_platform	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_platform = "INFO" ":" "platform[" PLATFORM_ID "]";$/;"	v
+info_simulate	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const* info_simulate = "INFO" ":" "simulate[" SIMULATE_ID "]";$/;"	v
+info_simulate	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* info_simulate = "INFO" ":" "simulate[" SIMULATE_ID "]";$/;"	v
+info_simulate_version	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const info_simulate_version[] = {$/;"	v
+info_simulate_version	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_simulate_version[] = {$/;"	v
+info_version	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const info_version[] = {$/;"	v
+info_version	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version[] = {$/;"	v
+info_version_internal	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const info_version_internal[] = {$/;"	v
+info_version_internal	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version_internal[] = {$/;"	v
+init_load_default	components/usr/global_var.c	/^static uint16_t init_load_default(void)$/;"	f	file:
+init_load_status	components/usr/global_var.c	/^void init_load_status(void)$/;"	f
+initialise_wifi	components/cli/cmd_wifi.c	/^static void initialise_wifi(void* arg)$/;"	f	file:
+initialize_console	components/cli/cli_shell.c	/^static void initialize_console()$/;"	f	file:
+initialize_filesystem	components/cli/cli_shell.c	/^static void initialize_filesystem()$/;"	f	file:
+initialize_nvs	components/usr/usr_sys_init.c	/^static void initialize_nvs()$/;"	f	file:
+ins_snr	components/usr/sys_conf.h	/^    float	   	ins_snr;$/;"	m	struct:__anon30
+int16	components/usr/sys_def.h	/^typedef short				int16;$/;"	t
+int32	components/usr/sys_def.h	/^typedef long				int32;$/;"	t
+int8	components/usr/sys_def.h	/^typedef char 				int8;$/;"	t
+intv_cnts	components/usr/sys_conf.h	/^    uint32_t    intv_cnts;$/;"	m	struct:__anon22
+is_fifo16_empty	components/kits/fifo.c	/^uint8_t	is_fifo16_empty(fifo16_cb_td* fifo_cb)$/;"	f
+is_fifo16_full	components/kits/fifo.c	/^uint8_t	is_fifo16_full(fifo16_cb_td* fifo_cb)$/;"	f
+is_fifo32_empty	components/kits/fifo.c	/^uint32_t	is_fifo32_empty(fifo32_cb_td* fifo_cb)$/;"	f
+is_fifo32_full	components/kits/fifo.c	/^uint32_t	is_fifo32_full(fifo32_cb_td* fifo_cb)$/;"	f
+is_fifo8_empty	components/kits/fifo.c	/^uint8_t	is_fifo8_empty(fifo8_cb_td* fifo_cb)$/;"	f
+is_fifo8_full	components/kits/fifo.c	/^uint8_t	is_fifo8_full(fifo8_cb_td* fifo_cb)$/;"	f
+is_slow	components/kits/meow_fft.h	/^    unsigned is_slow;$/;"	m	struct:Meow_Stage_Info
+j	components/kits/meow_fft.h	/^    float j;$/;"	m	struct:Meow_FFT_Complex
+join_wifi	components/threads/test_thread.c	/^void join_wifi(void)$/;"	f
+js_err	components/web_server/web_srv.c	/^static void js_err(char * err_info, char* cj_dst)$/;"	f	file:
+kc_buf_tx	components/usr/cmd_resolve.c	/^kfifo_t 		kc_buf_tx;$/;"	v
+kf_buf_s	components/drv/adxl_drv.c	/^static uint8_t 	kf_buf_s[DEV_GEO_FIFO_SIZE*4];$/;"	v	file:
+kf_init	components/drv/adxl_drv.c	/^static void kf_init(void)$/;"	f	file:
+kf_s	components/drv/adxl_drv.c	/^kfifo_t 		kf_s;$/;"	v
+kfifo	components/kits/kfifo.h	/^typedef struct kfifo {$/;"	s
+kfifo_alloc	components/kits/kfifo.c	/^int kfifo_alloc(struct kfifo *fifo, unsigned int size\/*, gfp_t gfp_mask*\/)$/;"	f
+kfifo_drop_cnt	components/usr/sys_conf.h	/^    uint32_t   	kfifo_drop_cnt;$/;"	m	struct:__anon29
+kfifo_in	components/kits/kfifo.c	/^unsigned int kfifo_in(struct kfifo *fifo, const void *from,$/;"	f
+kfifo_init	components/kits/kfifo.c	/^void kfifo_init(struct kfifo *fifo, void *buffer, unsigned int size)$/;"	f
+kfifo_len	components/kits/kfifo.c	/^unsigned int kfifo_len(struct kfifo *fifo)$/;"	f
+kfifo_out	components/kits/kfifo.c	/^unsigned int kfifo_out(struct kfifo *fifo, void *to, unsigned int len)$/;"	f
+kfifo_out2	components/kits/kfifo.h	/^inline unsigned int kfifo_out2(struct kfifo *fifo, unsigned int len)$/;"	f
+kfifo_out_peek	components/kits/kfifo.c	/^unsigned int kfifo_out_peek(struct kfifo *fifo, void *to, unsigned int len)$/;"	f
+kfifo_reset	components/kits/kfifo.c	/^void kfifo_reset(struct kfifo *fifo)$/;"	f
+kfifo_t	components/kits/kfifo.h	/^}kfifo_t;$/;"	t	typeref:struct:kfifo
+length	components/kits/fifo.h	/^	uint16_t	length;	$/;"	m	struct:fifo16_cb
+length	components/kits/fifo.h	/^	uint16_t	length;	$/;"	m	struct:fifo32_cb
+length	components/kits/fifo.h	/^	uint16_t	length;	$/;"	m	struct:fifo8_cb
+load_conf	components/usr/global_var.c	/^int load_conf(const char *load_type)$/;"	f
+load_conf_opt	components/usr/reg_map_check.c	/^uint16_t load_conf_opt(uint32_t pram)$/;"	f
+load_config_arg	components/usr/global_var.c	/^static int load_config_arg(int argc, char **argv)$/;"	f	file:
+main	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^int main(argc, argv) int argc; char *argv[];$/;"	f
+main	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^void main() {}$/;"	f
+main	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^int main(int argc, char* argv[])$/;"	f
+main	build/CMakeFiles/feature_tests.c	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
+main	build/CMakeFiles/feature_tests.cxx	/^int main(int argc, char** argv) { (void)argv; return features[argc]; }$/;"	f
+man	components/usr/sys_conf.h	/^    stat_man_st 	man;$/;"	m	struct:__anon31
+man_date	components/usr/sys_conf.h	/^    uint32_t    man_date;$/;"	m	struct:__anon28
+max	components/usr/sys_conf.h	/^    uint32_t	max;$/;"	m	struct:__anon33
+mdns_args	components/usr/global_var.c	/^} mdns_args;$/;"	v	typeref:struct:__anon13	file:
+meow_add	components/kits/meow_fft.h	/^Meow_FFT_Complex inline meow_add$/;"	f
+meow_calculate_stages	components/kits/meow_fft.h	/^Meow_Stage_Info meow_calculate_stages(unsigned n, Meow_FFT_Workset* workset)$/;"	f
+meow_conjugate	components/kits/meow_fft.h	/^Meow_FFT_Complex inline meow_conjugate(const Meow_FFT_Complex lhs)$/;"	f
+meow_dft_n_dit	components/kits/meow_fft.h	/^void meow_dft_n_dit$/;"	f
+meow_fft	components/kits/meow_fft.h	/^void meow_fft$/;"	f
+meow_fft_generate_workset	components/kits/meow_fft.h	/^size_t meow_fft_generate_workset(int N, Meow_FFT_Workset* workset)$/;"	f
+meow_fft_generate_workset_real	components/kits/meow_fft.h	/^size_t meow_fft_generate_workset_real$/;"	f
+meow_fft_i	components/kits/meow_fft.h	/^void meow_fft_i$/;"	f
+meow_fft_is_slow	components/kits/meow_fft.h	/^unsigned meow_fft_is_slow(const Meow_FFT_Workset* workset)$/;"	f
+meow_fft_is_slow_real	components/kits/meow_fft.h	/^unsigned meow_fft_is_slow_real(const Meow_FFT_Workset_Real* workset)$/;"	f
+meow_fft_real	components/kits/meow_fft.h	/^void meow_fft_real$/;"	f
+meow_fft_real_i	components/kits/meow_fft.h	/^void meow_fft_real_i$/;"	f
+meow_is_codelet	components/kits/meow_fft.h	/^unsigned meow_is_codelet(unsigned radix)$/;"	f
+meow_make_twiddles	components/kits/meow_fft.h	/^void meow_make_twiddles$/;"	f
+meow_make_twiddles_sequential	components/kits/meow_fft.h	/^unsigned meow_make_twiddles_sequential$/;"	f
+meow_mixer	components/kits/meow_fft.h	/^void inline meow_mixer$/;"	f
+meow_mixer_i	components/kits/meow_fft.h	/^void inline meow_mixer_i$/;"	f
+meow_mul	components/kits/meow_fft.h	/^Meow_FFT_Complex inline meow_mul$/;"	f
+meow_mul_by_conjugate	components/kits/meow_fft.h	/^Meow_FFT_Complex inline meow_mul_by_conjugate$/;"	f
+meow_mul_by_j	components/kits/meow_fft.h	/^Meow_FFT_Complex inline meow_mul_by_j(const Meow_FFT_Complex lhs)$/;"	f
+meow_mulf	components/kits/meow_fft.h	/^Meow_FFT_Complex inline meow_mulf$/;"	f
+meow_negate	components/kits/meow_fft.h	/^Meow_FFT_Complex inline meow_negate(const Meow_FFT_Complex lhs)$/;"	f
+meow_radix_2_dit	components/kits/meow_fft.h	/^void meow_radix_2_dit$/;"	f
+meow_radix_2_dit_i	components/kits/meow_fft.h	/^void meow_radix_2_dit_i$/;"	f
+meow_radix_3_dit	components/kits/meow_fft.h	/^void meow_radix_3_dit$/;"	f
+meow_radix_3_dit_i	components/kits/meow_fft.h	/^void meow_radix_3_dit_i$/;"	f
+meow_radix_4_dit	components/kits/meow_fft.h	/^void meow_radix_4_dit$/;"	f
+meow_radix_4_dit_i	components/kits/meow_fft.h	/^void meow_radix_4_dit_i$/;"	f
+meow_radix_5_dit	components/kits/meow_fft.h	/^void meow_radix_5_dit$/;"	f
+meow_radix_5_dit_i	components/kits/meow_fft.h	/^void meow_radix_5_dit_i$/;"	f
+meow_radix_8_dit	components/kits/meow_fft.h	/^static void meow_radix_8_dit$/;"	f
+meow_radix_8_dit_i	components/kits/meow_fft.h	/^static void meow_radix_8_dit_i$/;"	f
+meow_recursive_fft_mixed_meow_radix_dit	components/kits/meow_fft.h	/^void meow_recursive_fft_mixed_meow_radix_dit$/;"	f
+meow_recursive_fft_mixed_meow_radix_dit_i	components/kits/meow_fft.h	/^void meow_recursive_fft_mixed_meow_radix_dit_i$/;"	f
+meow_sub	components/kits/meow_fft.h	/^Meow_FFT_Complex inline meow_sub$/;"	f
+min	components/drv/adxl_drv.c	26;"	d	file:
+min	components/kits/kfifo.c	36;"	d	file:
+min	components/usr/sys_conf.h	/^    int32_t	    min;$/;"	m	struct:__anon33
+min	components/web_server/web_srv.c	30;"	d	file:
+mod	components/usr/sys_conf.h	/^    conf_mod_st mod;$/;"	m	struct:__anon26
+mod_en_opt	components/usr/reg_map_check.c	/^uint16_t mod_en_opt(uint32_t pram)$/;"	f
+mod_freq_off	components/usr/sys_conf.h	/^    uint32_t	mod_freq_off;$/;"	m	struct:__anon25
+mod_freq_opt	components/usr/reg_map_check.c	/^uint16_t mod_freq_opt(uint32_t pram)$/;"	f
+mod_volum_opt	components/usr/reg_map_check.c	/^uint16_t mod_volum_opt(uint32_t pram)$/;"	f
+my_fft_inst	components/kits/my_fft.c	/^my_fft_st 		my_fft_inst;$/;"	v
+my_fft_st	components/kits/my_fft.c	/^}my_fft_st;$/;"	t	typeref:struct:__anon35	file:
+n	components/usr/sys_conf.h	/^    uint32_t    n;$/;"	m	struct:__anon22
+n	components/usr/sys_conf.h	/^    uint32_t    n;$/;"	m	struct:__anon23
+noise_level	components/kits/goertzel.c	/^    float 		noise_level;$/;"	m	struct:__anon37	file:
+noise_level	components/usr/sys_conf.h	/^    float		noise_level;$/;"	m	struct:__anon30
+obuf	components/drv/adxl_drv.h	/^    float		obuf[DEV_GEO_FIFO_SIZE];$/;"	m	struct:__anon1
+offset	components/kits/goertzel.c	/^    int16_t		offset;$/;"	m	struct:__anon37	file:
+offset	components/usr/sys_conf.h	/^    int32_t		offset;$/;"	m	struct:__anon30
+offsets	components/kits/meow_fft.h	/^    unsigned* offsets;$/;"	m	struct:Meow_Fft_Stages
+ord	components/kits/my_fft.c	/^	uint16_t				ord;$/;"	m	struct:__anon35	file:
+out	components/kits/kfifo.h	/^    unsigned int out;\/* data is extracted from off. (out % size) *\/$/;"	m	struct:kfifo
+out_dbuf_ptr	components/kits/my_fft.c	/^	Meow_FFT_Complex*		out_dbuf_ptr;$/;"	m	struct:__anon35	file:
+password	components/cli/cmd_wifi.c	/^    struct arg_str *password;$/;"	m	struct:__anon6	typeref:struct:__anon6::arg_str	file:
+pkg_en	components/usr/sys_conf.h	/^    uint32_t    pkg_en;$/;"	m	struct:__anon24
+pkg_period	components/usr/sys_conf.h	/^    uint32_t    pkg_period;$/;"	m	struct:__anon24
+plc_conf_opt	components/usr/reg_map_check.c	/^uint16_t plc_conf_opt(uint32_t pram)$/;"	f
+plen	components/usr/usr_sys_init.c	/^char plen;$/;"	v
+print_config	components/usr/global_var.c	/^static int print_config(int argc, char **argv)$/;"	f	file:
+print_speed	components/threads/spp_thread.c	/^static void print_speed(void)$/;"	f	file:
+print_timer_counter	components/drv/infared_drv.c	/^static void inline print_timer_counter(uint64_t counter_value)$/;"	f	file:
+print_wifi	components/usr/global_var.c	/^int print_wifi(int argc, char **argv)$/;"	f
+pwd	components/usr/global_var.c	/^    struct arg_str *pwd;$/;"	m	struct:__anon14	typeref:struct:__anon14::arg_str	file:
+pwd	components/usr/usr_sys_init.c	/^char pwd[24];$/;"	v
+q0	components/kits/goertzel.c	/^    float 		q0[FREQ_SPAN_MAX];$/;"	m	struct:__anon36	file:
+q1	components/kits/goertzel.c	/^    float 		q1[FREQ_SPAN_MAX];$/;"	m	struct:__anon36	file:
+q2	components/kits/goertzel.c	/^    float 		q2[FREQ_SPAN_MAX];$/;"	m	struct:__anon36	file:
+qnxnto	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
+qnxnto	build/CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v
+r	components/kits/meow_fft.h	/^    float r;$/;"	m	struct:Meow_FFT_Complex
+radix	components/kits/meow_fft.h	/^    unsigned* radix;$/;"	m	struct:Meow_Fft_Stages
+rank	components/kits/goertzel.c	/^    uint16_t 	rank;$/;"	m	struct:__anon37	file:
+rank	components/usr/sys_conf.h	/^    uint32_t   	rank;$/;"	m	struct:__anon30
+raw_data_buf	components/drv/adxl_drv.c	/^static int16_t raw_data_buf(uint32_t din, uint8_t axis)$/;"	f	file:
+rd_reg	components/usr/global_var.c	/^static int rd_reg(int argc, char **argv)$/;"	f	file:
+rd_reg	components/web_server/web_srv.c	/^httpd_uri_t rd_reg = {$/;"	v
+rd_reg_get_handler	components/web_server/web_srv.c	/^esp_err_t rd_reg_get_handler(httpd_req_t *req)$/;"	f
+recv_frame_fsm	components/usr/cmd_resolve.c	/^void recv_frame_fsm(void)$/;"	f
+reg_map_read	components/usr/global_var.c	/^uint16 reg_map_read(uint16 reg_addr,uint32_t* reg_data,uint8_t read_cnt)$/;"	f
+reg_map_write	components/usr/global_var.c	/^uint16 reg_map_write(uint16 reg_addr, uint32_t *wr_data, uint8_t wr_cnt)$/;"	f
+reg_ptr	components/usr/sys_conf.h	/^    uint32_t*	reg_ptr;$/;"	m	struct:__anon33
+reg_ptr	components/usr/sys_conf.h	/^    uint32_t*	reg_ptr;$/;"	m	struct:__anon34
+register_adxl_info	components/drv/adxl_drv.c	/^static void register_adxl_info()$/;"	f	file:
+register_adxl_rd	components/drv/adxl_drv.c	/^static void register_adxl_rd()$/;"	f	file:
+register_adxl_wr	components/drv/adxl_drv.c	/^static void register_adxl_wr()$/;"	f	file:
+register_fft_info	components/drv/adxl_drv.c	/^static void register_fft_info()$/;"	f	file:
+register_free	components/cmd_system/cmd_system.c	/^static void register_free()$/;"	f	file:
+register_gtz_info	components/usr/global_var.c	/^static void register_gtz_info()$/;"	f	file:
+register_heap	components/cmd_system/cmd_system.c	/^static void register_heap()$/;"	f	file:
+register_load_conf	components/usr/global_var.c	/^static void register_load_conf()$/;"	f	file:
+register_print_conf	components/usr/global_var.c	/^static void register_print_conf()$/;"	f	file:
+register_print_wifi	components/usr/global_var.c	/^static void register_print_wifi()$/;"	f	file:
+register_rd_reg	components/usr/global_var.c	/^static void register_rd_reg()$/;"	f	file:
+register_restart	components/cmd_system/cmd_system.c	/^static void register_restart()$/;"	f	file:
+register_save_ap	components/usr/global_var.c	/^static void register_save_ap()$/;"	f	file:
+register_save_conf	components/usr/global_var.c	/^static void register_save_conf()$/;"	f	file:
+register_save_mdns	components/usr/global_var.c	/^static void register_save_mdns()$/;"	f	file:
+register_save_station	components/usr/global_var.c	/^static void register_save_station()$/;"	f	file:
+register_system	components/cmd_system/cmd_system.c	/^void register_system()$/;"	f
+register_tasks	components/cmd_system/cmd_system.c	/^static void register_tasks()$/;"	f	file:
+register_version	components/cmd_system/cmd_system.c	/^static void register_version()$/;"	f	file:
+register_wifi	components/cli/cmd_wifi.c	/^void register_wifi()$/;"	f
+register_wr_reg	components/usr/global_var.c	/^static void register_wr_reg()$/;"	f	file:
+register_wr_spp	components/threads/spp_thread.c	/^static void register_wr_spp()$/;"	f	file:
+regmap_args	components/usr/global_var.c	/^} regmap_args;$/;"	v	typeref:struct:__anon16	file:
+remainder	components/kits/meow_fft.h	/^    unsigned* remainder;$/;"	m	struct:Meow_Fft_Stages
+report_data	components/usr/cmd_resolve.c	/^uint16_t report_data(void)$/;"	f
+report_geo_data	components/usr/cmd_resolve.c	/^uint16_t report_geo_data(void)$/;"	f
+res	components/kits/goertzel.c	/^    float		res[FREQ_SPAN_MAX];$/;"	m	struct:__anon36	file:
+reset	components/usr/sys_conf.h	/^    uint32_t    reset;$/;"	m	struct:__anon23
+restart	components/cmd_system/cmd_system.c	/^static int restart(int argc, char **argv)$/;"	f	file:
+restart	components/usr/sys_conf.h	/^    uint32_t 		restart;$/;"	m	struct:__anon20
+role_slave	components/threads/spp_thread.c	/^static const esp_spp_role_t role_slave = ESP_SPP_ROLE_SLAVE;$/;"	v	file:
+roundup_pow_of_two	components/kits/kfifo.c	38;"	d	file:
+rt_buf	components/web_server/web_srv.c	/^float 		rt_buf[DEV_GEO_FIFO_SIZE];$/;"	v
+rtx_timeout	components/usr/cmd_resolve.c	/^    uint16_t rtx_timeout;$/;"	m	struct:__anon19	file:
+rx_buf	components/threads/tcp_thread.c	/^static uint8_t  rx_buf[BUFSZ];$/;"	v	file:
+rx_buf	components/usr/cmd_resolve.c	/^    uint32_t rx_buf[CMD_RTX_BUF_DEPTH];$/;"	m	struct:__anon19	file:
+rx_cnt	components/usr/cmd_resolve.c	/^    uint16_t rx_cnt;$/;"	m	struct:__anon19	file:
+rx_tag	components/usr/cmd_resolve.c	/^    uint16_t rx_tag;$/;"	m	struct:__anon19	file:
+rxd	components/drv/adxl_drv.c	/^    uint8_t                         rxd[DEV_GEO_RTX_SIZE];$/;"	m	struct:__anon3	file:
+rxd_temp	components/drv/adxl_drv.c	/^static uint8_t 	rxd_temp[DEV_GEO_RTX_SIZE];$/;"	v	file:
+sample_channel	components/usr/sys_conf.h	/^    uint32_t 		sample_channel;$/;"	m	struct:__anon20
+sample_freq	components/usr/sys_conf.h	/^    uint32_t    sample_freq;$/;"	m	struct:__anon23
+sample_mode	components/usr/sys_conf.h	/^    uint32_t 		sample_mode;$/;"	m	struct:__anon20
+sample_period	components/usr/sys_conf.h	/^    uint32_t    sample_period;$/;"	m	struct:__anon24
+savconf_args	components/usr/global_var.c	/^} savconf_args;$/;"	v	typeref:struct:__anon15	file:
+save_ap	components/usr/global_var.c	/^static int save_ap(const char *ssid, const char *pwd)$/;"	f	file:
+save_ap_arg	components/usr/global_var.c	/^static int save_ap_arg(int argc, char **argv)$/;"	f	file:
+save_conf	components/usr/global_var.c	/^int save_conf(const char *save_type)$/;"	f
+save_conf_opt	components/usr/reg_map_check.c	/^uint16_t save_conf_opt(uint32_t pram)$/;"	f
+save_config_arg	components/usr/global_var.c	/^static int save_config_arg(int argc, char **argv)$/;"	f	file:
+save_mdns_arg	components/usr/global_var.c	/^static int save_mdns_arg(int argc, char **argv)$/;"	f	file:
+save_station	components/usr/global_var.c	/^static int save_station(const char *ssid, const char *pwd)$/;"	f	file:
+save_station_arg	components/usr/global_var.c	/^static int save_station_arg(int argc, char **argv)$/;"	f	file:
+sec_mask	components/threads/spp_thread.c	/^static const esp_spp_sec_t sec_mask = ESP_SPP_SEC_AUTHENTICATE;$/;"	v	file:
+serial_no	components/usr/sys_conf.h	/^    uint32_t    serial_no;$/;"	m	struct:__anon28
+set_boot_opt	components/usr/reg_map_check.c	/^uint16_t set_boot_opt(uint32_t pram)$/;"	f
+set_led	components/drv/led_drv.c	/^void set_led(uint8_t pin_num, uint8_t value)$/;"	f
+set_mdns_hostname	components/usr/global_var.c	/^static int set_mdns_hostname(const char *hostname)$/;"	f	file:
+set_timestamp	components/usr/reg_map_check.c	/^uint16_t set_timestamp(uint32_t pram)$/;"	f
+setup_time	components/usr/sys_conf.h	/^    uint32_t    setup_time;$/;"	m	struct:__anon25
+signal_level	components/kits/goertzel.c	/^    float 		signal_level;$/;"	m	struct:__anon37	file:
+signal_level	components/usr/sys_conf.h	/^    float		signal_level;$/;"	m	struct:__anon30
+signal_th	components/usr/sys_conf.h	/^    uint32_t    signal_th;$/;"	m	struct:__anon23
+size	components/kits/kfifo.h	/^    unsigned int size;\/* the size of the allocated buffer *\/$/;"	m	struct:kfifo
+slen	components/usr/usr_sys_init.c	/^char slen;$/;"	v
+snr	components/kits/goertzel.c	/^    float		snr;$/;"	m	struct:__anon37	file:
+snr_buf_inst	components/kits/goertzel.c	/^snr_buf_st snr_buf_inst;$/;"	v
+snr_buf_st	components/kits/goertzel.c	/^}snr_buf_st;$/;"	t	typeref:struct:__anon38	file:
+snr_sts_st	components/kits/goertzel.c	/^}snr_sts_st;$/;"	t	typeref:struct:__anon37	file:
+software_ver	components/usr/sys_conf.h	/^    uint32_t    software_ver;$/;"	m	struct:__anon27
+spi_device_h	components/drv/adxl_drv.c	/^    spi_device_handle_t     		spi_device_h;$/;"	m	struct:__anon3	file:
+spi_geo_dev_inst	components/drv/adxl_drv.c	/^spi_geo_device_st spi_geo_dev_inst;$/;"	v
+spi_geo_device_st	components/drv/adxl_drv.c	/^}spi_geo_device_st;$/;"	t	typeref:struct:__anon3	file:
+spp_init	components/threads/spp_thread.c	/^static void spp_init(void)$/;"	f	file:
+spp_thread	components/threads/spp_thread.c	/^void spp_thread(void* param)$/;"	f
+ssid	components/cli/cmd_wifi.c	/^    struct arg_str *ssid;$/;"	m	struct:__anon6	typeref:struct:__anon6::arg_str	file:
+ssid	components/usr/global_var.c	/^    struct arg_str *ssid;$/;"	m	struct:__anon14	typeref:struct:__anon14::arg_str	file:
+ssid	components/usr/usr_sys_init.c	/^char ssid[24];$/;"	v
+stage_count	components/kits/meow_fft.h	/^    unsigned stage_count;$/;"	m	struct:Meow_Stage_Info
+stages	components/kits/meow_fft.h	/^    Meow_Fft_Stages   stages;$/;"	m	struct:Meow_FFT_Workset
+start_mdns_service	components/usr/global_var.c	/^void start_mdns_service(void)$/;"	f
+start_webserver	components/web_server/web_srv.c	/^httpd_handle_t start_webserver(void)$/;"	f
+stat	components/usr/sys_conf.h	/^    status_st   stat;$/;"	m	struct:__anon32
+stat_gen_st	components/usr/sys_conf.h	/^}stat_gen_st;$/;"	t	typeref:struct:__anon27
+stat_geo_st	components/usr/sys_conf.h	/^}stat_geo_st;$/;"	t	typeref:struct:__anon29
+stat_gtz_st	components/usr/sys_conf.h	/^}stat_gtz_st;$/;"	t	typeref:struct:__anon30
+stat_man_st	components/usr/sys_conf.h	/^}stat_man_st;$/;"	t	typeref:struct:__anon28
+state	components/drv/adxl_drv.h	/^	uint8_t		state;$/;"	m	struct:__anon1
+status_bm	components/usr/sys_conf.h	/^    uint32_t    status_bm;$/;"	m	struct:__anon27
+status_reg_map_inst	components/usr/global_var.c	/^const sts_reg_map_st status_reg_map_inst[STAT_REG_MAP_NUM]=$/;"	v
+status_reg_num	components/usr/sys_conf.h	/^    uint32_t    status_reg_num;$/;"	m	struct:__anon27
+status_st	components/usr/sys_conf.h	/^}status_st;$/;"	t	typeref:struct:__anon31
+stop_webserver	components/web_server/web_srv.c	/^void stop_webserver(httpd_handle_t server)$/;"	f
+sts_reg_map_st	components/usr/sys_conf.h	/^}sts_reg_map_st;$/;"	t	typeref:struct:__anon34
+symbol_period	components/usr/sys_conf.h	/^    uint32_t	symbol_period;$/;"	m	struct:__anon25
+sys_reg_st	components/usr/sys_conf.h	/^}sys_reg_st;$/;"	t	typeref:struct:__anon32
+target_freq	components/usr/sys_conf.h	/^    uint32_t    target_freq;$/;"	m	struct:__anon23
+target_span	components/usr/sys_conf.h	/^    uint32_t    target_span;$/;"	m	struct:__anon23
+tasks_create	main/main.c	/^static void tasks_create(void)$/;"	f	file:
+tasks_info	components/cmd_system/cmd_system.c	/^static int tasks_info(int argc, char **argv)$/;"	f	file:
+tcp_en	components/usr/sys_conf.h	/^    uint32_t    tcp_en;$/;"	m	struct:__anon21
+tcp_flag	components/threads/tcp_thread.c	/^static uint8_t  tcp_flag;$/;"	v	file:
+tcp_period	components/usr/sys_conf.h	/^    uint32_t    tcp_period;$/;"	m	struct:__anon21
+tcp_rx_thread	components/threads/tcp_thread.c	/^static void tcp_rx_thread(void* parameter)$/;"	f	file:
+tcp_thread	components/threads/tcp_thread.c	/^void tcp_thread(void *pvParameters)$/;"	f
+tcp_timer_opt	components/usr/reg_map_check.c	/^uint16_t tcp_timer_opt(uint32_t pram)$/;"	f
+tcp_tx_thread	components/threads/tcp_thread.c	/^static void tcp_tx_thread(void* parameter)$/;"	f	file:
+test_thread	components/threads/test_thread.c	/^void test_thread(void* param)$/;"	f
+time	components/web_server/web_srv.c	/^httpd_uri_t time = {$/;"	v
+time_get_handler	components/web_server/web_srv.c	/^esp_err_t time_get_handler(httpd_req_t *req)$/;"	f
+time_new	components/threads/spp_thread.c	/^static struct timeval time_new, time_old;$/;"	v	typeref:struct:timeval	file:
+time_old	components/threads/spp_thread.c	/^static struct timeval time_new, time_old;$/;"	v	typeref:struct:	file:
+timeout	components/cli/cmd_wifi.c	/^    struct arg_int *timeout;$/;"	m	struct:__anon6	typeref:struct:__anon6::arg_int	file:
+timer_counter_value	components/drv/infared_drv.c	/^    uint64_t timer_counter_value;$/;"	m	struct:__anon5	file:
+timer_event_t	components/drv/infared_drv.c	/^} timer_event_t;$/;"	t	typeref:struct:__anon5	file:
+timer_example_evt_task	components/drv/infared_drv.c	/^static void timer_example_evt_task(void *arg)$/;"	f	file:
+timer_group	components/drv/infared_drv.c	/^    int timer_group;$/;"	m	struct:__anon5	file:
+timer_group0_isr	components/drv/infared_drv.c	/^void IRAM_ATTR timer_group0_isr(void *para)$/;"	f
+timer_idx	components/drv/infared_drv.c	/^    int timer_idx;$/;"	m	struct:__anon5	file:
+timer_queue	components/drv/infared_drv.c	/^xQueueHandle timer_queue;$/;"	v
+toggle_led	components/drv/led_drv.c	/^void toggle_led(uint8_t pin_num)$/;"	f
+tx_buf	components/threads/spp_thread.c	/^static uint32_t tx_buf[1024];$/;"	v	file:
+tx_buf	components/threads/tcp_thread.c	/^static uint32_t tx_buf[2048];$/;"	v	file:
+tx_buf	components/usr/cmd_resolve.c	/^    uint32_t tx_buf[CMD_RTX_BUF_DEPTH*2];$/;"	m	struct:__anon19	file:
+tx_cmd	components/usr/cmd_resolve.c	/^    uint16_t tx_cmd;$/;"	m	struct:__anon19	file:
+tx_cnt	components/usr/cmd_resolve.c	/^    uint16_t tx_cnt;$/;"	m	struct:__anon19	file:
+tx_errcode	components/usr/cmd_resolve.c	/^    uint8_t  tx_errcode;$/;"	m	struct:__anon19	file:
+txd	components/drv/adxl_drv.c	/^    uint8_t                         txd[DEV_GEO_RTX_SIZE];$/;"	m	struct:__anon3	file:
+type	components/drv/infared_drv.c	/^    int type;  \/\/ the type of timer's event$/;"	m	struct:__anon5	file:
+type	components/usr/sys_conf.h	/^    uint8_t	    type;                     \/\/0:RW, 1:WO$/;"	m	struct:__anon33
+uint16	components/usr/sys_def.h	/^typedef unsigned short 		uint16;$/;"	t
+uint32	components/usr/sys_def.h	/^typedef unsigned long 		uint32;$/;"	t
+uint8	components/usr/sys_def.h	/^typedef unsigned char 		uint8;$/;"	t
+usr_led_init	components/drv/led_drv.c	/^void usr_led_init(void)$/;"	f
+usr_spp_args	components/threads/spp_thread.c	/^} usr_spp_args;$/;"	v	typeref:struct:__anon8	file:
+usr_spp_init	components/threads/spp_thread.c	/^static void usr_spp_init(void)$/;"	f	file:
+usr_spp_inst	components/threads/spp_thread.c	/^static usr_spp_st usr_spp_inst;$/;"	v	file:
+usr_spp_reg_conn	components/threads/spp_thread.c	/^static esp_err_t usr_spp_reg_conn(uint32_t h_conn,bool reg_mode)$/;"	f	file:
+usr_spp_register	components/threads/spp_thread.c	/^void usr_spp_register(void)$/;"	f
+usr_spp_st	components/threads/spp_thread.c	/^}usr_spp_st;$/;"	t	typeref:struct:__anon7	file:
+usr_spp_write	components/threads/spp_thread.c	/^esp_err_t usr_spp_write(uint8_t conn_id,uint8_t* src_dptr, uint16_t tx_len)$/;"	f
+usr_sys_init	components/usr/usr_sys_init.c	/^void usr_sys_init(void)$/;"	f
+usr_wifi_init	components/cli/cmd_wifi.c	/^void usr_wifi_init(void)$/;"	f
+volatile	build/CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	11;"	d	file:
+volum	components/usr/sys_conf.h	/^    uint32_t    volum;$/;"	m	struct:__anon25
+w_2n	components/kits/meow_fft.h	/^    Meow_FFT_Complex* w_2n;$/;"	m	struct:Meow_FFT_Workset_Real
+w_count	components/kits/meow_fft.h	/^    unsigned w_count;$/;"	m	struct:Meow_Stage_Info
+wifi_args	components/cli/cmd_wifi.c	/^} wifi_args;$/;"	v	typeref:struct:__anon6	file:
+wifi_args	components/usr/global_var.c	/^} wifi_args;$/;"	v	typeref:struct:__anon14	file:
+wifi_event_group	components/cli/cmd_wifi.c	/^static EventGroupHandle_t wifi_event_group;$/;"	v	file:
+wifi_join	components/cli/cmd_wifi.c	/^static bool wifi_join(const char* ssid, const char* pass, int timeout_ms)$/;"	f	file:
+wifi_mode	components/usr/sys_conf.h	/^    uint32_t 		wifi_mode;$/;"	m	struct:__anon20
+win	components/usr/sys_conf.h	/^    uint32_t    win;$/;"	m	struct:__anon22
+win_apply	components/kits/my_fft.c	/^void win_apply(float* inbuf, float* outbuf)$/;"	f
+win_buf_ptr	components/kits/my_fft.c	/^	float*					win_buf_ptr;$/;"	m	struct:__anon35	file:
+win_init	components/kits/my_fft.c	/^static void win_init(uint16_t ord)$/;"	f	file:
+window	components/kits/goertzel.c	/^inline static float window(uint32_t n, uint32_t ord)$/;"	f	file:
+wn	components/kits/meow_fft.h	/^    Meow_FFT_Complex* wn;$/;"	m	struct:Meow_FFT_Workset
+wn_ordered	components/kits/meow_fft.h	/^    Meow_FFT_Complex* wn_ordered;$/;"	m	struct:Meow_FFT_Workset
+wr_reg	components/usr/global_var.c	/^static int wr_reg(int argc, char **argv)$/;"	f	file:
+wr_reg	components/web_server/web_srv.c	/^httpd_uri_t wr_reg = {$/;"	v
+wr_reg_get_handler	components/web_server/web_srv.c	/^esp_err_t wr_reg_get_handler(httpd_req_t *req)$/;"	f
+wr_spp	components/threads/spp_thread.c	/^static int wr_spp(int argc, char **argv)$/;"	f	file:

@@ -48,6 +48,7 @@ void test_thread(void* param)
 	extern sys_reg_st  g_sys;
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	dac_init(1);
+	adc_init();
 	if((g_sys.conf.gen.wifi_mode == 1)&&bit_op_get(g_sys.stat.gen.status_bm,GBM_WIFI) == 1)
 	{
 		join_wifi();
@@ -65,6 +66,7 @@ void test_thread(void* param)
 			printf("n_psd:\t%f\t%f\n",g_sys.stat.gtz.acc_noise_level,g_sys.stat.gtz.noise_level);
 			printf("rank:\t%d\t\t%d\n\n",g_sys.stat.gtz.acc_rank,g_sys.stat.gtz.rank);
 		}
+		printf("adc:%d,%d\n",adc_get_raw(),adc_get_volt());
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 		if(g_sys.conf.gen.restart == 9527)
 			esp_restart();
