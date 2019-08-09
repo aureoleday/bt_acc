@@ -21,6 +21,13 @@ typedef struct
 
 typedef struct
 {
+    uint32_t    mav_cnt;
+    uint32_t    up_lim;
+    uint32_t    low_lim;
+}conf_bat_st;
+
+typedef struct
+{
     uint32_t    tcp_en;
     uint32_t    tcp_period;
     uint32_t    http_en;
@@ -73,6 +80,7 @@ typedef struct
     conf_mod_st mod;
     conf_fft_st fft;
     conf_gtz_st gtz;
+	conf_bat_st bat;
 }config_st;
 
 
@@ -91,6 +99,13 @@ typedef struct
     uint32_t    man_date;
     uint32_t    dev_type;
 }stat_man_st;
+
+typedef struct
+{
+    uint32_t   	adc_raw;
+    uint32_t   	pwr_val;
+    uint32_t   	pwr_sts;
+}stat_bat_st;
 
 typedef struct
 {
@@ -118,6 +133,7 @@ typedef struct
     stat_man_st 	man;
     stat_geo_st		geo;
     stat_gtz_st		gtz;
+    stat_bat_st		bat;
 }status_st;
 
 typedef struct
