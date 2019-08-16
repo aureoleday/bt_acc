@@ -56,28 +56,7 @@ static void tasks_create(void)
             NULL,
             CMD_THREAD_PRIO,
             NULL);
-
-    //    xTaskCreate(&spp_thread,
-    //                "Task_spp",
-    //    			SPP_THREAD_STACK_SIZE,
-    //                NULL,
-    //    			SPP_THREAD_PRIO,
-    //    			NULL);
-
-    //	xTaskCreate(&tcp_thread,
-    //				"Task_tcp",
-    //				TCP_THREAD_STACK_SIZE,
-    //				NULL,
-    //				TCP_THREAD_PRIO,
-    //				NULL);
-
-    xTaskCreate(&geo_thread,
-            "Task_geo",
-            GEO_THREAD_STACK_SIZE,
-            NULL,
-            GEO_THREAD_PRIO,
-            NULL);
-}
+} 
 
 void app_main()
 {

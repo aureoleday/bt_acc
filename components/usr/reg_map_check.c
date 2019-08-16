@@ -5,8 +5,6 @@
 #include "freertos/task.h"
 #include "esp_timer.h"
 #include "esp_log.h"
-#include "adxl_drv.h"
-#include "goertzel.h"
 
 
 //extern sys_reg_st g_sys;
@@ -16,18 +14,6 @@ uint16_t dhcp_trigger(uint32_t pram)
     //    usr_dhcp_action(pram);
     return 1;
 }
-
-//static void reset_timeout(void* arg)
-//{
-//	printf("restart1\n");
-//	esp_restart();
-//}
-//
-//static esp_timer_handle_t reset_timer;
-//uint16_t sys_reset_opt(uint32_t pram)
-//{
-//
-//}
 
 uint16_t set_boot_opt(uint32_t pram)
 {  
@@ -57,17 +43,7 @@ uint16_t load_conf_opt(uint32_t pram)
 
 uint16_t set_timestamp(uint32_t pram)
 {
-    //    rt_device_t device;
-    //    rt_err_t ret = -RT_ERROR;
-    //
-    //    device = rt_device_find("rtc");
-    //    /* update to RTC device. */
-    //    ret = rt_device_control(device, RT_DEVICE_CTRL_RTC_SET_TIME, &pram);
-    //
-    //    if(ret == RT_EOK)
-    //        return 1;
-    //    else
-    return 0;
+   return 0;
 }
 
 uint16_t plc_conf_opt(uint32_t pram)
@@ -96,43 +72,6 @@ uint16_t tcp_timer_opt(uint32_t pram)
     return 1;
 }
 
-
-uint16_t geo_timer_opt(uint32_t pram)
-{
-    extern esp_timer_handle_t geo_timer;
-    ESP_ERROR_CHECK(esp_timer_stop(geo_timer));
-    ESP_ERROR_CHECK(esp_timer_start_periodic(geo_timer, pram*1000));
-    return 1;
-}
-
-uint16_t geo_filter_opt(uint32_t pram)
-{
-    uint8_t data = pram&0x0ff;
-
-    adxl_wr_reg(ADXL_FILTER,data);
-
-    return 1;
-}
-
-uint16_t geo_pwr_opt(uint32_t pram)
-{
-    uint8_t data = pram&0x0ff;
-    if(pram == 1)
-        adxl_wr_reg(ADXL_POWER_CTL,0);
-    else if(pram == 0)
-        adxl_wr_reg(ADXL_POWER_CTL,1);
-    else
-        adxl_wr_reg(ADXL_POWER_CTL,data);
-
-    return 1;
-}
-
-uint16_t gtz_rst_opt(uint32_t pram)
-{
-    gtz_reset();
-
-    return 1;
-}
 
 uint16_t mod_en_opt(uint32_t pram)
 {

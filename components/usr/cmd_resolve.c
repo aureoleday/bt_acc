@@ -57,7 +57,6 @@ kfifo_t 		kc_buf_tx;
 
 fifo32_cb_td cmd_rx_fifo;
 //fifo32_cb_td cmd_tx_fifo;
-esp_timer_handle_t geo_timer;
 
 typedef struct
 {
@@ -121,34 +120,6 @@ static void cmd_buf_init(void)
 //    report_data();
 //}
 
-static void geo_timeout(void* arg)
-{
-    extern sys_reg_st g_sys;
-    uint16_t report_geo_data(void);
-    if(g_sys.conf.geo.pkg_en)
-        report_geo_data();
-}
-
-/**
- * @brief   sample interval timer initialization, expires in 6 miliseconds pieriod
- * @param  none
- * @retval none
- */
-
-static uint16_t	geo_timer_init(void)
-{
-    extern sys_reg_st g_sys;
-    const esp_timer_create_args_t geo_timer_args = {
-            .callback = &geo_timeout,
-            /* name is optional, but may help identify the timer when debugging */
-            .name = "periodic"
-    };
-
-    ESP_ERROR_CHECK(esp_timer_create(&geo_timer_args, &geo_timer));
-    ESP_ERROR_CHECK(esp_timer_start_periodic(geo_timer, g_sys.conf.geo.pkg_period*1000));
-    return 0;
-}
-
 
 /**
  * @brief  cmd uart send interface
@@ -160,7 +131,6 @@ void cmd_dev_init(void)
 {
     cmd_buf_init();
     //    cmd_timer_init();
-    geo_timer_init();
 }
 
 /**
@@ -649,62 +619,6 @@ uint16_t report_data(void)
     cmd_response();
     return err_code;
 }
-
-//static int16_t get_geo_data(uint32_t * buf_ptr)
-//{
-//    extern fifo32_cb_td geo_rx_fifo;
-//    uint32_t temp;
-//    uint16_t i;
-//    uint16_t fifo_len;
-//
-//    fifo_len = get_fifo32_length(&geo_rx_fifo);
-//
-//    for(i=0;i<fifo_len;i++)
-//    {
-//        fifo32_pop(&geo_rx_fifo,&temp);
-//        *(buf_ptr+i) = temp;
-//    }
-//    return fifo_len;
-//}
-
-
-static int16_t get_geo_fdata(float* buf_ptr)
-{
-    extern kfifo_t kf_s;
-
-    return kfifo_out(&kf_s,buf_ptr,sizeof(uint32_t)*256);
-}
-
-uint16_t report_geo_data(void)
-{
-    extern sys_reg_st	  g_sys;
-    uint8_t err_code;
-    uint16_t rd_cnt;
-
-    err_code = CMD_ERR_NOERR;
-    if((bit_op_get(g_sys.stat.gen.status_bm,GBM_BT) == 0)&&(bit_op_get(g_sys.stat.gen.status_bm,GBM_TCP) == 0))
-        return CMD_NOT_READY;
-
-    //    rd_cnt = get_geo_data(&cmd_reg_inst.tx_buf[FRAME_D_AL_POS])/4;
-    rd_cnt = get_geo_fdata((float*)&cmd_reg_inst.tx_buf[FRAME_D_AL_POS])/4;
-
-    if(rd_cnt == 0)
-        return 0;
-
-    cmd_reg_inst.tx_cmd	= CMD_RP_GEO;
-    cmd_reg_inst.tx_cnt = rd_cnt;
-    cmd_reg_inst.tx_errcode = err_code;
-    cmd_response();
-    return err_code;
-}
-
-
-
-//const esp_timer_create_args_t periodic_timer_args = {
-//        .callback = &periodic_timer_callback,
-//        /* name is optional, but may help identify the timer when debugging */
-//        .name = "periodic"
-//};
 
 
 

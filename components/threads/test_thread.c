@@ -57,7 +57,6 @@ void test_thread(void* param)
 
 	while(1)
 	{
-		toggle_led(0);
 		bat_update();
 		if(g_sys.conf.gen.dbg == 1)
 		{
