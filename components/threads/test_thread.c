@@ -13,7 +13,7 @@
 #include "global_var.h"
 #include "bit_op.h"
 #include "dac_drv.h"
-#include "bat_drv.h"
+#include "pb_drv.h"
 
 void join_wifi(void)
 {
@@ -49,7 +49,6 @@ void test_thread(void* param)
 	extern sys_reg_st  g_sys;
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	dac_init(1);
-	bat_init();
 	if((g_sys.conf.gen.wifi_mode == 1)&&bit_op_get(g_sys.stat.gen.status_bm,GBM_WIFI) == 1)
 	{
 		join_wifi();
@@ -57,7 +56,7 @@ void test_thread(void* param)
 
 	while(1)
 	{
-		bat_update();
+		pb_cb();
 		if(g_sys.conf.gen.dbg == 1)
 		{
 			printf("\tacc\t\tcur\n");
