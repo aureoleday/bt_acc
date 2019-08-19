@@ -9,6 +9,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "led_drv.h"
+#include "pb_drv.h"
 #include "global_var.h"
 #include "nvs.h"
 #include "nvs_flash.h"
@@ -35,6 +36,7 @@ void usr_sys_init(void)
     //	extern sys_reg_st  g_sys;
     initialize_nvs();
     led_init();
+	pb_init();
     gvar_init();
     gvar_register();
 }
