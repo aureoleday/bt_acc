@@ -102,12 +102,12 @@ void set_bat_led(uint16_t bat_cnt)
     sr_output();
 }
 
-void set_pwr_led(uint16_t pwr_cnt)
+void set_vol_led(uint16_t vol_cnt)
 {
-	uint16_t pwr_reg;
-	pwr_reg = (~(0x0001<<pwr_cnt))&0x000f;
+	uint16_t vol_reg;
+	vol_reg = (~(0x0001<<vol_cnt))&0x000f;
     uint16_t sr_reg = shift_reg_data;
-    sr_reg = (sr_reg & 0xff0f) | (pwr_reg << 4);
+    sr_reg = (sr_reg & 0xff0f) | (vol_reg << 4);
     sr_update(sr_reg);
     shift_reg_data = sr_reg;
     sr_output();

@@ -9,12 +9,12 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "led_drv.h"
+#include "bat_drv.h"
 #include "pb_drv.h"
 #include "global_var.h"
 #include "nvs.h"
 #include "nvs_flash.h"
 #include "threads.h"
-#include "goertzel.h"
 
 char ssid[24];
 char pwd[24];
@@ -36,6 +36,7 @@ void usr_sys_init(void)
     //	extern sys_reg_st  g_sys;
     initialize_nvs();
     led_init();
+	bat_init();
 	pb_init();
     gvar_init();
     gvar_register();
