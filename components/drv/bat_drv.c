@@ -1,4 +1,5 @@
 #include "driver/adc.h"
+#include "led_drv.h"
 #include "esp_adc_cal.h"
 #include "sys_conf.h"
 
@@ -81,6 +82,7 @@ void bat_update(void)
 	extern sys_reg_st g_sys;
 	g_sys.stat.bat.adc_raw = bat_mav_calc(g_sys.conf.bat.mav_cnt);
 	g_sys.stat.bat.pwr_val = bat_pwr_calc(g_sys.conf.bat.up_lim,g_sys.conf.bat.low_lim,g_sys.stat.bat.adc_raw);
+	set_bat_led(g_sys.stat.bat.pwr_val/12);
 }
 
 void bat_init(void) 

@@ -96,10 +96,15 @@ void set_bat_led(uint16_t bat_cnt)
 	uint16_t bat_bm;
 	bat_bm = 0x00ff>>bat_cnt;
     uint16_t sr_reg = shift_reg_data;
-    sr_reg = (sr_reg & 0x00ff) | (bat_bm << 8);
-    sr_update(sr_reg);
-    shift_reg_data = sr_reg;
-    sr_output();
+	if((sr_reg>>8) == bat_bm)
+		return;
+	else
+	{
+    	sr_reg = (sr_reg & 0x00ff) | (bat_bm << 8);
+    	sr_update(sr_reg);
+    	shift_reg_data = sr_reg;
+    	sr_output();
+	}
 }
 
 void set_vol_led(uint16_t vol_cnt)
