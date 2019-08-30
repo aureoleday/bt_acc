@@ -36,6 +36,7 @@ void usr_sys_init(void)
     //	extern sys_reg_st  g_sys;
     initialize_nvs();
     led_init();
+    led_register();
 	bat_init();
 	pb_init();
     gvar_init();

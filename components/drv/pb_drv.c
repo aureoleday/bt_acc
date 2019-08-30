@@ -109,6 +109,7 @@ void pb_init(void)
     io_conf.mode = GPIO_MODE_INPUT;
     //bit mask of the pins that you want to set,e.g.GPIO18/19fasdf
     io_conf.pin_bit_mask = GPIO_INPUT_PIN_SEL;
+    io_conf.pull_down_en = 0;
     //enable pull-up mode
     io_conf.pull_up_en = 1;
     //configure GPIO with the given settings

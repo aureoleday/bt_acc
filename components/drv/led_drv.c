@@ -4,6 +4,8 @@
  *  Created on: 2019Äê5ÔÂ6ÈÕ
  *      Author: Administrator
  */
+#include "argtable3/argtable3.h"
+#include "esp_console.h"
 #include "driver/gpio.h"
 #define     SR_D			12 
 #define     SR_CLK          14 
@@ -18,7 +20,7 @@
 #define     Bit_RESET		0
 #define     Bit_SET		 	1	
 
-#define GPIO_OUTPUT_PIN_SEL ((1ULL<<SR_D)  | (1ULL<<SR_CLK) | (1ULL<<SR_NCLR)  | (1ULL<<SR_OE_n) | (1ULL<<PIN_LED_PWR) | (1ULL<<PIN_LED_STS)| (1ULL<<PIN_LED_COM))
+#define GPIO_OUTPUT_PIN_SEL ((1ULL<<SR_D)  | (1ULL<<SR_SRCLK)  | (1ULL<<SR_CLK) | (1ULL<<SR_NCLR)  | (1ULL<<SR_OE_n) | (1ULL<<PIN_LED_PWR) | (1ULL<<PIN_LED_STS)| (1ULL<<PIN_LED_COM))
 
 static uint16_t shift_reg_data;
 
@@ -28,7 +30,7 @@ void led_init(void)
     //disable interrupt
     io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
     //set as output mode
-    io_conf.mode = GPIO_MODE_INPUT_OUTPUT;
+    io_conf.mode = GPIO_MODE_OUTPUT;
     //bit mask of the pins that you want to set,e.g.GPIO18/19fasdf
     io_conf.pin_bit_mask = GPIO_OUTPUT_PIN_SEL;
     //disable pull-down mode
@@ -41,7 +43,7 @@ void led_init(void)
     gpio_set_level(SR_CLK, 0);
     gpio_set_level(SR_SRCLK, 0);
     gpio_set_level(SR_NCLR, 1);
-    gpio_set_level(SR_OE_n, 1);
+    gpio_set_level(SR_OE_n, 0);
     gpio_set_level(PIN_LED_PWR, 1);
     gpio_set_level(PIN_LED_STS, 1);
     gpio_set_level(PIN_LED_COM, 1);
@@ -55,10 +57,12 @@ static void sr_bit_op(uint16_t pin_type, uint8_t action)
 
 static void sr_delay(uint16_t time)
 {
-    uint16_t i;
-    for(i=0;i<time;i++)
-    ;
-
+    uint16_t i,j;
+    for(i=0;i<time*10;i++)
+    {
+        for(j=0;j<1000;j++)
+            ;
+    }
 }
 
 static void sr_output(void)
@@ -94,13 +98,13 @@ static void sr_update(uint16_t sdata)
 void set_bat_led(uint16_t bat_cnt)
 {
 	uint16_t bat_bm;
-	bat_bm = 0x00ff>>bat_cnt;
     uint16_t sr_reg = shift_reg_data;
-	if((sr_reg>>8) == bat_bm)
+	bat_bm = (0x00ff<<bat_cnt)&0x00ff;
+	if((sr_reg&0x00ff) == bat_bm)
 		return;
 	else
 	{
-    	sr_reg = (sr_reg & 0x00ff) | (bat_bm << 8);
+    	sr_reg = (sr_reg & 0xff00) | bat_bm;
     	sr_update(sr_reg);
     	shift_reg_data = sr_reg;
     	sr_output();
@@ -110,9 +114,9 @@ void set_bat_led(uint16_t bat_cnt)
 void set_vol_led(uint16_t vol_cnt)
 {
 	uint16_t vol_reg;
-	vol_reg = (~(0x0001<<vol_cnt))&0x000f;
     uint16_t sr_reg = shift_reg_data;
-    sr_reg = (sr_reg & 0xff0f) | (vol_reg << 4);
+	vol_reg = (~(0x0001<<vol_cnt))&0x000f;
+    sr_reg = (sr_reg & 0x0fff) | (vol_reg << 12);
     sr_update(sr_reg);
     shift_reg_data = sr_reg;
     sr_output();
@@ -123,7 +127,7 @@ void set_freq_led(uint16_t freq_cnt)
 	uint16_t freq_reg;
     uint16_t sr_reg = shift_reg_data;
 	freq_reg = (~(0x0001<<freq_cnt))&0x000f;
-    sr_reg = (sr_reg & 0xfff0) | freq_reg;
+    sr_reg = (sr_reg & 0xf0ff) | (freq_reg<<8);
     sr_update(sr_reg);
     shift_reg_data = sr_reg;
     sr_output();
@@ -143,5 +147,119 @@ void set_ind_led(uint8_t led_type, uint8_t bit_action)
 	{
 		gpio_set_level(PIN_LED_COM, bit_action);
 	}
+}
+
+/** Arguments used by 'mdns' function */
+static struct {
+    struct arg_int *dir;
+    struct arg_end *end;
+} led_mod_args;
+
+static int bat_mod(int argc, char **argv)
+{
+
+    int nerrors = arg_parse(argc, argv, (void**) &led_mod_args);
+    if (nerrors != 0) {
+        arg_print_errors(stderr, led_mod_args.end, argv[0]);
+        return 1;
+    }
+    set_bat_led(led_mod_args.dir->ival[0]);
+
+    return 0;
+}
+
+static int vol_mod(int argc, char **argv)
+{
+
+    int nerrors = arg_parse(argc, argv, (void**) &led_mod_args);
+    if (nerrors != 0) {
+        arg_print_errors(stderr, led_mod_args.end, argv[0]);
+        return 1;
+    }
+    set_vol_led(led_mod_args.dir->ival[0]);
+
+    return 0;
+}
+
+static int freq_mod(int argc, char **argv)
+{
+
+    int nerrors = arg_parse(argc, argv, (void**) &led_mod_args);
+    if (nerrors != 0) {
+        arg_print_errors(stderr, led_mod_args.end, argv[0]);
+        return 1;
+    }
+    set_freq_led(led_mod_args.dir->ival[0]);
+
+    return 0;
+}
+
+static int led_sts_info(int argc, char **argv)
+{
+    esp_err_t err = 0;
+    printf("shiff reg:%x\n",shift_reg_data);
+    return err;
+}
+
+static void register_bat_mod()
+{
+    led_mod_args.dir = arg_int1(NULL, NULL, "<a>", "bat change");
+    led_mod_args.end = arg_end(1);
+    const esp_console_cmd_t cmd = {
+            .command = "bat_mod",
+            .help = "Change bat led status",
+            .hint = NULL,
+            .func = &bat_mod,
+            .argtable = &led_mod_args
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
+static void register_vol_mod()
+{
+    led_mod_args.dir = arg_int1(NULL, NULL, "<a>", "volum change");
+    led_mod_args.end = arg_end(1);
+    const esp_console_cmd_t cmd = {
+            .command = "vol_mod",
+            .help = "Change volum led status",
+            .hint = NULL,
+            .func = &vol_mod,
+            .argtable = &led_mod_args
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
+static void register_freq_mod()
+{
+    led_mod_args.dir = arg_int1(NULL, NULL, "<a>", "freq change");
+    led_mod_args.end = arg_end(1);
+    const esp_console_cmd_t cmd = {
+            .command = "freq_mod",
+            .help = "Change freq led status",
+            .hint = NULL,
+            .func = &freq_mod,
+            .argtable = &led_mod_args
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
+void register_led_sts_info()
+{
+    const esp_console_cmd_t cmd = {
+            .command = "led_sts_info",
+            .help = "print led sts info",
+            .hint = NULL,
+            .func = &led_sts_info
+    };
+    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
+}
+
+void led_register(void)
+{
+    register_led_sts_info();
+    register_bat_mod();
+    register_vol_mod();
+    register_freq_mod();
+
 }
 
