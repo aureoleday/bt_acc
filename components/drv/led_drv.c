@@ -5,6 +5,8 @@
  *      Author: Administrator
  */
 #include "argtable3/argtable3.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include "esp_console.h"
 #include "driver/gpio.h"
 #define     SR_D			12 
@@ -24,32 +26,6 @@
 
 static uint16_t shift_reg_data;
 
-void led_init(void)
-{
-    gpio_config_t io_conf;
-    //disable interrupt
-    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
-    //set as output mode
-    io_conf.mode = GPIO_MODE_OUTPUT;
-    //bit mask of the pins that you want to set,e.g.GPIO18/19fasdf
-    io_conf.pin_bit_mask = GPIO_OUTPUT_PIN_SEL;
-    //disable pull-down mode
-    io_conf.pull_down_en = 0;
-    //disable pull-up mode
-    io_conf.pull_up_en = 0;
-    //configure GPIO with the given settings
-    gpio_config(&io_conf);
-    gpio_set_level(SR_D, 0);
-    gpio_set_level(SR_CLK, 0);
-    gpio_set_level(SR_SRCLK, 0);
-    gpio_set_level(SR_NCLR, 1);
-    gpio_set_level(SR_OE_n, 0);
-    gpio_set_level(PIN_LED_PWR, 1);
-    gpio_set_level(PIN_LED_STS, 1);
-    gpio_set_level(PIN_LED_COM, 1);
-}
-
-
 static void sr_bit_op(uint16_t pin_type, uint8_t action)
 {
 	gpio_set_level(pin_type, action);
@@ -57,12 +33,9 @@ static void sr_bit_op(uint16_t pin_type, uint8_t action)
 
 static void sr_delay(uint16_t time)
 {
-    uint16_t i,j;
+    uint16_t i;
     for(i=0;i<time*10;i++)
-    {
-        for(j=0;j<1000;j++)
-            ;
-    }
+        ;
 }
 
 static void sr_output(void)
@@ -81,7 +54,7 @@ static void sr_update(uint16_t sdata)
     for(i=0;i<16;i++)
     {
         sr_bit_op(SR_SRCLK,Bit_RESET);
-        sr_delay(1);
+        //sr_delay(1);
         if(update_reg&0x8000)
             sr_bit_op(SR_D,Bit_SET);
         else
@@ -147,6 +120,20 @@ void set_ind_led(uint8_t led_type, uint8_t bit_action)
 	{
 		gpio_set_level(PIN_LED_COM, bit_action);
 	}
+}
+
+void led_en(uint16_t enable)
+{
+    if(enable != 0)
+    {
+        set_freq_led(0);
+        set_vol_led(0);
+    }
+    else
+    {
+        set_freq_led(4);
+        set_vol_led(4);
+    }
 }
 
 /** Arguments used by 'mdns' function */
@@ -254,12 +241,43 @@ void register_led_sts_info()
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
 }
 
+void led_init(void)
+{
+    gpio_config_t io_conf;
+    //disable interrupt
+    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
+    //set as output mode
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    //bit mask of the pins that you want to set,e.g.GPIO18/19fasdf
+    io_conf.pin_bit_mask = GPIO_OUTPUT_PIN_SEL;
+    //disable pull-down mode
+    io_conf.pull_down_en = 0;
+    //disable pull-up mode
+    io_conf.pull_up_en = 0;
+    //configure GPIO with the given settings
+    gpio_config(&io_conf);
+    gpio_set_level(SR_D, 1);
+    gpio_set_level(SR_CLK, 0);
+    gpio_set_level(SR_SRCLK, 0);
+    gpio_set_level(SR_NCLR, 1);
+    gpio_set_level(SR_OE_n, 0);
+    gpio_set_level(PIN_LED_PWR, 1);
+    gpio_set_level(PIN_LED_STS, 1);
+    gpio_set_level(PIN_LED_COM, 1);
+
+	vTaskDelay(10 / portTICK_PERIOD_MS);
+
+    shift_reg_data = 0xffff;
+
+    led_en(0);
+    set_bat_led(0);
+}
+
 void led_register(void)
 {
     register_led_sts_info();
     register_bat_mod();
     register_vol_mod();
     register_freq_mod();
-
 }
 

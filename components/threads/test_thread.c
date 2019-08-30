@@ -56,7 +56,7 @@ void test_thread(void* param)
 
 	while(1)
 	{
-		pb_cb();
+		//pb_cb();
 		bat_update();	
 		if(g_sys.conf.gen.dbg == 1)
 		{

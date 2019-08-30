@@ -9,6 +9,7 @@
 #define COMPONENTS_DRV_PB_DRV_H_
 
 void pb_init(void);
-void pb_cb(void);
+//void pb_cb(void);
+void pb_sts_update(void);
 
 #endif /* COMPONENTS_DRV_PB_DRV_H_ */
