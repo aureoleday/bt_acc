@@ -65,7 +65,7 @@ static uint32_t bat_mav_calc(uint16_t mav_cnt_set)
        	 	bat_inst.mav_cnt = 0;
 		bat_mav_volt = bat_inst.accum_sum/mav_cnt_set;
 	}
-	return bat_mav_volt*83/50;
+	return bat_mav_volt*105/50;
 }
 
 static uint32_t bat_pwr_calc(uint32_t up_lim, uint32_t low_lim, uint32_t bat_volt)
@@ -81,6 +81,7 @@ void bat_update(void)
 {
 	extern sys_reg_st g_sys;
 	g_sys.stat.bat.adc_raw = bat_mav_calc(g_sys.conf.bat.mav_cnt);
+    //printf("bat_volt:%d\n",g_sys.stat.bat.adc_raw);
 	g_sys.stat.bat.pwr_val = bat_pwr_calc(g_sys.conf.bat.up_lim,g_sys.conf.bat.low_lim,g_sys.stat.bat.adc_raw);
 	set_bat_led(g_sys.stat.bat.pwr_val/12);
 }

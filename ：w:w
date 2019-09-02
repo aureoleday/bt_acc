@@ -1,0 +1,55 @@
+#include "driver/gpio.h"
+#include "driver/dac.h"
+#include "driver/adc.h"
+#include "soc/rtc_periph.h"
+#include "soc/sens_reg.h"
+#include "esp_adc_cal.h"
+
+//#define DEFAULT_VREF    1100
+//static esp_adc_cal_characteristics_t *adc_chars;
+
+//void adc_init(void)
+//{
+//    adc1_config_width(ADC_WIDTH_BIT_12);
+//    adc1_config_channel_atten(ADC1_CHANNEL_0,ADC_ATTEN_DB_11);
+//	adc_chars = calloc(1, sizeof(esp_adc_cal_characteristics_t));
+//    esp_adc_cal_value_t val_type = esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, DEFAULT_VREF, adc_chars);
+//}
+static void dac_timer_cb(void* arg)
+{
+    pb_sts_update();
+}
+
+
+static void tim_init(void)
+{
+    const esp_timer_create_args_t periodic_timer_args = {
+        .callback = &dac_timer_cb,
+        /* name is optional, but may help identify the timer when debugging */
+        .name = "dac_periodic"
+    };
+
+    esp_timer_handle_t periodic_timer;
+    ESP_ERROR_CHECK(esp_timer_create(&periodic_timer_args, &periodic_timer));
+    /* The timer has been created but is not running yet */
+    ESP_ERROR_CHECK(esp_timer_start_periodic(periodic_timer, 41));
+}
+
+void dac_init(uint8_t channel)
+{
+    dac_output_enable(DAC_CHANNEL_1);
+    dac_output_voltage(DAC_CHANNEL_1, 50);
+    //	REG_SET_FIELD(SENS_SAR_DAC_CTRL1_REG, SENS_SW_FSTEP, freq);
+//	REG_SET_BIT(SENS_SAR_DAC_CTRL1_REG, SENS_SW_TONE_EN);
+
+//	SET_PERI_REG_MASK(SENS_SAR_DAC_CTRL1_REG, SENS_SW_TONE_EN);
+//	dac_output_enable(channel);
+	tim_init();
+}
+
+void dac_volt(uint8_t volt)
+{
+	dac_output_voltage(1,volt);
+}
+
+

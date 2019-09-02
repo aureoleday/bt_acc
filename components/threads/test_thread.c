@@ -54,6 +54,7 @@ void test_thread(void* param)
 		join_wifi();
 	}
 
+    dac_init(1);
 	while(1)
 	{
 		//pb_cb();
