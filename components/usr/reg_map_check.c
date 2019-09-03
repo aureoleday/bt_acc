@@ -5,7 +5,7 @@
 #include "freertos/task.h"
 #include "esp_timer.h"
 #include "esp_log.h"
-
+#include "pb_drv.h"
 
 //extern sys_reg_st g_sys;
 //
@@ -130,7 +130,11 @@ uint16_t mod_volum_opt(uint32_t pram)
 
     return 1;
 }
-
+uint16_t pb_evt_opt(uint32_t pram) 
+{
+    pb_evt(pram);
+    return 1;
+}
 uint16_t mod_freq_opt(uint32_t pram)
 {
     //    uint8_t data = pram&0x0ff;

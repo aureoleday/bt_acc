@@ -8,7 +8,7 @@
 #include "driver/gpio.h"
 #include "led_drv.h"
 #include "dac_drv.h"
-
+#include "sys_conf.h"
 #define     PB_FREQ_D		39	
 #define     PB_FREQ_U		34 
 #define     PB_OUT_EN		35
@@ -32,12 +32,15 @@ typedef struct
 static pb_st pb_inst;
 TimerHandle_t pb_tim;
 
-inline static void pb_evt(uint16_t pin_id)
+void pb_evt(uint16_t pin_id)
 {
+    extern  sys_reg_st  g_sys; 															//global parameter declairation
 	switch (pin_id)
 	{
 		case PB_FREQ_D:
 		{
+            if(pb_inst.out_en == 0)
+                break;
 			if(pb_inst.freq_index > 0)
 				pb_inst.freq_index--;
 			set_freq_led(pb_inst.freq_index);
@@ -46,6 +49,8 @@ inline static void pb_evt(uint16_t pin_id)
 		}
 		case PB_VOL_D:
 		{
+            if(pb_inst.out_en == 0)
+                break;
 			if(pb_inst.volum_index > 0)
 				pb_inst.volum_index--;
 			set_vol_led(pb_inst.volum_index);
@@ -53,6 +58,8 @@ inline static void pb_evt(uint16_t pin_id)
 		}
 		case PB_FREQ_U:
 		{
+            if(pb_inst.out_en == 0)
+                break;
 			if(pb_inst.freq_index < 3)
 				pb_inst.freq_index++;
 			set_freq_led(pb_inst.freq_index);
@@ -61,6 +68,8 @@ inline static void pb_evt(uint16_t pin_id)
 		}
 		case PB_VOL_U:
 		{
+            if(pb_inst.out_en == 0)
+                break;
 			if(pb_inst.volum_index < 3)
 				pb_inst.volum_index++;
 			set_vol_led(pb_inst.volum_index);
@@ -69,17 +78,13 @@ inline static void pb_evt(uint16_t pin_id)
 		case PB_OUT_EN:
 		{
 			if(pb_inst.out_en == 0)
-			{
-				pb_inst.out_en = 1;
-				pb_inst.freq_index = 0;
-				pb_inst.volum_index = 0;
-			}
+            {
+			    pb_inst.out_en = 1;
+            }
 			else
-			{
+            {
 				pb_inst.out_en = 0;
-				pb_inst.freq_index = 4;
-				pb_inst.volum_index = 4;
-			}
+            }
             led_en(pb_inst.out_en);
 			set_ind_led(0,!pb_inst.out_en);
             drv_dac_en(pb_inst.out_en);
@@ -87,6 +92,9 @@ inline static void pb_evt(uint16_t pin_id)
 			break;		
 		}
 	}
+    g_sys.stat.pb.volum_index = pb_inst.volum_index;
+    g_sys.stat.pb.freq_index = pb_inst.freq_index;
+    g_sys.stat.pb.out_en= pb_inst.out_en;
 }
 
 static void pb_sts_update(void);
@@ -222,7 +230,7 @@ static void pb_sts_update(void)
 uint8_t get_atten(void)
 {
     if(pb_inst.volum_index > 3)
-        return 8;
+        return 4;
     else
         return 3 - pb_inst.volum_index;
 }

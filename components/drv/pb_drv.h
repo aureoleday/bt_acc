@@ -12,4 +12,5 @@ void pb_init(void);
 //void pb_cb(void);
 void pb_sts_update(void);
 uint8_t get_atten(void);
+void pb_evt(uint16_t pin_id);
 #endif /* COMPONENTS_DRV_PB_DRV_H_ */

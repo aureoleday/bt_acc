@@ -10,7 +10,6 @@
 #include "nvs_flash.h"
 #include "nvs.h"
 #include "mdns.h"
-#include "goertzel.h"
 
 #define CONFIG_NAMESPACE 	"config"
 #define WIFI_NAMESPACE 		"wifi"
@@ -22,34 +21,34 @@ sys_reg_st  g_sys; 															//global parameter declairation
 //configuration register map declairation
 const conf_reg_map_st conf_reg_map_inst[CONF_REG_MAP_NUM]=
 {//id           mapped registers                             min        max             default     type     chk_prt
-    {0,         &g_sys.conf.gen.wifi_mode,                   0,         1,              0,          0,       NULL},
-    {1,         &g_sys.conf.gen.sample_channel,              0,         2,              2,          0,       NULL},
+    {0,         &g_sys.conf.gen.wifi_mode,                   0,         2,              0,          0,       NULL},
+    {1,         NULL,                                        0,         0,              0,          0,       NULL},
     {2,         NULL,                                        0,         0,              0,          0,       NULL},
-    {3,         &g_sys.conf.geo.enable,                      0,         1,              0,          0,       NULL},
-    {4,         &g_sys.conf.geo.pkg_period,                  0,         1000000,        10,         0,       NULL},
-    {5,         &g_sys.conf.geo.sample_period,               0,         1000,           1,          0,       NULL},
-    {6,         &g_sys.conf.geo.filter,                      0,         255,            64,         0,       NULL},
-    {7,         &g_sys.conf.geo.pkg_en,                      0,         1,              0,          0,       NULL},
+    {3,         NULL,                                        0,	        0,              0,          0,       NULL},
+    {4,         NULL,                                        0,	        0,              0,          0,       NULL},
+    {5,         NULL,                                        0,	        0,              0,          0,       NULL},
+    {6,         NULL,                                        0,	        0,              0,          0,       NULL},
+    {7,         NULL,                                        0,	        0,              0,          0,       NULL},
     {8,         NULL,                                        0,         0,              0,          0,       NULL},
     {9,         NULL,                                        0,         0,              0,          0,       NULL},
     {10,        &g_sys.conf.eth.http_en,                     0,         1,              1,          0,       NULL},
     {11,        &g_sys.conf.eth.tcp_en,                      0,         1,              1,          0,       NULL},
     {12,        &g_sys.conf.eth.tcp_period,                  1,         0xffffffff,	    80,         0,       NULL},
-    {13,        &g_sys.conf.fft.acc_times,                   1,         128,            1,          0,       NULL},
-    {14,        &g_sys.conf.fft.intv_cnts,                   1,         1024,           1,          0,       NULL},
-    {15,        &g_sys.conf.gtz.n,                   	     32,        65535,          4000,       0,       NULL},
-    {16,        &g_sys.conf.gtz.target_freq,                 1,         1000,           470,        0,       NULL},
-    {17,        &g_sys.conf.gtz.sample_freq,                 4000,      4000,           4000,       0,       NULL},
-    {18,        &g_sys.conf.gtz.target_span,                 0,		    65,           	32,         0,       NULL},
-    {19,        &g_sys.conf.gtz.acc_q,                 	     2,		    32,      		5,          0,       NULL},
-    {20,        &g_sys.conf.gtz.reset,                       0,         1,              0,          0,       NULL},
+    {13,        NULL,                                        0,         0,              0,          0,       NULL},
+    {14,        NULL,                                        0,         0,              0,          0,       NULL},
+    {15,        NULL,                                        0,         0,              0,          0,       NULL},
+    {16,        NULL,                                        0,         0,              0,          0,       NULL},
+    {17,        NULL,                                        0,         0,              0,          0,       NULL},
+    {18,        NULL,                                        0,         0,              0,          0,       NULL},
+    {19,        NULL,                                        0,         0,              0,          0,       NULL},
+    {20,        NULL,                                        0,         0,              0,          0,       NULL},
     {21,        &g_sys.conf.bat.mav_cnt,                     1,	        128,            16,         0,       NULL},
     {22,        &g_sys.conf.bat.up_lim,                      3700,	    4500,           4150,       0,       NULL},
     {23,        &g_sys.conf.bat.low_lim,                     2700,	    3500,           3200,       0,       NULL},
     {24,        NULL,                                        0,	        0,              0,          0,       NULL},
     {25,        NULL,                                        0,	        0,              0,          0,       NULL},
     {26,        NULL,                                        0,	        0,              0,          0,       NULL},
-    {27,        NULL,                                        0,	        0,              0,          0,       NULL},
+    {27,        NULL,                                        0,	        256,            0,          0,       pb_evt_opt},
     {28,        &g_sys.conf.gen.dbg,                         0,         1,              0,          0,       NULL},
     {29,        NULL,                                        0,	        1,              0,          1,       save_conf_opt},
     {30,        NULL,                                        0,	        1,              0,          1,       load_conf_opt},
@@ -68,24 +67,24 @@ const sts_reg_map_st status_reg_map_inst[STAT_REG_MAP_NUM]=
         {	5,          &g_sys.stat.man.man_date,               MAN_DATE},
         {	6,          &g_sys.stat.man.dev_type,               DEVICE_TYPE},
         {	7,          &g_sys.stat.gen.status_bm,              0},
-        {	8,          &g_sys.stat.geo.kfifo_drop_cnt,         0},
+        {	8,          NULL,                                   0},
         {	9,          NULL,                                   0},
         {	10,         NULL,                                   0},
-        {	11,	        (void*)&g_sys.stat.gtz.acc_snr,         0},
-        {	12,	        (void*)&g_sys.stat.gtz.signal_level,    0},
-        {	13,	        (void*)&g_sys.stat.gtz.noise_level,     0},
-        {	14,	        &g_sys.stat.gtz.rank,                   0},
-        {	15,	        &g_sys.stat.gtz.acc_rank,               0},
-        {	16,	        (void*)&g_sys.stat.gtz.offset,          0},
-        {	17,	        (void*)&g_sys.stat.gtz.acc_offset,      0},
-        {	18,	        (void*)&g_sys.stat.gtz.acc_signal_level,0},
-        {	19,	        (void*)&g_sys.stat.gtz.acc_noise_level, 0},
+        {	11,         NULL,                                   0},
+        {	12,         NULL,                                   0},
+        {	13,         NULL,                                   0},
+        {	14,         NULL,                                   0},
+        {	15,         NULL,                                   0},
+        {	16,         NULL,                                   0},
+        {	17,         NULL,                                   0},
+        {	18,         NULL,                                   0},
+        {	19,         NULL,                                   0},
         {	20,	        &g_sys.stat.bat.adc_raw,                0},
         {	21,	        &g_sys.stat.bat.pwr_val,                0},
         {	22,	        &g_sys.stat.bat.pwr_sts,                0},
-        {	23,	        NULL,                                   0},
-        {	24,	        NULL,                                   0},
-        {	25,	        NULL,                                   0},
+        {	23,	        &g_sys.stat.pb.out_en,                  0},
+        {	24,	        &g_sys.stat.pb.freq_index,              0},
+        {	25,	        &g_sys.stat.pb.volum_index,             0},
         {	26,	        NULL,                                   0},
         {	27,	        NULL,                                   0},
         {	28,	        NULL,                                   0},
@@ -562,25 +561,6 @@ int print_wifi(int argc, char **argv)
     return err;
 }
 
-static int gtz_info(int argc, char **argv)
-{
-    esp_err_t err = 0;
-    float fbin[65];
-    uint16_t bin_num;
-    uint32_t i;
-    printf("center_freq is: %d\n",g_sys.conf.gtz.target_freq);
-    printf("sl: %f,nl: %f\n",g_sys.stat.gtz.signal_level, g_sys.stat.gtz.noise_level);
-    printf("acc_snr:%f,snr: %f,rank: %d\n", g_sys.stat.gtz.acc_snr, g_sys.stat.gtz.ins_snr, g_sys.stat.gtz.rank);
-    printf("freq_bins:\n");
-    gtz_freq_bins(fbin,&bin_num);
-    for(i=0;i<bin_num;i++)
-    {
-        printf("%3f ",fbin[i]);
-    }
-    printf("\n");
-    return err;
-}
-
 
 /** Arguments used by 'blob' function */
 static struct {
@@ -830,16 +810,7 @@ static void register_print_wifi()
     ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
 }
 
-static void register_gtz_info()
-{
-    const esp_console_cmd_t cmd = {
-            .command = "gtz_info",
-            .help = "print gtz freq bins",
-            .hint = NULL,
-            .func = &gtz_info
-    };
-    ESP_ERROR_CHECK( esp_console_cmd_register(&cmd) );
-}
+
 
 
 void gvar_register(void)
@@ -853,7 +824,6 @@ void gvar_register(void)
     register_save_station();
     register_save_ap();
     register_print_wifi();
-    register_gtz_info();
 }
 
 

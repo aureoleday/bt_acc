@@ -65,10 +65,17 @@ static void tim_init(void)
     ESP_ERROR_CHECK(esp_timer_start_periodic(dac_ptimer, dac_inst.tim_cnt));
 }
 
+void drv_dac_en(uint8_t enable)
+{
+    if(enable == 1)
+        dac_output_enable(DAC_CHANNEL_1);
+    else
+        dac_output_disable(DAC_CHANNEL_1);
+}
+
 void dac_init(uint8_t channel)
 {
-    dac_output_enable(DAC_CHANNEL_1);
-    dac_output_voltage(DAC_CHANNEL_1, 0);
+    drv_dac_en(0);
 	tim_init();
 }
 
@@ -90,31 +97,31 @@ void update_tim_param(uint8_t freq_mod)
 {
     switch (freq_mod)
     {
-        case 0:
+        case 0://290Hz
         {
             dac_inst.tbl_gap = 15;
             dac_inst.tim_cnt = 200;
             break;
         }
-        case 1:
+        case 1://470Hz
         {
             dac_inst.tbl_gap = 24;
             dac_inst.tim_cnt = 200;
             break;
         }
-        case 2:
+        case 2://580Hz
         {
             dac_inst.tbl_gap = 30;
             dac_inst.tim_cnt = 200;
             break;
         }
-        case 3:
+        case 3://690Hz
         {
             dac_inst.tbl_gap = 35;
             dac_inst.tim_cnt = 200;
             break;
         }
-        case 4:
+        case 4://0Hz
         {
             dac_inst.tbl_gap = 35;
             dac_inst.tim_cnt = 200;
@@ -130,11 +137,4 @@ void update_tim_param(uint8_t freq_mod)
     dac_tim_rst();
 }
 
-void drv_dac_en(uint8_t enable)
-{
-    if(enable == 1)
-        dac_output_enable(DAC_CHANNEL_1);
-    else
-        dac_output_disable(DAC_CHANNEL_1);
-}
 

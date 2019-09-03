@@ -9,6 +9,7 @@
 #include "freertos/task.h"
 #include "esp_console.h"
 #include "driver/gpio.h"
+#include "sys_conf.h"
 #define     SR_D			12 
 #define     SR_CLK          14 
 #define     SR_SRCLK        26
@@ -124,10 +125,11 @@ void set_ind_led(uint8_t led_type, uint8_t bit_action)
 
 void led_en(uint16_t enable)
 {
+    extern sys_reg_st  g_sys; 															
     if(enable != 0)
     {
-        set_freq_led(0);
-        set_vol_led(0);
+        set_freq_led(g_sys.stat.pb.freq_index);
+        set_vol_led(g_sys.stat.pb.volum_index);
     }
     else
     {

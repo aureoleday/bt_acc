@@ -40,16 +40,6 @@ static EventGroupHandle_t wifi_event_group;
 const int CONNECTED_BIT = BIT0;
 const int STARTED_BIT = BIT1;
 
-static void connected_ops(void)
-{
-    xTaskCreate(&tcp_thread,
-            "Task_TCP",
-            8192,
-            NULL,
-            5,
-            NULL);
-}
-
 
 static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
@@ -58,7 +48,6 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
     switch(event->event_id) {
     case SYSTEM_EVENT_AP_START:
         ESP_LOGI(TAG, "AP started!\n");
-        connected_ops();
         break;
     case SYSTEM_EVENT_STA_GOT_IP:
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
@@ -118,6 +107,12 @@ static void initialise_wifi(void* arg)
 
     err = get_wifi_info(ssid,lcssid,pwd,lcpwd,&slen,&lslen,&plen,&lplen);
 
+    if(g_sys.conf.gen.wifi_mode==0)
+    {
+        printf("WIFI BANNED!\n");
+        return;
+    }
+
     if(ESP_OK != err)
     {
         printf("get wifi err!\n");
@@ -125,6 +120,7 @@ static void initialise_wifi(void* arg)
         return;
     }
     bit_op_set(&g_sys.stat.gen.status_bm,GBM_WIFI,1);
+    printf("hello wifi\n");
     printf("ap ssid:%s,pwd:%s\n",lcssid,lcpwd);
 
     strncpy((char*) wifi_config.ap.ssid, lcssid, lslen-1);
